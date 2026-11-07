@@ -1,0 +1,144 @@
+<title>Płynność TL;DR 7.11</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+  /* Layout: one reading column (max 760px); two decision boards side by side on wide screens, stacked on phone. Palette = the app's own (cream ground, moss accent). */
+  :root {
+    --bg: #f6f4ef; --card: #ffffff; --ink: #1f2328; --muted: #6b7280; --line: #e5e1d8;
+    --accent: #2f6f5e; --accent-soft: #e3efea; --warn: #b4551d; --warn-soft: #f7e9df; --soft: #f1efe8;
+    --f-display: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --f-body: "IBM Plex Sans", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --f-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #161a19; --card: #1f2523; --ink: #ecebe6; --muted: #a2a8a5; --line: #343b38;
+    --accent: #7fc3ad; --accent-soft: #223b34; --warn: #e3966a; --warn-soft: #3a2a20; --soft: #242a28; color-scheme: dark; } }
+  :root[data-theme="dark"] {
+    --bg: #161a19; --card: #1f2523; --ink: #ecebe6; --muted: #a2a8a5; --line: #343b38;
+    --accent: #7fc3ad; --accent-soft: #223b34; --warn: #e3966a; --warn-soft: #3a2a20; --soft: #242a28; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.5;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 48px; }
+  .wrap { max-width: 1040px; margin: 0 auto; }
+  header { padding: 36px 0 20px; border-bottom: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: baseline; }
+  .eyebrow { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  h1 { font-family: var(--f-display); font-weight: 600; font-size: clamp(30px, 5vw, 44px); line-height: 1.1; margin: 4px 0 0; text-wrap: balance; letter-spacing: -.01em; width: 100%; }
+  header p { margin: 0; color: var(--muted); max-width: 65ch; }
+  h2 { font-family: var(--f-display); font-weight: 600; font-size: 24px; margin: 36px 0 10px; text-wrap: balance; }
+  h3 { font-size: 15px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 22px 0 8px; }
+  p, li { max-width: 72ch; }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  code { font-family: var(--f-mono); font-size: .92em; background: var(--soft); padding: 1px 5px; border-radius: 5px; }
+
+  .state { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 22px; }
+  .state div { border: 1px solid var(--line); background: var(--card); border-radius: 12px; padding: 12px 14px; }
+  .state b { display: block; font-size: 15px; margin-bottom: 2px; }
+  .state span { color: var(--muted); font-size: 14px; }
+  .ok { border-left: 4px solid var(--accent); }
+  .pending { border-left: 4px solid var(--warn); }
+
+  .boards { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 14px; }
+  @media (max-width: 760px) { .boards { grid-template-columns: 1fr; } }
+  .board { min-width: 0; }
+  .board > p.lead { color: var(--muted); font-size: 15px; margin: 0 0 12px; }
+  .item { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; }
+  .item .tag { display: inline-block; font-family: var(--f-mono); font-size: 12px; padding: 1px 7px; border-radius: 6px; margin-right: 6px; vertical-align: 1px; }
+  .tech .tag { background: var(--accent-soft); color: var(--accent); }
+  .biz .tag { background: var(--warn-soft); color: var(--warn); }
+  .item b.t { font-size: 16px; }
+  .item p { margin: 6px 0 0; font-size: 15px; }
+  .item .rec { margin-top: 6px; font-size: 15px; }
+  .item .rec strong { color: var(--accent); font-weight: 600; }
+  .biz .item .rec strong { color: var(--warn); }
+
+  ol.steps { padding-left: 0; list-style: none; counter-reset: s; margin: 10px 0 0; }
+  ol.steps li { position: relative; padding: 9px 0 9px 42px; border-bottom: 1px solid var(--line); counter-increment: s; }
+  ol.steps li:last-child { border-bottom: 0; }
+  ol.steps li::before { content: counter(s); position: absolute; left: 0; top: 8px; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 600; font-size: 14px; display: flex; align-items: center; justify-content: center; }
+  :root[data-theme="dark"] ol.steps li::before { color: #10201b; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) ol.steps li::before { color: #10201b; } }
+
+  table { width: 100%; border-collapse: collapse; font-size: 15px; margin-top: 8px; }
+  th, td { text-align: left; padding: 8px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-size: 13px; text-transform: uppercase; letter-spacing: .04em; font-weight: 600; }
+  .tablewrap { overflow-x: auto; }
+  .foot { margin-top: 40px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+  ul.plain { padding-left: 18px; margin: 6px 0; }
+  ul.plain li { margin: 4px 0; }
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">Sesja Claude Code · 7 listopada 2026 · Alek</span>
+  <h1>Płynność: co postawiłem, co wybrałem, co czeka na Ciebie</h1>
+  <p>Jedno repo, które jest jednocześnie vaultem Obsidiana i kodem aplikacji. Apka v3 działa i jest przetestowana. Poniżej decyzje techniczne, które podjąłem (możesz zawetować), i decyzje biznesowe, które są Twoje.</p>
+</header>
+
+<section class="state">
+  <div class="ok"><b>Apka v3 live</b><span>Opublikowana wersja = <code>app/index.html</code> w repo, sprawdzone bajt w bajt. Nic nie republikowałem.</span></div>
+  <div class="ok"><b>Harness zielony</b><span>Oba skrypty Playwright: exit 0, zero błędów konsoli, zero wyjątków, 38 zrzutów. Ścieżki uniezależnione od maszyny.</span></div>
+  <div class="ok"><b>Vault Obsidiana</b><span>Katalog repo otwierasz jako vault. Start → Decyzje do podjęcia → Backlog. Szablony jak w Twoim <code>intradero-knowledge</code>.</span></div>
+  <div class="pending"><b>Czeka na Ciebie</b><span>9 decyzji biznesowych (B1–B9), w tym dwie z terminem: specjalista 10.11 i treść tygodni 4–12 przed 28.11.</span></div>
+</section>
+
+<h2>Co zrobiłem z Twoich dotychczasowych repo</h2>
+<p><code>intradero-knowledge</code> to jedyne repo z realną treścią: wzorzec vaultu (00 Start, wiki/…, templates, Decision log, tygodniowy Review) przeniosłem tutaj jeden do jednego, ale bez Spec Kitu, CI, safety-scanów i podziału na dwa repo. Tam to miało sens przy dwóch osobach i wielu repo; tu jest jedna osoba i jedna apka. <code>cegladanych</code> jest puste, <code>Szkolenie</code> to same logotypy z 2021.</p>
+<p>Z handoffu z czatu zachowałem to, co się sprawdziło: pętlę budowniczy → niezależny tester → recenzent → publikacja. Użyłem jej od razu: dwóch subagentów zrobiło niezależną recenzję kodu i research transkrypcji po polsku.</p>
+
+<h2>Decyzje</h2>
+<div class="boards">
+  <div class="board tech">
+    <p class="lead">Techniczne. Wybrane przeze mnie, działam wg nich domyślnie. Veto jedną linią w <code>Decyzje do podjęcia.md</code>.</p>
+    <div class="item"><span class="tag">A1</span><b class="t">Stack: Vanilla+, bez frameworka i bundlera</b><p>Każdą zmianę robi agent w jednym przebiegu: czytaj, edytuj, test headless. Opcja B (Vite + Preact) to 5–8 rund i build przy każdej zmianie. Veto ma sens tylko przy &gt;8 ekranach w pół roku.</p></div>
+    <div class="item"><span class="tag">A2</span><b class="t">Jedno repo = vault + kod</b><p>Obsidian pokazuje tylko notatki, pliki <code>.html</code>/<code>.js</code> są niewidoczne. Dwa repo dopiero przy drugim produkcie albo drugim współpracowniku.</p></div>
+    <div class="item"><span class="tag">A3</span><b class="t">Jakość = harness Playwright, nic więcej</b><p>Zielone = exit 0, puste <code>*.errors</code>, brak <code>*.EXCEPTION</code>. Bez CI, linterów, Spec Kitu, dopóki nie boli.</p></div>
+    <div class="item"><span class="tag">A4</span><b class="t">Runtime v1 = artefakt claude.ai</b><p>Tylko tam działa „Oceń z Claude” bez własnego backendu i klucza API. GitHub Pages dopiero, gdy ocena w stronie przestanie być potrzebna.</p></div>
+    <div class="item"><span class="tag">A5</span><b class="t">Podział pliku: najpierw <code>data.js</code></b><p>Treść (instrukcje, zachęty, tematy, tygodnie) do osobnego pliku bez logiki. Tygodnie 4–12 to zmiany w treści, więc agent dotyka jednego pliku. Potem <code>map.js</code> z wstrzykiwanym kontekstem, <code>styles.css</code>, <code>app.js</code>. Recenzent oszacował 2 rundy.</p></div>
+    <div class="item"><span class="tag">A6</span><b class="t">Poprawki z recenzji R1–R6 przed treścią tygodnia 4</b><p>Najważniejsze: R1, zaliczenie dnia liczy się z aktualnej listy ćwiczeń, więc dodanie ćwiczeń do tygodnia 4 cofnie zaliczone dni i streak. Do tego: ucinany dziennik przy powrocie na mapę, błąd od dnia 85, sonda Claude odpalana bez kliknięcia, stary wynik oceny doklejany do nowego transkryptu.</p></div>
+  </div>
+  <div class="board biz">
+    <p class="lead">Biznesowe i produktowe. Twoje. Każda ma rekomendację, kroki są w <code>Decyzje do podjęcia.md</code>.</p>
+    <div class="item"><span class="tag">B1</span><b class="t">Repo na GitHubie</b><p class="rec"><strong>Rekomendacja:</strong> prywatne <code>jestemalek1/plynnosc</code>, push od razu. Kopia poza sesją, historia zmian, start sesji Claude Code z repo. Teraz jedyna kopia to zip z tej sesji.</p></div>
+    <div class="item"><span class="tag">B2</span><b class="t">Specjalista, poniedziałek 10.11</b><p class="rec"><strong>Rekomendacja:</strong> najpierw FIKS (darmowa diagnoza, Camperdown online), Jankiewicz jako plan B. Lista pytań na rozmowę jest w decyzjach: program zintegrowany vs bloki „na start z zewnątrz”, kolejność tygodni 4–12, ADHD a jąkanie.</p></div>
+    <div class="item"><span class="tag">B3</span><b class="t">Treść tygodni 4–12: przed czy po konsultacji</b><p class="rec"><strong>Rekomendacja:</strong> agent pisze tygodnie 4–6 z programu teraz, 7–12 po konsultacji. Ty czytasz instrukcje ćwiczeń, nie kod. Termin: przed 28.11.</p></div>
+    <div class="item"><span class="tag">B4</span><b class="t">Transkrypcja po polsku</b><p class="rec"><strong>Rekomendacja:</strong> apka Whisper offline na iPhonie (Whisper Notes, jednorazowo kilka dolarów). Plan B za 0 zł: Gemini przyjmuje m4a, do 10 min, ale audio idzie do chmury. Fakty z researchu: Apple Dyktafon nie robi polskiego (iOS 18/26), Claude app nie przyjmuje audio, a ocena w artefakcie przyjmuje tylko tekst i obrazy.</p></div>
+    <div class="item"><span class="tag">B5</span><b class="t">Kopia danych: eksport/import JSON</b><p class="rec"><strong>Rekomendacja:</strong> TAK, jako pierwsza nowa funkcja. Dane są tylko w localStorage jednego telefonu; czyszczenie Safari lub nowy telefon kasuje dziennik i SR. Capability <code>downloads</code> umożliwia zapis pliku za potwierdzeniem. Eksport też przed startem leków.</p></div>
+    <div class="item"><span class="tag">B6</span><b class="t">Kolejność funkcji na 3 tygodnie</b><p class="rec"><strong>Rekomendacja:</strong> eksport → podział + poprawki + Wake Lock → tygodnie 4–6 → „jedno pytanie” w Ocenie (#12) → English card (#13) → tryb szybki.</p></div>
+    <div class="item"><span class="tag">B7</span><b class="t">Tryb szybki 10 min</b><p class="rec"><strong>Rekomendacja:</strong> odłożyć do końca tygodnia 3; Postępy pokażą, czy są dni opuszczone z braku czasu.</p></div>
+    <div class="item"><span class="tag">B8</span><b class="t">#14 „psychoanaliza” z nagrań</b><p class="rec"><strong>Rekomendacja:</strong> #12 wchodzi pierwsze (research gotowy). #14 czeka, aż dostarczysz pliki designu z sesji „AI lab”.</p></div>
+    <div class="item"><span class="tag">B9</span><b class="t">Diagnostyka ADHD a baseline</b><p class="rec"><strong>Rekomendacja:</strong> umów diagnostykę; przed lekiem eksport danych i cztery nagrania bazowe jak w dniu 1. Lekarz ma wiedzieć o jąkaniu.</p></div>
+  </div>
+</div>
+
+<h2>Jak w tym pracować, krok po kroku</h2>
+<ol class="steps">
+  <li>Otwórz katalog <code>plynnosc</code> w Obsidianie jako vault. Zakładka Start jest w zakładkach. Czytaj: Start → Decyzje do podjęcia → Backlog.</li>
+  <li>W <code>Decyzje do podjęcia.md</code> odhacz <code>[x]</code> i dopisz jedną linię „Decyzja: …” przy każdej pozycji, którą rozstrzygasz. Reszta idzie wg rekomendacji.</li>
+  <li>Zrób B1 (GitHub) jako pierwsze: utwórz prywatne repo, a w sesji Claude Code powiedz „podłącz repo jestemalek1/plynnosc z prawem push i wypchnij main”.</li>
+  <li>Każda sesja agenta zaczyna od <code>CLAUDE.md</code>, bierze jedną pozycję z backlogu albo jedną decyzję do wdrożenia, kończy zielonym harnessem i wpisem w Decision log.</li>
+  <li>Większe zmiany (stan, timer, mapa, ocena, logika dnia): budowniczy → niezależny tester + recenzent → poprawki → publikacja. Małe (tekst, jedna funkcja): sam budowniczy + harness.</li>
+  <li>Publikacja: narzędzie Artifact, <code>read</code> aktualnej wersji, potem <code>publish</code> na ten sam URL, bez podawania <code>capabilities</code>. Po publikacji jedno sprawdzenie na telefonie.</li>
+  <li>Niedziela, 10 minut: <code>Review.md</code>. Czy decyzje są zapisane, czy harness zielony, czy artefakt = repo, czy w vaultcie nie ma transkryptów.</li>
+</ol>
+
+<h2>Co dały researche subagentów</h2>
+<div class="tablewrap">
+<table>
+  <tr><th>Research</th><th>Wynik</th><th>Co z tym robisz</th></tr>
+  <tr><td>Niezależna recenzja kodu v3</td><td>11 ryzyk z numerami linii (R1–R11), plan podziału na 4 pliki zweryfikowany na kodzie, lista „czego nie ruszać” (Timer, SRPicker, load/sanitize, router).</td><td>Nic. Przyjąłem jako A5/A6; agent wykona w 2 rundach po Twoim OK na kolejność (B6).</td></tr>
+  <tr><td>Transkrypcja PL na iPhonie</td><td>Apple nie obsługuje polskiego ani w Dyktafonie, ani w silniku iOS 26. Claude app bez audio. Działa: Whisper offline (Whisper Notes, Aiko), Gemini z plikiem m4a, dyktowanie po polsku do Notatek.</td><td>B4: wybierz jedną ścieżkę i przetestuj jutro na jednym monologu PL.</td></tr>
+  <tr><td>Wcześniejsze (z czatu): terapie, protokoły, polskie zasoby, samorozwój i angielski, szablony UI</td><td>Przeniesione do <code>wiki/research/</code> bez zmian. Program terapii jest źródłem prawdy dla treści ćwiczeń.</td><td>B2 i B3 opierają się na nich; na konsultację weź „Kontekst i profil”.</td></tr>
+</table>
+</div>
+
+<h2>Gdzie co leży</h2>
+<ul class="plain">
+  <li><code>00 Start/Start.md</code>: dashboard, aktualny stan, następna akcja.</li>
+  <li><code>wiki/decyzje/</code>: Decision log (postanowione), Decyzje do podjęcia (otwarte, z krokami), ten TL;DR.</li>
+  <li><code>wiki/produkt/</code>: Kontekst i profil, Backlog (16 pozycji). <code>wiki/program/</code>: program terapii.</li>
+  <li><code>wiki/architektura/</code>: budowa apki, plan podziału, ograniczenia publikacji. <code>wiki/operacje/</code>: jak pracujemy, testy.</li>
+  <li><code>wiki/research/</code>: 7 raportów. <code>app/</code>, <code>test/</code>: kod i harness. <code>90 Archiwum/</code>: HANDOFF z czatu, dzień 1, stary harness.</li>
+</ul>
+
+<p class="foot">Apka: <a href="https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P">claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P</a>. Wersja repo: pierwszy commit 7.11.2026. Ten plik: <code>wiki/decyzje/TLDR 2026-11-07.html</code>.</p>
+</div>

@@ -5,7 +5,7 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 
 ## Najważniejsze
 - [[Kontekst i profil]] — po co to jest, kim jest użytkownik, co już ustalone
-- [[Decyzje do podjęcia]] — co czeka na Alka, z instrukcją krok po kroku
+- [[Decyzje do podjęcia]] — co czeka na Alka, z instrukcją krok po kroku (TL;DR z sesji 7.11: `wiki/decyzje/TLDR 2026-11-07.html`)
 - [[Decision log]] — co już postanowione i dlaczego
 - [[Backlog]] — pomysły i plan funkcji (14 pozycji)
 - [[Program płynności]] — źródło prawdy dla treści ćwiczeń i progresji
@@ -28,6 +28,8 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - Harness testowy przeniesiony do repo i uniezależniony od ścieżek (patrz [[Testy]]).
 - Tygodnie 1–3 mają treść; tygodnie 4–12 to placeholder (dziennik + SR). Termin: przed 28.11.2026.
 - Konsultacje ze specjalistą: poniedziałek 10.11 (FIKS / Jankiewicz) — patrz [[Decyzje do podjęcia]].
+- Niezależna recenzja kodu: 11 ryzyk, R1–R6 do poprawy przed treścią tygodnia 4 ([[Review kodu v3 – niezależny]]). Research transkrypcji PL gotowy ([[Transkrypcja PL – research]]).
+- Repo lokalne z pierwszym commitem; nie wypchnięte na GitHub (decyzja B1).
 
 ## Następna akcja
 1. Alek: przejrzeć [[Decyzje do podjęcia]] i odhaczyć.

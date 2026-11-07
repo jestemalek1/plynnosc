@@ -22,14 +22,23 @@ Jeden plik `app/index.html` (107 KB): `<style>` (~220 linii) + `<script>` (~1170
 | Postępy | `streak`, `renderPostepy`, `chart` | SVG wykres SR 0–8 |
 | Ściągawka, nawigacja | `renderSciagawka`, `showTab`, `fromHash`, obsługa klawiatury (`body.kb`) | hash routing `#dzis/#ocena/#postepy/#sciagawka` |
 
-## Plan podziału (Opcja A, bez bundlera)
-Cel: agent czyta tylko plik, który zmienia. Propozycja (do zweryfikowania z [[Review kodu v3 – niezależny]]):
-- `index.html` — szkielet DOM + `<link rel="stylesheet" href="styles.css">` + `<script src="data.js">`, `<script src="app.js">`.
-- `styles.css` — cały `<style>`.
-- `data.js` — treść: `ENC`, `INS`, `TOPICS`, `WEEKS`, `EX_META`, `HIER`, `BASE_HIER`, `SR_MEANING`, `SR_COLORS` → jeden globalny obiekt `window.PLYNNOSC_DATA`. **To jest plik, który zmieniamy najczęściej (tygodnie 4–12) i który nie powinien dotykać logiki.**
-- `app.js` — reszta (helpers, stan, komponenty, ekrany, mapa). Jeśli urośnie: `map.js` jako drugi plik z funkcjami mapy, wpięty przez `window.PLYNNOSC_MAP`.
-Harness nie wymaga zmian poza tym, że T11 czyta `TOPICS` z `script:not([src])` — po podziale czyta `data.js` z dysku.
-Publikacja: `publish` z `files` (patrz [[Publikacja (artefakt claude.ai)]]).
+## Plan podziału (Opcja A, bez bundlera) — zweryfikowany recenzją
+Źródło: [[Review kodu v3 – niezależny]] §3. Cztery pliki, klasyczne `<script src>` w kolejności `data.js` → `map.js` → `app.js`, bez `type=module` (działa z `file://`, `node --check` per plik).
+1. `styles.css` — cały `<style>` bez zmian.
+2. `data.js` → `window.PLYN_DATA` = { DAY1, HIER, BASE_HIER, SR_COLORS, SR_MEANING, TOPICS, TAG_LABEL, ENC, INS, BRIEF_LABEL, A_WORDS, B_WORDS, TENSION, WEEKS, EX_META, FILL_PL, FILL_EN }. Zero logiki. **Najczęściej edytowany plik (tygodnie 4–12) → najmniejsze ryzyko.**
+3. `map.js` → `window.PLYN_MAP` = { render(root, ctx), scrollToArch, openSheet, closeSheet, weekStart, weekDoneCount, islandState }; zależności wstrzykiwane przez `ctx` (h, sv, clear, append, daty, isDayDone, exercisesFor, state, saveNow, streak, openDay, onReady). `justDone`/`mapMsg` jako parametry, nie globale.
+4. `app.js` — reszta; eksportuje `window.PLYN` = { state, save, saveNow, day, isDayDone, exercisesFor, streak, showTab, renderDzis, openDay }.
+Granice globalne: tylko `PLYN_DATA`, `PLYN_MAP`, `PLYN`. Harness: T11 czyta `TOPICS` z `data.js` z dysku zamiast z `script:not([src])`.
+Szacunek: **2 rundy**. Runda 1: CSS + `data.js` + `app.js` (czysto mechanicznie, zero zmian logiki, screenshoty identyczne). Runda 2: `map.js` z `ctx` + poprawki R1–R6 z recenzji. Najpierw podział, potem zmiana semantyki — nie w jednym commicie.
+
+## Poprawki z recenzji do zrobienia przed treścią tygodnia 4
+- **R1** `isDayDone` liczy z aktualnej listy ćwiczeń → po dodaniu ćwiczeń do tyg. 4 zaliczone dni „odkończą się” (streak, wyspy). Zapisywać snapshot listy/flagę `complete` w dniu.
+- **R2** powrót na mapę po 1,8 s ucina pisanie dziennika, gdy dziennik jest ostatni → odkładać do `focusout`.
+- **R3** TypeError od dnia 85 (`WEEKS[w-1]` poza zakresem) → klamp `weekOf` do 12.
+- **R4** sonda `sample` z 10 s timeoutem blokuje na stałe i odpala się na `load`, nie po kliknięciu.
+- **R5** stary wynik Claude doklejany do nowego transkryptu przy „Zapisz metryki”.
+- **R6** `body.kb` bez resetu poza `focusout` (pasek kart może zostać schowany).
+- R7–R11: sanityzacja stanu (brak `version`), dzień 1 z danymi domyślnymi w źródle, rollover/UTC w datach ocen, drobiazgi timera, tekst `planCard`.
 
 ## Model danych (localStorage `plynnosc`)
 ```

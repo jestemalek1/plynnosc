@@ -22,6 +22,9 @@ Właściciel: Alek. Stan na 2026-11-07.
 
 14. **Lepsze rozumienie siebie i podłoża zachowań („psychoanaliza” z nagrań)** – rozwinięcie #12: nie tylko refleksja, ale analiza wzorców i ich źródeł na podstawie tego, co Alek opowiada. Istnieje już design pipeline'u z wcześniejszego projektu Alka z innym współpracownikiem (ten współpracownik robił „psychoanalizę”); design jest poparty researchem i ma materiały – DO DOSTARCZENIA przez Alka (plik/link/nazwa Projektu), wtedy adaptujemy pipeline do naszego rozwiązania. Zgłoszone 2026-11-07. Status: design powstał w sesji Claude Code („AI lab”, https://claude.ai/code/session_01M48q9i1Wur2dFYwTKhR61K) – nie da się jej odczytać z tej rozmowy; potrzebne repo lub pliki designu.
 
+15. **Eksport/import danych (JSON)** – dane tylko w localStorage jednego telefonu; eksport przez capability `downloads`, import przez wklejenie. Zgłoszone 2026-11-07 (sesja Claude Code), decyzja B5 w [[Decyzje do podjęcia]].
+16. **Poprawki z niezależnej recenzji v3 (R1–R11)** – [[Review kodu v3 – niezależny]]; R1–R6 przed treścią tygodnia 4. Zgłoszone 2026-11-07.
+
 ## Dane bazowe (dzień 1, 2026-11-07)
 
 | Nagranie | Bloki | SR |
@@ -49,6 +52,8 @@ Dziennik: „za wolno myślę, nie wiem co powiedzieć, brakuje mi treningu w ro
 **Kolejność prac:** (1) szkielet + SRPicker + Timer z auto‑licznikiem; (2) sesja dnia 2 (niedziela 8.11) i import dnia 1; (3) ocena transkryptu z `sample`; (4) postępy; (5) treści: karty tematów, zachęty, instrukcje „jak to ma brzmieć”.
 
 ## Status
+
+- 2026-11-07 (sesja Claude Code): repo + vault Obsidiana, harness zielony lokalnie (exit 0, 0 błędów), niezależna recenzja kodu i research transkrypcji PL w `wiki/research/`. Decyzje: [[Decyzje do podjęcia]].
 
 - 2026-11-07: v2 opublikowana (https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P), 3 rundy build → tester + code review → poprawki; 15/15 testów akceptacyjnych PASS, harnessy: test/run.js, test/round2.js. Pokryte pomysły 1–9. Pomysł 10 (transkrypcja PL) otwarty.
 

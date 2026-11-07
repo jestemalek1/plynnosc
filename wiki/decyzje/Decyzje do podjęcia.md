@@ -19,6 +19,8 @@ Każda pozycja ma rekomendację i kroki. Odhaczasz `[x]`, dopisujesz jedną lini
 - [ ] **A4. Runtime v1 = artefakt claude.ai** (bo tylko tam działa ocena przez Claude bez własnego backendu). Domyślnie: TAK. GitHub Pages dopiero, gdyby „Oceń z Claude” przestało być potrzebne w stronie.
 - [ ] **A5. Pierwszy krok w kodzie: wydzielić treść do `data.js`** (zachęty, instrukcje, tematy, tygodnie), potem Wake Lock i własne modale. Domyślnie: TAK. Powód: tygodnie 4–12 to zmiany w treści, nie w logice — agent ma dotykać jednego pliku bez ryzyka.
 
+- [ ] **A6. Poprawki z niezależnej recenzji R1–R6 przed treścią tygodnia 4.** Domyślnie: TAK, w rundzie 2 podziału. Najważniejsze: R1 — dodanie ćwiczeń do tygodnia 4 cofnie zaliczone dni i streak, jeśli nie zmienimy `isDayDone`. Lista: [[Review kodu v3 – niezależny]].
+
 ## B. Biznesowe / produktowe — czekają na Ciebie
 
 - [ ] **B1. Repo na GitHubie.** Rekomendacja: prywatne repo `jestemalek1/plynnosc`, push od razu. Powód: kopia poza sesją w chmurze, sesje Claude Code mogą startować z repo, historia zmian apki.
@@ -30,7 +32,7 @@ Każda pozycja ma rekomendację i kroki. Odhaczasz `[x]`, dopisujesz jedną lini
   Fakty: Apple Dyktafon nie transkrybuje polskiego (iOS 18/26), Claude app nie przyjmuje audio, a `sample` w artefakcie przyjmuje tylko tekst i obrazy — więc transkrypcja musi powstać poza apką. Źródła: [[Transkrypcja PL – research]].
   Kroki: zainstaluj jedną apkę, zrób jutro jeden monolog PL i sprawdź jakość; jeśli bełkot → Gemini.
 - [ ] **B5. Kopia danych (eksport/import).** Rekomendacja: TAK, jako pierwsza nowa funkcja (1 runda). Dane są tylko w localStorage jednego telefonu — czyszczenie Safari albo zmiana telefonu = utrata dziennika i SR. Rozwiązanie: przycisk „Eksport” (plik JSON przez capability `downloads`, z potwierdzeniem) + „Import” (wklej JSON). Dodatkowo: eksport przed startem leków (baseline ADHD).
-- [ ] **B6. Kolejność funkcji na najbliższe 3 tygodnie.** Rekomendacja: (1) B5 eksport, (2) A5 podział + Wake Lock, (3) tygodnie 4–6, (4) #12 „jedno pytanie” w Ocenie, (5) #13 English card, (6) tryb szybki 10 min. Zmień kolejność, jeśli chcesz.
+- [ ] **B6. Kolejność funkcji na najbliższe 3 tygodnie.** Rekomendacja: (1) B5 eksport, (2) A5 podział + A6 poprawki + Wake Lock, (3) tygodnie 4–6, (4) #12 „jedno pytanie” w Ocenie, (5) #13 English card, (6) tryb szybki 10 min. Zmień kolejność, jeśli chcesz.
 - [ ] **B7. Tryb „szybki” 10 min.** Rekomendacja: odłożyć do końca tygodnia 3 — wtedy zobaczymy w Postępach, czy są dni opuszczone z braku czasu.
 - [ ] **B8. #14 „psychoanaliza” z nagrań.** Rekomendacja: #12 (jedno pytanie dziennie, już zresearchowane) wchodzi pierwsze; #14 czeka, aż dostarczysz pliki designu z sesji „AI lab” (repo/eksport/plik). Bez tych plików agent nie adaptuje pipeline'u.
 - [ ] **B9. Diagnostyka ADHD a baseline.** Rekomendacja: umów diagnostykę; przed ewentualnym lekiem zrób eksport danych (B5) i cztery nagrania bazowe jak w dniu 1. Lekarzowi powiedz o jąkaniu (dobór leku).
