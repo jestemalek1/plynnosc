@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dzień 1 – Baza (sobota, 7 listopada)</title>
+<style>
+  :root {
+    --bg: #f6f4ef; --card: #ffffff; --ink: #1f2328; --muted: #6b7280;
+    --line: #e5e1d8; --accent: #2f6f5e; --accent-ink: #ffffff; --warn: #b4551d; --done: #d9efe5;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.45; font-size: 16px; }
+  header { padding: 20px 18px 10px; }
+  header h1 { margin: 0 0 4px; font-size: 22px; }
+  header p { margin: 0; color: var(--muted); font-size: 14px; }
+  main { padding: 0 14px 60px; max-width: 680px; margin: 0 auto; }
+  .progress { display: flex; gap: 6px; margin: 12px 0 18px; }
+  .progress span { flex: 1; height: 6px; border-radius: 3px; background: var(--line); }
+  .progress span.on { background: var(--accent); }
+  section.step { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-bottom: 14px; }
+  section.step.done { background: var(--done); }
+  .step-head { display: flex; align-items: flex-start; gap: 12px; }
+  .step-head input[type=checkbox] { width: 24px; height: 24px; margin-top: 2px; accent-color: var(--accent); flex-shrink: 0; }
+  .step-head h2 { margin: 0; font-size: 18px; }
+  .step-head small { color: var(--muted); font-size: 13px; display: block; margin-top: 2px; }
+  .body { margin-top: 10px; }
+  .body p { margin: 6px 0; }
+  .body ol, .body ul { margin: 6px 0; padding-left: 22px; }
+  .body li { margin: 4px 0; }
+  .note { font-size: 14px; color: var(--muted); }
+  .warn { color: var(--warn); font-weight: 600; }
+  .timer { display: flex; align-items: center; gap: 10px; margin: 10px 0; flex-wrap: wrap; }
+  .timer .clock { font-variant-numeric: tabular-nums; font-size: 28px; font-weight: 700; min-width: 86px; }
+  button { font: inherit; border: 0; border-radius: 10px; padding: 10px 14px; background: var(--accent); color: var(--accent-ink); font-weight: 600; cursor: pointer; }
+  button.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  button:active { transform: translateY(1px); }
+  table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 14px; }
+  th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; vertical-align: middle; }
+  th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .02em; }
+  input[type=number], input[type=text], textarea, select { font: inherit; width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+  input[type=number] { width: 64px; text-align: center; }
+  textarea { min-height: 70px; resize: vertical; }
+  .rep { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .rep button { width: 40px; height: 40px; padding: 0; background: #fff; color: var(--ink); border: 1px solid var(--line); }
+  .rep button.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .scale { font-size: 13px; color: var(--muted); margin-top: 6px; }
+  .footer { text-align: center; color: var(--muted); font-size: 13px; margin-top: 24px; }
+  .pill { display: inline-block; font-size: 12px; padding: 2px 8px; border-radius: 999px; background: var(--bg); color: var(--muted); margin-left: 6px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Dzień 1 – Baza</h1>
+  <p>Sobota, 7 listopada 2026 · tydzień 0 · ok. 25 min (dziś wyjątkowo dłużej niż 15)</p>
+  <div class="progress" id="progress"></div>
+</header>
+<main>
+
+<section class="step" data-step="1">
+  <div class="step-head">
+    <input type="checkbox" aria-label="Zrobione">
+    <div><h2>1. Nagrania bazowe <span class="pill">10 min</span></h2><small>Dyktafon w telefonie. Mów normalnie – nie „lepiej”. To ma być Twoja zwykła mowa.</small></div>
+  </div>
+  <div class="body">
+    <p>Cztery nagrania po ~2 min. Odpal timer, nagrywaj, stop po sygnale.</p>
+    <div class="timer" data-seconds="120"><span class="clock">2:00</span><button class="start">Start</button><button class="ghost reset">Reset</button></div>
+    <table>
+      <thead><tr><th>Nagranie</th><th>Bloki</th><th>SR 0–8</th></tr></thead>
+      <tbody>
+        <tr><td>Czytanie na głos (PL)</td><td><input type="number" min="0" max="99" data-k="r1b"></td><td><input type="number" min="0" max="8" data-k="r1s"></td></tr>
+        <tr><td>Monolog PL – luźno, szybko, o czymś, co Cię kręci</td><td><input type="number" min="0" max="99" data-k="r2b"></td><td><input type="number" min="0" max="8" data-k="r2s"></td></tr>
+        <tr><td>Monolog EN – ten sam temat</td><td><input type="number" min="0" max="99" data-k="r3b"></td><td><input type="number" min="0" max="8" data-k="r3s"></td></tr>
+        <tr><td>Rozmowa (telefon do bliskiej osoby lub zamówienie)</td><td><input type="number" min="0" max="99" data-k="r4b"></td><td><input type="number" min="0" max="8" data-k="r4s"></td></tr>
+      </tbody>
+    </table>
+    <p class="scale">SR: 0 brak · 1 jest, słuchacz nie zauważa · 2–3 lekkie · 4–5 umiarkowane · 6–7 ciężkie · 8 przekaz nie dochodzi. Bloki i SR wpisz po odsłuchu (krok 2).</p>
+  </div>
+</section>
+
+<section class="step" data-step="2">
+  <div class="step-head">
+    <input type="checkbox" aria-label="Zrobione">
+    <div><h2>2. Odsłuch i ocena <span class="pill">5 min</span></h2><small>Policz bloki w każdym nagraniu, oceń SR, wpisz do tabeli wyżej.</small></div>
+  </div>
+  <div class="body">
+    <p>Przy liczeniu: blok = zatrzymanie z napięciem (brak dźwięku, zacięty oddech). Przeciągnięcia i współruchy też licz jako bloki.</p>
+    <p>Różnica PL vs EN i czytanie vs monolog to Twój pierwszy pomiar. Nie interpretuj – zapisz.</p>
+    <label>Co zauważyłeś w ciele podczas bloków (brzuch, krtań, wargi, oddech)?<textarea data-k="body"></textarea></label>
+  </div>
+</section>
+
+<section class="step" data-step="3">
+  <div class="step-head">
+    <input type="checkbox" aria-label="Zrobione">
+    <div><h2>3. Hierarchia sytuacji <span class="pill">5 min</span></h2><small>Oceń każdą sytuację: ile bloków się spodziewasz (0–10). Nie stres – bloki.</small></div>
+  </div>
+  <div class="body">
+    <table>
+      <thead><tr><th>#</th><th>Sytuacja</th><th>0–10</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Czytanie na głos samemu</td><td><input type="number" min="0" max="10" data-k="h1"></td></tr>
+        <tr><td>2</td><td>Daily po polsku (własny moment)</td><td><input type="number" min="0" max="10" data-k="h2"></td></tr>
+        <tr><td>3</td><td>Rozmowa z bliską osobą – luźno, szybko</td><td><input type="number" min="0" max="10" data-k="h3"></td></tr>
+        <tr><td>4</td><td>Wtrącenie się do cudzej rozmowy</td><td><input type="number" min="0" max="10" data-k="h4"></td></tr>
+        <tr><td>5</td><td>Szybka odpowiedź, gdy ktoś czeka</td><td><input type="number" min="0" max="10" data-k="h5"></td></tr>
+        <tr><td>6</td><td>Telefon służbowy</td><td><input type="number" min="0" max="10" data-k="h6"></td></tr>
+        <tr><td>7</td><td>Przedstawienie się obcej osobie (imię)</td><td><input type="number" min="0" max="10" data-k="h7"></td></tr>
+        <tr><td>8</td><td>Wypowiedź na spotkaniu po angielsku</td><td><input type="number" min="0" max="10" data-k="h8"></td></tr>
+        <tr><td>9</td><td>Spotkanie z klientem</td><td><input type="number" min="0" max="10" data-k="h9"></td></tr>
+        <tr><td>10</td><td>Prezentacja / szkolenie po angielsku</td><td><input type="number" min="0" max="10" data-k="h10"></td></tr>
+      </tbody>
+    </table>
+    <p class="note">Jeśli kolejność nie pasuje – zmień w głowie, nie w tabeli. Liczby są ważniejsze niż numeracja.</p>
+  </div>
+</section>
+
+<section class="step" data-step="4">
+  <div class="step-head">
+    <input type="checkbox" aria-label="Zrobione">
+    <div><h2>4. Oddech bez blokady (ćw. A) <span class="pill">2 min</span></h2><small>Dłoń na brzuchu. Blok to zatrzymanie plus docisk – tu uczysz się, żeby nie było stopu.</small></div>
+  </div>
+  <div class="body">
+    <ol>
+      <li>Wdech nosem do brzucha, 2–3 s.</li>
+      <li>Bez pauzy: wydech na „fff”, 6–8 s, brzuch miękki, nic nie trzymasz.</li>
+      <li>Powtórzenia 9–12: zamiast „fff” mówisz słowo <strong>na początku</strong> wydechu – bez zatrzymania po wdechu. Np. „Aleksander”, „okej”, „dzisiaj”, „rano”.</li>
+    </ol>
+    <div class="timer" data-seconds="8"><span class="clock">0:08</span><button class="start">Wydech 8 s</button><button class="ghost reset">Reset</button></div>
+    <p>Odhaczaj powtórzenia:</p>
+    <div class="rep" data-k="reps" data-n="12"></div>
+    <p class="note">Jeśli przy słowie czujesz „stop” między wdechem a głosem – to jest dokładnie ten moment, który trenujesz. Zrób jeszcze raz wolniej, nie mocniej.</p>
+  </div>
+</section>
+
+<section class="step" data-step="5">
+  <div class="step-head">
+    <input type="checkbox" aria-label="Zrobione">
+    <div><h2>5. Luźny monolog – symulacja warunków bloku <span class="pill">2 min</span></h2><small>Dziś po polsku. O czymś, co Cię kręci. Szybko, naturalnie – nie zwalniaj sztucznie.</small></div>
+  </div>
+  <div class="body">
+    <p>Jedyne kryterium: <strong>frazy 3–5 słów i oddech po każdej</strong>. Bloki się nie liczą.</p>
+    <div class="timer" data-seconds="120"><span class="clock">2:00</span><button class="start">Start</button><button class="ghost reset">Reset</button></div>
+    <p>Po odsłuchu:</p>
+    <table>
+      <tbody>
+        <tr><td>Czy był oddech po większości fraz?</td><td><select data-k="m1"><option value="">–</option><option>tak</option><option>częściowo</option><option>nie</option></select></td></tr>
+        <tr><td>Czy brzuch był miękki?</td><td><select data-k="m2"><option value="">–</option><option>tak</option><option>częściowo</option><option>nie</option></select></td></tr>
+        <tr><td>Bloki (informacyjnie)</td><td><input type="number" min="0" max="99" data-k="m3"></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="step" data-step="6">
+  <div class="step-head">
+    <input type="checkbox" aria-label="Zrobione">
+    <div><h2>6. Dziennik bloków – start <span class="pill">1 min</span></h2><small>Od dziś przy każdym wyraźnym bloku jedno zdanie. Bez interpretacji.</small></div>
+  </div>
+  <div class="body">
+    <p>Wzór: <em>co robiłem · kto decydował o momencie startu (ja / ktoś) · język · tempo</em>.</p>
+    <label>Pierwszy wpis (może być z wczoraj):<textarea data-k="diary" placeholder="np. rozmowa z kolegą o nartach · chciałem się wtrącić · PL · szybko"></textarea></label>
+  </div>
+</section>
+
+<section class="step" data-step="7">
+  <div class="step-head">
+    <input type="checkbox" aria-label="Zrobione">
+    <div><h2>7. Na poniedziałek</h2><small>Dwa telefony, kto odpowie szybciej, ten zaczyna.</small></div>
+  </div>
+  <div class="body">
+    <ul>
+      <li>Fundacja FIKS – bezpłatna konsultacja diagnostyczna, Camperdown online: tel. 793 001 160</li>
+      <li>Karolina Jankiewicz – pierwszy wolny termin online: tel. 509 812 667</li>
+    </ul>
+    <p class="note">Zdanie do powiedzenia: „zacinam się przy długich, szybkich, spontanicznych wypowiedziach i po angielsku, głównie gdy muszę zacząć mówić w cudzym momencie; na daily po polsku jestem płynny; w rodzinie jąka się ciocia i jej dziecko”.</p>
+  </div>
+</section>
+
+<div class="footer">Dane zapisują się w tej przeglądarce (bez synchronizacji). <button class="ghost" id="copy">Kopiuj podsumowanie</button> <span id="copied"></span></div>
+
+</main>
+<script>
+(function(){
+  var KEY = 'plynnosc-dzien-01';
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch(e) { state = {}; }
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} }
+
+  // steps + progress
+  var steps = Array.prototype.slice.call(document.querySelectorAll('section.step'));
+  var progress = document.getElementById('progress');
+  steps.forEach(function(s){ var sp = document.createElement('span'); progress.appendChild(sp); });
+  function renderProgress(){
+    steps.forEach(function(s, i){
+      var on = !!state['done' + s.dataset.step];
+      s.classList.toggle('done', on);
+      s.querySelector('.step-head input').checked = on;
+      progress.children[i].classList.toggle('on', on);
+    });
+  }
+  steps.forEach(function(s){
+    s.querySelector('.step-head input').addEventListener('change', function(e){
+      state['done' + s.dataset.step] = e.target.checked; save(); renderProgress();
+    });
+  });
+  renderProgress();
+
+  // fields
+  Array.prototype.forEach.call(document.querySelectorAll('[data-k]'), function(el){
+    if (el.classList.contains('rep')) return;
+    var k = el.dataset.k;
+    if (state[k] !== undefined) el.value = state[k];
+    el.addEventListener('input', function(){ state[k] = el.value; save(); });
+    el.addEventListener('change', function(){ state[k] = el.value; save(); });
+  });
+
+  // reps
+  var rep = document.querySelector('.rep');
+  if (rep) {
+    var n = parseInt(rep.dataset.n, 10);
+    state.reps = state.reps || [];
+    for (var i = 0; i < n; i++) (function(i){
+      var b = document.createElement('button'); b.type = 'button'; b.textContent = i + 1;
+      if (state.reps[i]) b.classList.add('on');
+      b.addEventListener('click', function(){ state.reps[i] = !state.reps[i]; b.classList.toggle('on', !!state.reps[i]); save(); });
+      rep.appendChild(b);
+    })(i);
+  }
+
+  // timers
+  function fmt(s){ var m = Math.floor(s/60), r = s%60; return m + ':' + (r<10?'0':'') + r; }
+  function beep(){
+    try {
+      var ctx = new (window.AudioContext || window.webkitAudioContext)();
+      var o = ctx.createOscillator(), g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination); o.frequency.value = 880; g.gain.value = 0.2;
+      o.start(); setTimeout(function(){ o.stop(); ctx.close(); }, 350);
+    } catch(e){}
+    try { if (navigator.vibrate) navigator.vibrate(300); } catch(e){}
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.timer'), function(t){
+    var total = parseInt(t.dataset.seconds, 10), left = total, iv = null;
+    var clock = t.querySelector('.clock'), start = t.querySelector('.start'), reset = t.querySelector('.reset');
+    var label = start.textContent;
+    function draw(){ clock.textContent = fmt(left); }
+    start.addEventListener('click', function(){
+      if (iv) { clearInterval(iv); iv = null; start.textContent = label; return; }
+      if (left <= 0) left = total;
+      start.textContent = 'Pauza';
+      iv = setInterval(function(){
+        left--; draw();
+        if (left <= 0) { clearInterval(iv); iv = null; start.textContent = label; beep(); }
+      }, 1000);
+    });
+    reset.addEventListener('click', function(){ if (iv) clearInterval(iv); iv = null; left = total; draw(); start.textContent = label; });
+    draw();
+  });
+
+  // copy summary
+  document.getElementById('copy').addEventListener('click', function(){
+    var lines = ['Dzień 1 – baza (2026-11-07)'];
+    var names = {r1:'Czytanie PL', r2:'Monolog PL', r3:'Monolog EN', r4:'Rozmowa'};
+    Object.keys(names).forEach(function(k){ lines.push(names[k] + ': bloki ' + (state[k+'b']||'–') + ', SR ' + (state[k+'s']||'–')); });
+    var h = []; for (var i=1;i<=10;i++) h.push(i + '=' + (state['h'+i]||'–'));
+    lines.push('Hierarchia: ' + h.join(' '));
+    lines.push('Oddech: ' + ((state.reps||[]).filter(Boolean).length) + '/12');
+    lines.push('Monolog: oddech po frazach ' + (state.m1||'–') + ', brzuch ' + (state.m2||'–') + ', bloki ' + (state.m3||'–'));
+    if (state.body) lines.push('Ciało: ' + state.body);
+    if (state.diary) lines.push('Dziennik: ' + state.diary);
+    var txt = lines.join('\n');
+    var out = document.getElementById('copied');
+    try {
+      navigator.clipboard.writeText(txt).then(function(){ out.textContent = 'Skopiowane.'; }, function(){ fallback(); });
+    } catch(e) { fallback(); }
+    function fallback(){
+      var ta = document.createElement('textarea'); ta.value = txt; ta.style.width='100%'; ta.rows = 8;
+      out.textContent = ''; out.appendChild(ta); ta.select();
+    }
+  });
+})();
+</script>
+</body>
+</html>
