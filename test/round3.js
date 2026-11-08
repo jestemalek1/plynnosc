@@ -291,6 +291,19 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
     verdict('R4', /^\s*0 \/ 10/.test(afterReset.reps) && repsAfterReset === 0 && afterReload.reps.startsWith(String(repsMid)),
       'reload keeps ' + afterReload.reps + '; Od nowa -> "' + afterReset.reps + '", store reps.sygnal=' + repsAfterReset);
     log('R4.controlsErrors', v.page.__errors); await v.c.close();
+    // narrow phones: every question and the wait text give the same cue height
+    {
+      const hs = {};
+      for (const width of [320, 360, 390]) {
+        const nc = await browser.newContext({ viewport: { width, height: 700 }, isMobile: true, hasTouch: true }); const np = await nc.newPage(); np.__errors = []; ALL_PAGES.push(np);
+        np.on('pageerror', e => np.__errors.push('PAGEERROR ' + e.message));
+        await np.clock.install({ time: D(2) }); await np.goto(URL); await np.waitForTimeout(100); await openToday(np);
+        hs[width] = await np.evaluate(() => { const src = document.querySelector('script:not([src])').textContent; const qs = eval('[' + src.match(/var SIGNAL_Q = \[([\s\S]*?)\];/)[1] + ']'); const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Start na sygnał'); c.classList.remove('collapsed'); const cue = c.querySelector('.cue'), tm = c.querySelector('.timer'); const set = new Set(); qs.forEach(q => { cue.textContent = q; set.add(Math.round(cue.getBoundingClientRect().height)); }); tm.classList.add('wait'); cue.textContent = 'Czekaj na sygnał…'; set.add(Math.round(cue.getBoundingClientRect().height)); return [...set]; });
+        await nc.close();
+      }
+      log('R4.cueHeights', hs);
+      verdict('R4', Object.values(hs).every(x => x.length === 1), 'cue height per width (all ' + 'questions + wait): ' + JSON.stringify(hs));
+    }
     // other day: different set
     const w = await ctx(browser, { time: D(3) });
     await w.page.goto(URL); await w.page.waitForTimeout(100); await openToday(w.page);
@@ -437,6 +450,38 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
         'diary completes the day in place: textarea top ' + ['anchor-auto', 'anchor-none'].map(a => a + ' ' + out[a].before + '→' + out[a].after).join(', '));
       verdict('R6', !out.srChip.onMap && out.srChip.typ === 3 && !out.insToggle.onMap && out.neutralBlur.onMap && out.tabSwitch.onMap,
         'after diary completion: SR header+chip -> onMap ' + out.srChip.onMap + ' (typ ' + out.srChip.typ + '), „Pokaż instrukcję” -> onMap ' + out.insToggle.onMap + '; neutral blur -> onMap ' + out.neutralBlur.onMap + '; blur + quick tab switch -> onMap ' + out.tabSwitch.onMap);
+    }
+    // a diary tag completes the day: the field keeps focus and position; keyboard Enter on a card header cancels the return like a tap
+    {
+      const seedT = { v: 2, days: { [KEY(7)]: { done: ['oddech', 'sygnal', 'monolog', 'sr'], reps: { oddech: 12, sygnal: 10 }, monolog: { ran: true, breath: 'tak', sr: 2, lang: 'pl', topic: 1 }, sr: { typ: 2, max: 4 } } } };
+      const out = {};
+      for (const sc of ['tag-auto', 'tag-none', 'kbHeader']) {
+        const none = sc === 'tag-none';
+        const v = await ctx(browser, { time: D(7), init: `localStorage.setItem('plynnosc', ${JSON.stringify(JSON.stringify(seedT))});` + (none ? ` document.addEventListener('DOMContentLoaded', () => { const s = document.createElement('style'); s.textContent = '* { overflow-anchor: none !important; }'; document.head.appendChild(s); });` : '') });
+        await v.page.goto(URL); await v.page.waitForTimeout(100); await openToday(v.page);
+        const dzT = await expand(v.page, 'Dziennik bloków');
+        await dzT.locator('textarea').click(); await v.page.clock.runFor(1000); await v.page.waitForTimeout(800);
+        const r = {};
+        if (sc !== 'kbHeader') {
+          await v.page.keyboard.type('abc', { delay: 5 });
+          r.before = await v.page.evaluate(() => Math.round(document.querySelector('#s-dzis textarea').getBoundingClientRect().top));
+          await dzT.locator('.tags button', { hasText: 'start: ktoś' }).click();
+          r.now = await v.page.evaluate(() => ({ top: Math.round(document.querySelector('#s-dzis textarea').getBoundingClientRect().top), active: document.activeElement.tagName }));
+          await v.page.waitForTimeout(700);
+          r.later = await v.page.evaluate(() => Math.round(document.querySelector('#s-dzis textarea').getBoundingClientRect().top));
+          r.complete = (await store(v.page)).days[KEY(7)].complete;
+        } else {
+          await v.page.keyboard.type('rozmowa z kolegą', { delay: 5 }); await v.page.clock.runFor(3000);
+          await card(v.page, 'SR tygodnia').locator('.chead').focus(); await v.page.keyboard.press('Enter');
+          await v.page.clock.runFor(3000); await v.page.waitForTimeout(50);
+          r.onMap = await onMap(v.page); r.srOpen = await card(v.page, 'SR tygodnia').evaluate(c => !c.classList.contains('collapsed'));
+        }
+        r.errors = v.page.__errors; out[sc] = r; await v.c.close();
+      }
+      log('R6.tagAndKeyboard', out);
+      verdict('R6', ['tag-auto', 'tag-none'].every(a => out[a].complete && out[a].now.active === 'TEXTAREA' && Math.abs(out[a].now.top - out[a].before) <= 3 && Math.abs(out[a].later - out[a].before) <= 3),
+        'diary tag completes the day: ' + ['tag-auto', 'tag-none'].map(a => a + ' ' + out[a].before + '→' + out[a].now.top + '→' + out[a].later + ' focus ' + out[a].now.active).join(', '));
+      verdict('R6', !out.kbHeader.onMap && out.kbHeader.srOpen, 'keyboard Enter on SR header after diary completion: onMap ' + out.kbHeader.onMap + ', SR expanded ' + out.kbHeader.srOpen);
     }
     // day completed by the diary, user keeps typing, then taps „Zmień” on SR tygodnia: no deferred jump to the map (v3 behaviour)
     {

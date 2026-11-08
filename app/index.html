@@ -109,7 +109,8 @@
   .srkey span.on { color: var(--ink); font-weight: 600; }
 
   /* Start na sygnał */
-  .signal .cue { font-size: 26px; min-height: 63px; } /* 2 linie: pytanie 1- albo 2-liniowe nie przesuwa kart pod spodem */
+  .signal .cue { font-size: 26px; min-height: 63px; }
+  @media (max-width: 359px) { .signal .cue { min-height: 94px; } } /* wąskie telefony: część pytań ma 3 linie */ /* 2 linie: pytanie 1- albo 2-liniowe nie przesuwa kart pod spodem */
   .signal.wait .cue { color: var(--muted); font-size: 22px; }
 
   /* Choice chips */
@@ -1059,7 +1060,7 @@
     var card = h('div', { class: 'card' + (done ? ' done' : '') + (isCurrent ? ' current' : '') + (open ? '' : ' collapsed') });
     function toggleBody() { expanded[ex] = card.classList.contains('collapsed'); card.classList.toggle('collapsed'); head.setAttribute('aria-expanded', card.classList.contains('collapsed') ? 'false' : 'true'); }
     var head = h('div', { class: 'chead', role: 'button', tabindex: '0', 'aria-expanded': open ? 'true' : 'false', onclick: toggleBody,
-      onkeydown: function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleBody(); } } },
+      onkeydown: function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); head.click(); } } }, // przez click: ta sama ścieżka co tap (anuluje powrót na mapę)
       h('div', { class: 'mark', text: done ? '✓' : '' }),
       h('div', { class: 't' }, h('h2', { text: exTitle(k, ex) }), h('small', { text: done ? 'Zrobione' + doneSummary(k, ex) : meta.sub + ' · ' + meta.mins })));
     if (done && !d.baseline && REPEAT[ex]) head.appendChild(repeatBtn(REPEAT[ex].label, function () { REPEAT[ex].fn(k, d); }));
@@ -1206,7 +1207,10 @@
       groups.forEach(function (g) {
         g[1].forEach(function (v) {
           var piece = g[0] === 'start' ? 'start: ' + v : v;
-          tags.appendChild(h('button', { type: 'button', text: piece, onclick: function () {
+          tags.appendChild(h('button', { type: 'button', text: piece,
+            onmousedown: function (e) { e.preventDefault(); }, // tag nie zabiera fokusu polu (klawiatura zostaje, pole nie skacze)
+            onclick: function () {
+            ta.focus({ preventScroll: true }); // przed zaliczeniem: keepFieldInPlace widzi pole jako aktywne
             ta.value = (ta.value.trim() ? ta.value.trim() + ' · ' : '') + piece; d.diary = ta.value; save(); saved.textContent = 'Zapisano'; maybeDone(); ta.focus();
           } }));
         });
