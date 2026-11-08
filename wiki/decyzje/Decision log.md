@@ -4,6 +4,11 @@ Format: data — decyzja. Krótko: co, dlaczego, kiedy wracamy. Otwarte sprawy s
 
 ## Aktywne decyzje
 
+### 2026-11-08 — B21, B22: lekki spec funkcji zamiast LLD modułów; pierwszy spec B14 (Alek)
+Decyzja B21: HLD zostaje katalogiem modułów. LLD modułu rośnie od dołu jako suma specyfikacji jego funkcji. Dla pozycji rozmiaru L (logika dnia/tygodnia, stan, timer, mapa, ocena) piszemy przed kodem jeden plik `wiki/specs/<ID>.md` wg [[Jak pisać spec]], a Alek go akceptuje. Tester dostaje scenariusze, recenzent dane i ryzyka. Backlog ma kolumny Rozmiar (S/M/L) i Spec. W [[Plan działania]] jest mapa „pętla HLD × kamienie”. Ślad bez macierzy: to samo ID w backlogu, specyfikacji, gałęzi i CHANGELOG. Bez Spec Kitu i Kiro (zgodnie z CLAUDE.md). Research: [[Planowanie pracy – research]]. Wracamy, gdy pojawi się drugi deweloper, produkt albo klasyfikacja jako wyrób medyczny.
+Decyzja B22: pierwszy spec to [[B14 Zadanie w terenie]] (szkic 8.11, treść tygodni 2–3 do akceptacji). Potem B15, potem T4–6.
+Do zrobienia poza vaultem: w `CLAUDE.md` wskazać `wiki/specs/` w kroku 2 workflow.
+
 ### 2026-11-08 — B15: zamiana słów i odpuszczone sytuacje jako fakty w dzienniku; zasada jednej skali doprecyzowana (Alek)
 Decyzja (HLD 06): w dzienniku bloków dwa przełączniki jednym dotknięciem: „zamieniłem słowo” i „odpuściłem sytuację”. Karta „SR tygodnia” pokazuje sumę z 7 dni. Bez pytań z pamięci o cały tydzień, bez SUDS i skali komfortu. OASES – z logopedką.
 **Zasada pomiaru:** jedna skala SR 0–8 tylko dla nasilenia jąkania i poziomu techniki; wszystko inne to fakt tak/nie albo licznik liczony przez apkę. Wyjątek: „Oddech po frazach: tak / częściowo / nie” zostaje.
