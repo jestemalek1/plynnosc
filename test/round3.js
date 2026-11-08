@@ -226,11 +226,12 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
     await sg.locator('.timer button.big').click();
     // step through with 100 ms resolution, record phase transitions
     const events = []; let prev = null, t = 0; const qs = [], repsStore = [];
-    let s = await snap(); prev = s.wait ? 'wait' : 'answer'; events.push({ t, ph: prev, cue: s.cue });
+    let s = await snap(); prev = s.wait ? 'wait' : 'answer'; events.push({ t, ph: prev, cue: s.cue }); const cueH = new Set();
     while (t < 200000) {
       await page.clock.runFor(100); t += 100;
-      const cur = await page.evaluate(() => { const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Start na sygnał'); if (!c) return { gone: true }; const tm = c.querySelector('.timer'); return { cue: tm ? c.querySelector('.cue').textContent : null, wait: tm ? tm.classList.contains('wait') : null, done: c.classList.contains('done'), reps: tm ? c.querySelector('.reps').textContent : null }; });
+      const cur = await page.evaluate(() => { const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Start na sygnał'); if (!c) return { gone: true }; const tm = c.querySelector('.timer'); return { cue: tm ? c.querySelector('.cue').textContent : null, wait: tm ? tm.classList.contains('wait') : null, done: c.classList.contains('done'), reps: tm ? c.querySelector('.reps').textContent : null, h: tm ? Math.round(c.querySelector('.cue').getBoundingClientRect().height) : null }; });
       if (cur.done || cur.gone) { events.push({ t, ph: 'done' }); break; }
+      cueH.add(cur.h);
       const ph = cur.wait ? 'wait' : 'answer';
       if (ph !== prev) { events.push({ t, ph, cue: cur.cue, reps: cur.reps }); if (ph === 'answer') qs.push(cur.cue); prev = ph; }
       if (t % 30000 === 0) { const st = await store(page); repsStore.push({ t, reps: st.days[KEY(2)].reps.sygnal }); }
@@ -242,6 +243,7 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
     const beeps = await page.evaluate(() => ({ vib: window.__beeps.length, osc: (window.__osc || []).length }));
     log('R4.run', { titles, idle, events: events.length, waits, answers, qs, repsStore, beeps, store: { reps: st.days[KEY(2)].reps, done: st.days[KEY(2)].done } });
     verdict('R4', titles[0] === 'Oddech A' && titles[1] === 'Start na sygnał', 'day 2 order: ' + JSON.stringify(titles));
+    verdict('R4', cueH.size === 1, 'cue height constant across wait/answer of all 10 rounds (cards below do not jump): ' + JSON.stringify([...cueH]));
     verdict('R4', events[0].ph === 'wait' && events[0].cue === 'Czekaj na sygnał…' && waits.length === 10 && waits.every(w => w >= 2000 && w <= 6200) && answers.length === 10 && answers.every(a => a >= 7900 && a <= 8200) && beeps.vib >= 11,
       'Start -> "' + events[0].cue + '"; waits ms ' + JSON.stringify(waits) + '; answer windows ' + JSON.stringify([...new Set(answers)]) + '; vibrate/beep calls ' + beeps.vib + ' (osc ' + beeps.osc + ')');
     const en = qs.filter(q => /^(What|Where|How|Can|Any|Coffee or tea\?$)/.test(q)).length;
