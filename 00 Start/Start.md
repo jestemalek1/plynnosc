@@ -24,6 +24,7 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - [[12-13 Samorozwój i angielski – brief]]
 - [[Szablony UI – research i werdykt]]
 - [[Transkrypcja PL – research]]
+- [[Planowanie pracy – research]]
 - [[Review kodu v3 – niezależny]]
 
 ## Aktualny stan (2026-11-08, sesja decyzji HLD)

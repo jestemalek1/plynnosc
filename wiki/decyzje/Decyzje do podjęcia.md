@@ -47,6 +47,8 @@ Każda pozycja ma rekomendację i kroki. Odhaczasz `[x]`, dopisujesz jedną lini
 - [x] **B18. Utrzymanie i nawroty w HLD.** Decyzja: dopisać do HLD (03, 06, §4).
 - [x] **B19. Ocena mowy przez AI z nagrania / rozmowy na żywo.** Decyzja: do HLD (01, 05, 06); realizacja później (B12).
 - [x] **B20. Minimum bezpieczeństwa z §6.** Decyzja: zapisać w HLD z przypisaniem do modułów.
+- [ ] **B21. Jak planujemy pracę: lekki spec funkcji zamiast LLD modułów.** Rekomendacja: TAK. HLD = katalog modułów; dla pozycji rozmiaru L (logika dnia/tygodnia, stan, timer, mapa, ocena) jeden plik `wiki/specs/<ID>.md` (cel i moduł, zakres i no-go z budżetem w rundach, scenariusze „Gdy… wtedy…” dla testera, dane i stan, treść do akceptacji, ryzyka, jak sprawdzone). Backlog dostaje kolumny Rozmiar (S/M/L) i Spec; w Plan działania mapa ścieżki HLD × kamienie. Bez Spec Kitu i macierzy. Research: [[Planowanie pracy – research]].
+- [ ] **B22. Pierwszy spec: B14 „Zadanie w terenie” (HLD 05).** Rekomendacja: TAK, przed kodem B14 (przed 14.11), razem z treścią kart tygodni 2–3. Potem B15, potem T4–6 (cykl Camperdown).
 - [ ] **B11. Dwa okna.** Rekomendacja: TAK, okno A – Dogfood i okno B – Rozwój, ale dopiero po repo na GitHubie i podziale pliku (A5). Szczegóły: [[Plan działania]].
 
 ## Zostało otwarte po sesji HLD (8.11)
