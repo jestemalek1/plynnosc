@@ -23,6 +23,22 @@ Moduły HLD: 01 Wywiad · 02 Biblioteka · 03 Generator · 04 Realizacja · 05 T
 | M4 Cały program | do 29.01.2027 | Tygodnie 7–12; plan utrzymania gotowy przed końcem programu | T7–12, B18 (przeglądy i sygnały nawrotu) | 02, 04, 03, 06 |
 | Utrzymanie | luty–lipiec 2027 | Przeglądy po 2, 2, 4, 4, 8 tygodniach, potem po 3 i 6 miesiącach; niezaliczony przegląd = powtórka etapu | przeglądy w apce, przy nawrocie powrót do G (tyg. 6–8) | 03, 06 |
 
+### Mapa ścieżki: pętla HLD × kamienie (B21)
+Sprawdzian: każdy kamień ma przesuwać całą pętlę, a nie tylko jeden ekran. Puste pole = w tym kamieniu nic.
+
+| Krok pętli (HLD) | M0 (13.11) | M1 (21.11) | M2 (27.11) | M3 (grudzień) | M4 + utrzymanie |
+| --- | --- | --- | --- | --- | --- |
+| 01 Ocena wstępna | (dzień 1 zrobiony) | | | | wywiad w apce – produkt |
+| 02 Biblioteka | A5 `data.js` | wnioski z konsultacji | T4–6 | | T7–12 |
+| 03 Plan | (wg daty) | | B13 | | B18 utrzymanie, silnik po przeglądzie M3 |
+| 04 Ćwiczenia | v4 | R3–R7, Wake Lock, #18 | T4–6 | B7 tryb szybki | T7–12 |
+| 05 Transfer | **B14** tyg. 2–3 | | zadania tyg. 4–6 (w T4–6) | | zadania tyg. 7–12 |
+| 06 Pomiar | SR tygodnia (v4), #15 eksport | B15 | | | sygnały nawrotu (B18); ocena AI (B19) po M3 |
+| 07 Wsparcie | | | (G, H w T4–6 – częściowo) | | #14 poza MVP |
+| 08 Logopeda | #15 eksport | B16 raport | | | przeglądy utrzymania |
+
+Specyfikacje (rozmiar L): [[Jak pisać spec]]; kolejność: B14 → B15 → T4–6.
+
 Po przeglądzie M3, w kolejności z HLD §7: B19 ocena mowy przez AI z nagrania i rozmowy na żywo (06, 05) → 03 silnik planu → 07 refleksja z nagrań (#14, poza MVP) → 01 wywiad w apce (produkt).
 
 Kolejność w M0 ma znaczenie: dopóki apka jest jednym plikiem, dwa okna będą się zderzać w tym samym pliku. B14 idzie jednak przed podziałem, bo tydzień 2 startuje 14.11 (trening wygrywa, B12). Jeśli A5 nie zmieści się do 13.11, schodzi na 14–15.11; B14 nie schodzi.
