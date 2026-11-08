@@ -48,6 +48,9 @@ Miary, czy apka robi robotę (zbierane w Review, nie w apce):
 | Uwagi „przeszkadza w treningu” otwarte dłużej niż 2 dni | 0 |
 | Kryterium tygodnia z programu spełnione | tak / nie (jeśli 2× nie → temat dla logopedy) |
 
+## Związek z HLD
+HLD v1 (8.11) opisuje produkt z 8 modułów. Rekomendacja (decyzja B12): apka Alka to prototyp tych modułów w wersji dla jednej osoby; decyzja o produkcie rynkowym po M2/M3. Mapowanie i różnice: [[HLD v1 – porównanie z planem]].
+
 ## Nasz obecny plan w skrócie (do porównania z HLD)
 Żeby porównanie z HLD było szybkie, tu są założenia, które dziś obowiązują:
 1. **Runtime:** statyczna strona jako artefakt claude.ai; ocena przez Claude przez capability `sample`; brak własnego backendu i kluczy API.

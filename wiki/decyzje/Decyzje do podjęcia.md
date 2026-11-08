@@ -37,7 +37,13 @@ Każda pozycja ma rekomendację i kroki. Odhaczasz `[x]`, dopisujesz jedną lini
 - [ ] **B8. #14 „psychoanaliza” z nagrań.** Rekomendacja: #12 (jedno pytanie dziennie, już zresearchowane) wchodzi pierwsze; #14 czeka, aż dostarczysz pliki designu z sesji „AI lab” (repo/eksport/plik). Bez tych plików agent nie adaptuje pipeline'u.
 - [ ] **B9. Diagnostyka ADHD a baseline.** Rekomendacja: umów diagnostykę; przed ewentualnym lekiem zrób eksport danych (B5) i cztery nagrania bazowe jak w dniu 1. Lekarzowi powiedz o jąkaniu (dobór leku).
 
-- [ ] **B10. HLD.** Alek ma gotowy HLD; porównanie z [[Plan działania]] (sekcja „Nasz obecny plan w skrócie”) po dostarczeniu pliku. Do tego czasu nie zmieniamy architektury.
+- [x] **B10. HLD.** Dostarczony 8.11, porównanie: [[HLD v1 – porównanie z planem]].
+- [ ] **B12. Czym jest ta apka: narzędziem dla Ciebie czy prototypem produktu z HLD?** Rekomendacja: prototyp dogfoodowany na sobie. Moduły HLD budujemy w wersji „dla jednej osoby” w obecnej apce (bez kont, backendu, panelu). Decyzję o produkcie rynkowym (stack, RODO, wyroby medyczne, MVP) podejmujemy po M2/M3 na podstawie własnych danych. Skutek: od teraz backlog jest przypisany do modułów 01–08.
+- [ ] **B13. Generator planu v0: przejście tygodnia po kryterium, nie po dacie.** Rekomendacja: TAK, w M2 razem z tygodniami 4–6. Tak mówi nasz własny program; dziś apka przesuwa tydzień z kalendarzem.
+- [ ] **B14. Zadanie w terenie w apce (moduł 05).** Rekomendacja: TAK, w M1. Jedno zadanie dziennie z programu + „zrobione / nie”. To jest transfer, którego brakowało w poprzedniej terapii.
+- [ ] **B15. Pomiar unikania i zamiany słów (moduł 06).** Rekomendacja: TAK, 2 pytania w karcie „SR tygodnia”, w M1.
+- [ ] **B16. Raport dla logopedy (moduł 08 w wersji minimum).** Rekomendacja: TAK, w M1. Jedna strona do skopiowania przed konsultacją.
+- [ ] **B17. #13 angielski i #12/#14 samorozwój są poza HLD.** Rekomendacja: zostają jako Twoje dodatki (M3/M4), oznaczone „poza HLD”; nie wchodzą do zakresu produktu bez osobnej decyzji.
 - [ ] **B11. Dwa okna.** Rekomendacja: TAK, okno A – Dogfood i okno B – Rozwój, ale dopiero po repo na GitHubie i podziale pliku (A5). Szczegóły: [[Plan działania]].
 
 ## Zrobione w tej sesji (do wiadomości)

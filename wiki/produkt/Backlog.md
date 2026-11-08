@@ -1,7 +1,7 @@
 # Płynność – backlog
 
 Właściciel: Alek. Aktualizacja: 2026-11-08. Kamienie milowe i zasady okien: [[Plan działania]].
-Okno **A** = Dogfood (poprawki z codziennego używania), okno **B** = Rozwój (funkcje z planu). Status: ☐ do zrobienia · ◐ w toku · ☑ zrobione · ⏸ czeka na Alka.
+Moduły HLD: [[HLD v1 – porównanie z planem]]. Okno **A** = Dogfood (poprawki z codziennego używania), okno **B** = Rozwój (funkcje z planu). Status: ☐ do zrobienia · ◐ w toku · ☑ zrobione · ⏸ czeka na Alka.
 
 ## Teraz – M0 Fundament (do 13.11)
 | Status | ID | Co | Okno | Uwagi |
@@ -17,6 +17,9 @@ Okno **A** = Dogfood (poprawki z codziennego używania), okno **B** = Rozwój (f
 | --- | --- | --- | --- | --- |
 | ☐ | R3–R7 | Poprawki z recenzji: błąd od dnia 85, sonda Claude bez kliknięcia, stary wynik oceny, pasek kart po klawiaturze, sanityzacja stanu | B | [[Review kodu v3 – niezależny]] |
 | ☐ | WL | Wake Lock w timerach (ekran nie gaśnie) | A | |
+| ⏸ | B14 | Zadanie w terenie dziennie (HLD 05) | B | czeka na decyzję B14 |
+| ⏸ | B15 | Zamiana słów + unikanie w karcie SR tygodnia (HLD 06) | A | czeka na decyzję B15 |
+| ⏸ | B16 | Raport dla logopedy – 1 strona do skopiowania (HLD 08) | B | czeka na decyzję B16 |
 | ⏸ | B4 | Transkrypcja PL: test Whisper na jednym monologu | Alek | [[Transkrypcja PL – research]] |
 | ⏸ | B2 | Konsultacja 10.11 → wnioski do programu | Alek | lista pytań w [[Decyzje do podjęcia]] |
 
@@ -24,6 +27,7 @@ Okno **A** = Dogfood (poprawki z codziennego używania), okno **B** = Rozwój (f
 | Status | ID | Co | Okno |
 | --- | --- | --- | --- |
 | ☐ | T4–6 | Treść tygodni 4–6: wydłużona mowa (D), cykle Camperdown, dobrowolne jąkanie (G), anulowanie (H) | B |
+| ⏸ | B13 | Generator planu v0: przejście tygodnia po kryterium (HLD 03) | B |
 
 ## Później – M3/M4
 | ID | Co | Kamień |
