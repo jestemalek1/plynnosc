@@ -25,6 +25,7 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - [[Szablony UI – research i werdykt]]
 - [[Transkrypcja PL – research]]
 - [[Planowanie pracy – research]]
+- [[Język obcy i refleksja – research]]
 - [[Review kodu v3 – niezależny]]
 
 ## Aktualny stan (2026-11-08, sesja decyzji HLD)
@@ -33,7 +34,7 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - [[Backlog]]: każda pozycja ma moduł HLD; roadmapa M0–M4 + utrzymanie i lista na 2 tygodnie w [[Plan działania]].
 - v4 przygotowana na `feature/dzien2-feedback` (wydana 9.11 – patrz niżej).
 - Planowanie (B21, B22): spec funkcji dla pozycji L w `wiki/specs/` ([[Jak pisać spec]]); pierwszy: [[B14 Zadanie w terenie]] – zaakceptowany, czeka na wydanie v4.
-- Otwarte decyzje: B13, B16, B17 (#12, #13).
+- B13, B16, B17 zdecydowane. Otwarte: B23 (moduł 09 Trening języka obcego), B24 (moduł 10 Refleksja i wzorce) – [[Język obcy i refleksja – research]].
 - 2026-11-09 (okno B): **v4 wydana i opublikowana** (tag `v4`, artefakt pod linkiem wyżej) po 8 rundach niezależnego testera i recenzenta; harness z bramką (run/round2/round3) zielony. Nowe decyzje z weryfikacji: B21–B28 (w tym B25 – reguła powrotu na mapę, B26 – treść „Start na sygnał”).
 
 ## Następna akcja

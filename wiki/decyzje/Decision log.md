@@ -4,6 +4,11 @@ Format: data — decyzja. Krótko: co, dlaczego, kiedy wracamy. Otwarte sprawy s
 
 ## Aktywne decyzje
 
+### 2026-11-08 — B13, B16, B17 (Alek)
+- **B13 (HLD 03), wersja bez silnika:** w karcie „SR tygodnia” (dzień 7, 14, …) jedno pytanie tak/nie: „Kryterium tygodnia spełnione?”, pod nim treść kryterium z [[Program płynności]]. Tydzień dalej przesuwa się z kalendarzem. Dwa razy „nie” z rzędu = sygnał dla logopedki w raporcie B16. Świadomie akceptujemy, że do czasu silnika (po M3) apka może przepuścić dalej bez kryterium. Rozmiar M, M2; ta sama karta co B15, więc może iść w tej samej rundzie.
+- **B16 (HLD 08):** TAK, M1, rozmiar M, po B14 i B15. Jedna strona tekstu do skopiowania: baza, SR tygodni, kryteria (B13), zadania w terenie (B14), zamiana słów i odpuszczone sytuacje (B15).
+- **B17:** #13 angielski wchodzi do HLD jako komunikacja w języku obcym, #12 „jedno pytanie” jako część refleksji z nagrań z zabezpieczeniami #14. Poza MVP; dla Alka M3. Docelowe miejsce w HLD (nowe moduły 09 i 10) – propozycja B23 i B24 ([[Język obcy i refleksja – research]]).
+
 ### 2026-11-08 — B21, B22: lekki spec funkcji zamiast LLD modułów; pierwszy spec B14 (Alek)
 Decyzja B21: HLD zostaje katalogiem modułów. LLD modułu rośnie od dołu jako suma specyfikacji jego funkcji. Dla pozycji rozmiaru L (logika dnia/tygodnia, stan, timer, mapa, ocena) piszemy przed kodem jeden plik `wiki/specs/<ID>.md` wg [[Jak pisać spec]], a Alek go akceptuje. Tester dostaje scenariusze, recenzent dane i ryzyka. Backlog ma kolumny Rozmiar (S/M/L) i Spec. W [[Plan działania]] jest mapa „pętla HLD × kamienie”. Ślad bez macierzy: to samo ID w backlogu, specyfikacji, gałęzi i CHANGELOG. Bez Spec Kitu i Kiro (zgodnie z CLAUDE.md). Research: [[Planowanie pracy – research]]. Wracamy, gdy pojawi się drugi deweloper, produkt albo klasyfikacja jako wyrób medyczny.
 Decyzja B22: pierwszy spec to [[B14 Zadanie w terenie]], zaakceptowany 8.11 z treścią tygodni 2–3. Przy imieniu w tygodniu 3 miękki start zgodnie z tabelą progresji; pytanie o preparatory set na konsultację. Daily jako szczebel 2. Potem B15, potem T4–6.
