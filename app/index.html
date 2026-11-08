@@ -427,7 +427,7 @@
       s._vals = v; return s;
     });
     var el = h('div', { class: 'srkey', 'aria-hidden': 'true' }, rows);
-    el._mark = function (val) { rows.forEach(function (s) { s.classList.toggle('on', val != null && s._vals.indexOf(val) >= 0); }); };
+    el._mark = function (val) { var vs = [].concat(val).filter(function (v) { return v != null; }); rows.forEach(function (s) { s.classList.toggle('on', vs.some(function (v) { return s._vals.indexOf(v) >= 0; })); }); };
     return el;
   }
   function SRPicker(container, value, onChange, opts) {
@@ -792,7 +792,7 @@
   function exTitle(k, ex) { var d = peekDay(k); return ex === 'sr' && d && d.baseline ? 'SR dnia' : EX_META[ex].title; }
   function isDone(k, ex) { var d = peekDay(k); return !!d && d.done.indexOf(ex) >= 0; }
   function refreshComplete(k) { var d = day(k); if (!d.complete && exercisesFor(k).every(function (e) { return d.done.indexOf(e) >= 0; })) d.complete = true; }
-  function markDone(k, ex) { var d = day(k); if (d.done.indexOf(ex) < 0) d.done.push(ex); refreshComplete(k); save(); recent[ex] = true; renderDzis(); scrollToNext(k); if (isDayDone(k)) scheduleReturn(k); }
+  function markDone(k, ex) { var d = day(k); if (d.done.indexOf(ex) < 0) d.done.push(ex); refreshComplete(k); save(); recent[ex] = true; renderDzis(); scrollToNext(k); if (allListedDone(k)) scheduleReturn(k); }
   function scrollToNext(k) {
     var nextEx = exercisesFor(k).filter(function (e) { return !isDone(k, e); })[0];
     var target = nextEx ? cards[nextEx] : hdr.banner;
@@ -806,9 +806,10 @@
     card.querySelector('small').textContent = 'Zrobione' + doneSummary(k, ex);
     var body = card.querySelector('.cbody'); body.insertBefore(encCard(k, ex), body.firstChild);
     updateHeader();
-    if (isDayDone(k)) scheduleReturn(k);
+    if (allListedDone(k)) scheduleReturn(k);
   }
   function unmark(k, ex) { var d = day(k); d.done = d.done.filter(function (x) { return x !== ex; }); delete recent[ex]; save(); }
+  function allListedDone(k) { var d = peekDay(k); return !!d && exercisesFor(k).every(function (e) { return d.done.indexOf(e) >= 0; }); }
   function isDayDone(k) { var d = peekDay(k); if (!d) return false; if (d.complete) return true; return exercisesFor(k).every(function (e) { return d.done.indexOf(e) >= 0; }); }
   function encCard(k, ex) { return h('div', { class: 'enc' }, h('strong', { text: 'Zaliczone. ' }), pick(ENC[ex] || ['Zrobione.'], dayIndex(k) + ex.length)); }
   var recent = {};
@@ -833,7 +834,7 @@
   var justDone = null, mapMsg = '';
   function scheduleReturn(k) {
     setTimeout(function () {
-      if (currentTab !== 'dzis' || dzisView !== 'session' || viewKey !== k || !isDayDone(k)) return;
+      if (currentTab !== 'dzis' || dzisView !== 'session' || viewKey !== k || !allListedDone(k)) return;
       // Review R2: never pull the screen away while the user is typing (diary is often the last exercise).
       var ae = document.activeElement;
       if (isField(ae)) { ae.addEventListener('focusout', function once() { ae.removeEventListener('focusout', once); scheduleReturn(k); }); return; }
@@ -892,7 +893,7 @@
   var AH = 540, MAPW = 390;
   var ISL_X = [125, 205, 280, 262, 180, 112, 195];
   function weekStart(w) { return addDays(DAY1, (w - 1) * 7); }
-  function weekExNames(w) { if (WEEKS[w - 1][2]) return WEEKS[w - 1][2]; return exercisesFor(addDays(DAY1, (w - 1) * 7 + 1)).map(function (e) { return EX_META[e].title; }); }
+  function weekExNames(w) { if (WEEKS[w - 1][2]) return WEEKS[w - 1][2]; return exercisesFor(addDays(DAY1, (w - 1) * 7 + 6)).map(function (e) { return EX_META[e].title; }); }
   function weekDoneCount(w) { var n = 0; for (var i = 0; i < 7; i++) if (isDayDone(addDays(weekStart(w), i))) n++; return n; }
   function islandState(k, today) { if (k > today) return 'locked'; if (isDayDone(k)) return 'done'; if (k === today) return 'today'; return 'missed'; }
   function sv(tag, attrs, text) { var e = document.createElementNS(NS, tag); Object.keys(attrs || {}).forEach(function (a) { e.setAttribute(a, attrs[a]); }); if (text != null) e.textContent = text; return e; }
@@ -994,7 +995,9 @@
     clear(hdr.bar); list.forEach(function (e) { hdr.bar.appendChild(h('span', { class: isDone(k, e) ? 'on' : '' })); });
     hdr.bar.setAttribute('aria-valuenow', doneCount); hdr.bar.setAttribute('aria-valuemax', list.length);
     clear(hdr.next); clear(hdr.banner);
-    if (nextEx) {
+    if (nextEx && isDayDone(k)) {
+      append(hdr.next, [h('div', {}, 'Dzień zaliczony. Dodatkowo: ', h('strong', { text: exTitle(k, nextEx) }), ' · ' + EX_META[nextEx].mins), h('span', { text: doneCount + '/' + list.length })]);
+    } else if (nextEx) {
       append(hdr.next, [h('div', {}, 'Teraz: ', h('strong', { text: exTitle(k, nextEx) }), ' · ' + EX_META[nextEx].mins), h('span', { text: doneCount + '/' + list.length })]);
     } else {
       var st = streak();
@@ -1179,9 +1182,11 @@
     sr: function (body, k, d) {
       body.appendChild(briefBlock('sr'));
       body.appendChild(h('div', { class: 'srlabel', text: 'Typowe' }));
-      SRPicker(body, d.sr.typ, function (v) { d.sr.typ = v; save(); check(); }, { label: 'SR typowe', key: false });
+      var kk = srKey();
+      SRPicker(body, d.sr.typ, function (v) { d.sr.typ = v; save(); kk._mark([d.sr.typ, d.sr.max]); check(); }, { label: 'SR typowe', key: false });
       body.appendChild(h('div', { class: 'srlabel', text: 'Najgorsze' }));
-      SRPicker(body, d.sr.max, function (v) { d.sr.max = v; save(); check(); }, { label: 'SR najgorsze' });
+      SRPicker(body, d.sr.max, function (v) { d.sr.max = v; save(); kk._mark([d.sr.typ, d.sr.max]); check(); }, { label: 'SR najgorsze', key: false });
+      body.appendChild(kk); kk._mark([d.sr.typ, d.sr.max]);
       if (d.baseline) body.appendChild(h('p', { class: 'note', text: 'Dzień 1: wyliczone z nagrań bazowych (średnia i maksimum SR).' }));
       fullInstructions(body, 'sr');
       function check() {
@@ -1412,11 +1417,12 @@
     var days = [], t = todayKey();
     for (var i = 13; i >= 0; i--) { var k = addDays(t, -i); if (dayIndex(k) >= 1) days.push(k); }
     var card = h('div', { class: 'card', style: 'margin-top:12px' }, h('h2', { text: 'SR (ocena raz w tygodniu)' }));
-    card.appendChild(chart(days));
+    var srDays = Object.keys(state.days).filter(function (k) { var x = state.days[k].sr; return dayIndex(k) >= 1 && x && (x.typ != null || x.max != null); }).sort().slice(-12);
+    card.appendChild(srDays.length ? chart(srDays) : h('p', { class: 'note', text: 'Pierwszy punkt pojawi się po ocenie SR tygodnia.' }));
     card.appendChild(h('div', { class: 'legend' }, h('span', {}, h('i', { style: 'background:var(--accent)' }), 'typowe'), h('span', {}, h('i', { style: 'background:var(--warn)' }), 'najgorsze')));
     var tb = h('tbody');
     days.slice().reverse().forEach(function (k) {
-      var d = peekDay(k), sr = d && d.sr ? d.sr : {}, doneN = d && d.done ? d.done.length : 0;
+      var d = peekDay(k), sr = d && d.sr ? d.sr : {}, doneN = d && d.done ? exercisesFor(k).filter(function (e) { return d.done.indexOf(e) >= 0; }).length : 0;
       tb.appendChild(h('tr', {}, h('td', { text: 'D' + dayIndex(k) + ' · ' + k.slice(5) }), h('td', { class: 'n', text: sr.typ != null ? sr.typ : '–' }), h('td', { class: 'n', text: sr.max != null ? sr.max : '–' }), h('td', { class: 'n', text: isDayDone(k) ? 'tak' : (doneN ? doneN + '/' + exercisesFor(k).length : '–') })));
     });
     card.appendChild(h('table', {}, h('thead', {}, h('tr', {}, h('th', { text: 'Dzień' }), h('th', { class: 'n', text: 'Typowe' }), h('th', { class: 'n', text: 'Najgorsze' }), h('th', { class: 'n', text: 'Sesja' }))), tb));
@@ -1463,15 +1469,15 @@
   }
   function chart(days) {
     var NS = 'http://www.w3.org/2000/svg', W = 360, H = 170, L = 26, R = 8, T = 10, B = 26;
-    var svg = document.createElementNS(NS, 'svg'); svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H); svg.setAttribute('class', 'chart'); svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', 'Wykres SR z ostatnich 14 dni');
+    var svg = document.createElementNS(NS, 'svg'); svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H); svg.setAttribute('class', 'chart'); svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', 'Wykres SR z ostatnich ocen');
     function el(n, a) { var e = document.createElementNS(NS, n); Object.keys(a).forEach(function (k) { e.setAttribute(k, a[k]); }); return e; }
     function x(i) { return days.length > 1 ? L + i * (W - L - R) / (days.length - 1) : (W + L - R) / 2; }
     function y(v) { return T + (8 - v) * (H - T - B) / 8; }
     for (var g = 0; g <= 8; g += 2) { svg.appendChild(el('line', { x1: L, x2: W - R, y1: y(g), y2: y(g), stroke: '#e5e1d8' })); var tx = el('text', { x: L - 6, y: y(g) + 4, 'text-anchor': 'end', 'font-size': '14', fill: '#6b7280' }); tx.textContent = g; svg.appendChild(tx); }
-    days.forEach(function (k, i) { var tx = el('text', { x: x(i), y: H - 8, 'text-anchor': 'middle', 'font-size': '14', fill: '#6b7280' }); tx.textContent = dayIndex(k); svg.appendChild(tx); });
+    days.forEach(function (k, i) { var tx = el('text', { x: x(i), y: H - 8, 'text-anchor': 'middle', 'font-size': '14', fill: '#6b7280' }); tx.textContent = 'D' + dayIndex(k); svg.appendChild(tx); });
     [['typ', '#2f6f5e'], ['max', '#b4551d']].forEach(function (s) {
       var pts = [], segs = [];
-      days.forEach(function (k, i) { var d = peekDay(k), v = d && d.sr ? d.sr[s[0]] : null; if (v == null) { if (pts.length) segs.push(pts); pts = []; return; } pts.push([x(i), y(v)]); });
+      days.forEach(function (k, i) { var d = peekDay(k), v = d && d.sr ? d.sr[s[0]] : null; if (v == null) return; pts.push([x(i), y(v)]); });
       if (pts.length) segs.push(pts);
       segs.forEach(function (sg) {
         if (sg.length > 1) svg.appendChild(el('polyline', { points: sg.map(function (p) { return p[0] + ',' + p[1]; }).join(' '), fill: 'none', stroke: s[1], 'stroke-width': '2.5', 'stroke-linejoin': 'round' }));
