@@ -25,6 +25,7 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - [[Szablony UI – research i werdykt]]
 - [[Transkrypcja PL – research]]
 - [[Planowanie pracy – research]]
+- [[Język obcy i refleksja – research]]
 - [[Review kodu v3 – niezależny]]
 
 ## Aktualny stan (2026-11-08, sesja decyzji HLD)
@@ -33,7 +34,7 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - [[Backlog]]: każda pozycja ma moduł HLD; roadmapa M0–M4 + utrzymanie i lista na 2 tygodnie w [[Plan działania]].
 - v4 w przygotowaniu na `feature/dzien2-feedback` (tester przerwany: `feature/testy-v4-wip`). Opublikowana jest nadal v3.
 - Planowanie (B21, B22): spec funkcji dla pozycji L w `wiki/specs/` ([[Jak pisać spec]]); pierwszy: [[B14 Zadanie w terenie]] – zaakceptowany, czeka na wydanie v4.
-- Otwarte decyzje: B13, B16, B17 (#12, #13).
+- B13, B16, B17 zdecydowane. Otwarte: B23 (moduł 09 Trening języka obcego), B24 (moduł 10 Refleksja i wzorce) – [[Język obcy i refleksja – research]].
 
 ## Następna akcja
 1. Okno B: domknąć v4 (tester + recenzent) i przygotować treść kart „Zadanie w terenie” tygodni 2–3 do akceptacji.

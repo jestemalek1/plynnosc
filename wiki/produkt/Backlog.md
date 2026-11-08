@@ -29,7 +29,7 @@ Okno **A** = Dogfood (poprawki z codziennego używania), okno **B** = Rozwój (f
 | ☐ | B15 | Dziennik: przełączniki „zamieniłem słowo” i „odpuściłem sytuację” (1 dotknięcie); suma z 7 dni w karcie SR tygodnia | 06 | L | do napisania (następny) | B | w tej samej rundzie co R3–R7; do wdrożenia zamiany zapisuj w notatce dnia |
 | ☐ | WL | Wake Lock w timerach (ekran nie gaśnie) | 04 | S | — | A | |
 | ☐ | #18 | „Uwaga do apki”: jedno zdanie z dowolnego ekranu, lista uwag + kopiuj | F→04 | M | — | A | przesunięte z M0 (B14); do tego czasu notatka dnia; usuwamy po okresie dogfoodingu |
-| ⏸ | B16 | Raport dla logopedy – 1 strona do skopiowania | 08 | M | — | B | czeka na decyzję B16; na 10.11 ręcznie [[Kontekst i profil]] |
+| ☐ | B16 | Raport dla logopedy – 1 strona do skopiowania: baza, SR tygodni, kryteria (B13), zadania w terenie, zamiany słów | 08 | M | — | B | po B14 i B15; na 10.11 ręcznie [[Kontekst i profil]] |
 | ⏸ | B4 | Transkrypcja PL: test Whisper na jednym monologu | 06 | — | — | Alek | pomost do czasu oceny z dźwięku (B19); [[Transkrypcja PL – research]] |
 | ⏸ | B2 | Konsultacja 10.11 → wnioski do programu (w tym kolejność szczebli hierarchii) | 08, 02 | — | — | Alek | lista pytań w [[Decyzje do podjęcia]] |
 
@@ -37,7 +37,7 @@ Okno **A** = Dogfood (poprawki z codziennego używania), okno **B** = Rozwój (f
 | Status | ID | Co | HLD | Rozmiar | Spec | Okno |
 | --- | --- | --- | --- | --- | --- | --- |
 | ☐ | T4–6 | Treść tygodni 4–6: wydłużona mowa (D), cykle Camperdown, dobrowolne jąkanie (G), anulowanie (H) | 02, 04 | L | do napisania (po B15) | B |
-| ⏸ | B13 | Kryterium przejścia tygodnia (silnik odłożony wg B12; zakres do decyzji B13) | 03 | L | po decyzji B13 | B |
+| ☐ | B13 | Karta SR tygodnia: „Kryterium tygodnia spełnione? tak/nie” + treść kryterium; 2× „nie” → sygnał w B16 | 03 | M | — (karta jak w B15; można w tej samej rundzie) | B |
 
 ## Później – po dopracowaniu funkcjonalności (B12)
 | ID | Co | HLD | Rozmiar | Spec | Kamień |
@@ -48,11 +48,13 @@ Okno **A** = Dogfood (poprawki z codziennego używania), okno **B** = Rozwój (f
 | B19 | Ocena mowy przez AI z nagrania i rozmowy na żywo (dźwięk, nie transkrypt) | 06, 05, 01 | L | później | po przeglądzie M3 |
 | 03 | Silnik planu (generator) | 03 | L | później | po przeglądzie M3 |
 | 01 | Wywiad i ocena wstępna w apce | 01 | L | później | produkt |
-| #14 | Refleksja z nagrań – wersja bezpieczna wg HLD 07; po dostarczeniu plików z sesji „AI lab” | 07 | L | później | poza MVP |
+| #13 | English card z nagrania EN (pierwsza wersja języka obcego) | 05 → 09 (B23) | L | do napisania | M3 |
+| #12 | Jedno pytanie z monologu (pierwsza wersja refleksji) | 07 → 10 (B24) | L | do napisania | M3 |
+| #14 | Refleksja z nagrań – wersja bezpieczna; po dostarczeniu plików z sesji „AI lab” | 07 → 10 (B24) | L | później | poza MVP |
 
 ## Zgłoszenia (historia – źródło numerów #)
 
-To jest historia zgłoszeń, nie backlog. Co z każdym zrobiono: tabele wyżej, [[Decision log]] i `CHANGELOG.md`. #12 i #13 nie są w backlogu, dopóki B17 nie przypisze ich do modułu HLD.
+To jest historia zgłoszeń, nie backlog. Co z każdym zrobiono: tabele wyżej, [[Decision log]] i `CHANGELOG.md`. #12 i #13 są w backlogu od B17 (moduły docelowe: B23, B24).
 
 1. **Jedna skala wszędzie** – SR 0–8 jako kolorowy pasek do kliknięcia; żadnych innych skal (0–10 wypada).
 2. **Ściągawka SR na stronie** – widoczna, intuicyjna, nie tekst.
