@@ -822,17 +822,23 @@
     // Same as markDone but without rebuilding the screen (keeps focus in inputs).
     var d = day(k); if (d.done.indexOf(ex) >= 0) return; d.done.push(ex); refreshComplete(k); save(); recent[ex] = true;
     var card = cards[ex]; if (!card) { renderDzis(); return; }
-    card.classList.add('done'); card.querySelector('.mark').textContent = '✓';
-    card.querySelector('small').textContent = 'Zrobione' + doneSummary(k, ex);
-    var body = card.querySelector('.cbody'); body.insertBefore(encCard(k, ex), body.firstChild);
-    updateHeader();
+    keepFieldInPlace(function () {
+      card.classList.add('done'); card.querySelector('.mark').textContent = '✓';
+      card.querySelector('small').textContent = 'Zrobione' + doneSummary(k, ex);
+      var body = card.querySelector('.cbody'); body.insertBefore(encCard(k, ex), body.firstChild);
+      updateHeader();
+    });
     if (allListedDone(k)) scheduleReturn(k);
+  }
+  function keepFieldInPlace(fn) {
+    // Zmiana DOM nad polem, w którym piszesz, nie może go przesunąć (Safari nie ma scroll anchoring).
+    var ae = document.activeElement, top = isField(ae) ? ae.getBoundingClientRect().top : null;
+    fn();
+    if (top != null && ae.isConnected) { var dy = ae.getBoundingClientRect().top - top; if (Math.abs(dy) > 1) try { window.scrollBy(0, dy); } catch (e) { /* ignore */ } }
   }
   function rebuildCard(k, ex) {
     var old = cards[ex]; if (!old || !old.parentNode) { renderDzis(); return; }
-    var ae = document.activeElement, top = isField(ae) ? ae.getBoundingClientRect().top : null;
-    var c = exerciseCard(k, ex, old.classList.contains('current')); old.parentNode.replaceChild(c, old); cards[ex] = c; updateHeader();
-    if (top != null && ae.isConnected) { var dy = ae.getBoundingClientRect().top - top; if (Math.abs(dy) > 1) try { window.scrollBy(0, dy); } catch (e) { /* ignore */ } }
+    keepFieldInPlace(function () { var c = exerciseCard(k, ex, old.classList.contains('current')); old.parentNode.replaceChild(c, old); cards[ex] = c; updateHeader(); });
   }
   function renderOrRebuild(k, ex) { var ae = document.activeElement; if (cards[ex] && isField(ae) && !cards[ex].contains(ae)) rebuildCard(k, ex); else renderDzis(); }
   function unmark(k, ex) { var d = day(k); d.done = d.done.filter(function (x) { return x !== ex; }); delete recent[ex]; save(); }
@@ -859,7 +865,13 @@
   function openDay(k) { viewKey = k; dzisView = 'session'; recent = {}; expanded = {}; renderDzis(); try { window.scrollTo(0, 0); } catch (e) { /* ignore */ } }
   function backToMap() { dzisView = 'map'; renderDzis(); flushAfterShow(); }
   var justDone = null, mapMsg = '';
-  var returnGen = 0; // podbijany przy każdej przebudowie sesji: odłożony powrót na mapę nie przerywa późniejszej akcji (np. „Zmień” SR)
+  // Odłożony powrót na mapę jest anulowany, gdy po zaliczeniu dnia zrobisz w sesji coś świadomie (przycisk, chip, nagłówek karty),
+  // np. „Zmień” SR. Neutralne wyjście z pola (klawiatura „Gotowe”, tap w puste miejsce) nadal wraca na mapę. Tagi dziennika to część pisania.
+  var returnGen = 0;
+  document.getElementById('s-dzis').addEventListener('click', function (e) {
+    var t = e.target && e.target.closest ? e.target.closest('button, [role=button], summary, a, label') : null;
+    if (t && !t.closest('.tags')) returnGen++;
+  }, true);
   function scheduleReturn(k, gen) {
     if (gen == null) gen = returnGen;
     setTimeout(function () {
@@ -873,7 +885,6 @@
     }, 1800);
   }
   function renderSession() {
-    returnGen++;
     killTimers();
     var root = document.getElementById('s-dzis'); clear(root);
     cards = {};

@@ -13,10 +13,11 @@ function verdict(req, ok, evidence) { (V[req] = V[req] || []).push({ ok: !!ok, e
 const D = (n) => { const d = new Date(2026, 10, 7, 10, 0, 0); d.setDate(d.getDate() + n - 1); return d; }; // program day n -> Date
 const KEY = (n) => { const d = D(n); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
 
+const ALL_PAGES = [];
 async function ctx(browser, opts = {}) {
   const c = await browser.newContext({ viewport: { width: 390, height: 844 }, userAgent: UA, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
   const page = await c.newPage();
-  page.__errors = []; page.__warn = [];
+  page.__errors = []; page.__warn = []; ALL_PAGES.push(page);
   page.on('console', m => { if (m.type() === 'error') page.__errors.push(m.text()); else if (m.type() === 'warning') page.__warn.push(m.text()); });
   page.on('pageerror', e => page.__errors.push('PAGEERROR ' + e.message));
   await page.addInitScript(() => {
@@ -405,6 +406,36 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
       verdict('R6', ['auto', 'none'].every(a => res[a].after.oddechDone && res[a].after.active === 'TEXTAREA' && Math.abs(res[a].after.top - res[a].before) <= 3),
         'Oddech A ends while typing: textarea top ' + ['auto', 'none'].map(a => a + ' ' + res[a].before + '→' + res[a].after.top).join(', ') + ' (overflow-anchor), focus ' + res.none.after.active);
     }
+    // diary completes the day in place: the field stays where it was (both scroll-anchoring modes)
+    // then: deliberate actions in the session cancel the pending return; a neutral blur (also with a quick tab switch) returns to the map
+    {
+      const seedD = { v: 2, days: { [KEY(7)]: { done: ['oddech', 'sygnal', 'monolog', 'sr'], reps: { oddech: 12, sygnal: 10 }, monolog: { ran: true, breath: 'tak', sr: 2, lang: 'pl', topic: 1 }, sr: { typ: 2, max: 4 } } } };
+      const out = {};
+      for (const sc of ['anchor-auto', 'anchor-none', 'srChip', 'insToggle', 'neutralBlur', 'tabSwitch']) {
+        const none = sc !== 'anchor-auto';
+        const v = await ctx(browser, { time: D(7), init: `localStorage.setItem('plynnosc', ${JSON.stringify(JSON.stringify(seedD))});` + (none ? ` document.addEventListener('DOMContentLoaded', () => { const s = document.createElement('style'); s.textContent = '* { overflow-anchor: none !important; }'; document.head.appendChild(s); });` : '') });
+        await v.page.goto(URL); await v.page.waitForTimeout(100); await openToday(v.page);
+        const dzD = await expand(v.page, 'Dziennik bloków');
+        await dzD.locator('textarea').click(); await v.page.clock.runFor(1000); await v.page.waitForTimeout(800); // let the focus „center” smooth scroll settle
+        await v.page.keyboard.type('rozmowa', { delay: 5 });
+        const before = await v.page.evaluate(() => Math.round(document.querySelector('#s-dzis textarea').getBoundingClientRect().top));
+        await v.page.keyboard.type(' z kolegą', { delay: 5 }); await v.page.waitForTimeout(300);
+        const r = { before, after: await v.page.evaluate(() => Math.round(document.querySelector('#s-dzis textarea').getBoundingClientRect().top)) };
+        await v.page.clock.runFor(5000);
+        if (sc === 'srChip') { await card(v.page, 'SR tygodnia').locator('.chead h2').click(); await v.page.waitForTimeout(30); await card(v.page, 'SR tygodnia').locator('.sr').nth(0).locator('.chip').nth(3).click(); }
+        if (sc === 'insToggle') { await card(v.page, 'Dziennik bloków').locator('button.instoggle').click(); }
+        if (sc === 'neutralBlur' || sc === 'tabSwitch') { await v.page.locator('#s-dzis h1').click(); }
+        if (sc === 'tabSwitch') { await v.page.clock.runFor(500); await tab(v.page, 'postepy'); await tab(v.page, 'dzis'); }
+        await v.page.clock.runFor(3000); await v.page.waitForTimeout(50);
+        r.onMap = await onMap(v.page); r.typ = (await store(v.page)).days[KEY(7)].sr.typ; r.errors = v.page.__errors;
+        out[sc] = r; await v.c.close();
+      }
+      log('R6.inPlaceAndCancel', out);
+      verdict('R6', ['anchor-auto', 'anchor-none'].every(a => Math.abs(out[a].after - out[a].before) <= 3),
+        'diary completes the day in place: textarea top ' + ['anchor-auto', 'anchor-none'].map(a => a + ' ' + out[a].before + '→' + out[a].after).join(', '));
+      verdict('R6', !out.srChip.onMap && out.srChip.typ === 3 && !out.insToggle.onMap && out.neutralBlur.onMap && out.tabSwitch.onMap,
+        'after diary completion: SR header+chip -> onMap ' + out.srChip.onMap + ' (typ ' + out.srChip.typ + '), „Pokaż instrukcję” -> onMap ' + out.insToggle.onMap + '; neutral blur -> onMap ' + out.neutralBlur.onMap + '; blur + quick tab switch -> onMap ' + out.tabSwitch.onMap);
+    }
     // day completed by the diary, user keeps typing, then taps „Zmień” on SR tygodnia: no deferred jump to the map (v3 behaviour)
     {
       const seed3 = { v: 2, days: { [KEY(7)]: { done: ['oddech', 'sygnal', 'monolog', 'sr'], reps: { oddech: 12, sygnal: 10 }, monolog: { ran: true, breath: 'tak', sr: 2, lang: 'pl', topic: 1 }, sr: { typ: 2, max: 4 } } } };
@@ -469,6 +500,7 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
   await browser.close();
   // every console/page error logged anywhere (also nested, e.g. R1.detail.*Errors) fails the run
   const errs = []; (function scan(o, p) { if (!o || typeof o !== 'object') return; for (const k of Object.keys(o)) { if (/errors$/i.test(k) && Array.isArray(o[k]) && o[k].length) errs.push(p + k + ': ' + JSON.stringify(o[k]).slice(0, 200)); else scan(o[k], p + k + '.'); } })(R, '');
+  ALL_PAGES.forEach((p, i) => { if (p.__errors.length && !errs.length) errs.push('page#' + i + ': ' + JSON.stringify(p.__errors).slice(0, 200)); });
   verdict('ERR', errs.length === 0, errs.length ? errs.join('; ') : 'no console/page errors in any section');
   R.verdicts = V;
   fs.writeFileSync(OUT + 'round3_results.json', JSON.stringify(R, null, 1));

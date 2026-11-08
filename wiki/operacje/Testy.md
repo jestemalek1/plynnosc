@@ -20,7 +20,7 @@ Wymagania: Node 22+, pakiet `playwright` dostępny przez `require('playwright')`
 - Wszystkie trzy skrypty kończą się exit 0 i wypisują logi `T*.`/`A.`…`O.`/`R*`.
 - W `test/results.json`, `test/round2_results.json` i `test/round3_results.json` klucze `*.errors` są pustymi tablicami, a `*.EXCEPTION` nie występuje.
 - `round3.js` wypisuje werdykty PASS/FAIL i kończy się exit 1, jeśli którykolwiek jest FAIL (część błędów, np. z R7, siedzi w zagnieżdżonych kluczach, więc samo „puste `*.errors`” by ich nie złapało).
-- `run.js` i `round2.js` na końcu wypisują `GATE OK` albo `GATE FAIL: …` i kończą się exit 1 przy każdym niepustym `*errors` (także zagnieżdżonym) lub `*.EXCEPTION`. Łańcuch `&&` jest więc prawdziwą bramką; reszta logów nadal do przeczytania przez testera.
+- `run.js` i `round2.js` na końcu wypisują `GATE OK` albo `GATE FAIL: …` i kończą się exit 1 przy każdym niepustym `*errors` (także zagnieżdżonym), `*.EXCEPTION` albo błędzie konsoli na dowolnej stronie testu (także takiej, która go nie zalogowała). Łańcuch `&&` jest więc prawdziwą bramką; reszta logów nadal do przeczytania przez testera.
 - Zrzuty `test/*.png` oglądamy przy zmianach wizualnych (są w `.gitignore`, generują się przy każdym biegu).
 
 `run.js` i `round2.js` poza bramką błędów logują, nie asertują — oceny PASS/FAIL dokonuje tester (agent albo człowiek) na podstawie logów i listy wymagań. To celowe: przy zmianie wymagań nie przepisujemy asercji, tylko czytamy wynik.

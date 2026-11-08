@@ -7,10 +7,11 @@ const UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/6
 const R = {};
 function log(k, v) { R[k] = v; console.log(k, JSON.stringify(v)); }
 
+const ALL_PAGES = []; // every page, so the GATE also sees contexts that never log their errors
 async function ctx(browser, opts = {}) {
   const c = await browser.newContext({ viewport: { width: 390, height: 844 }, userAgent: UA, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
   const page = await c.newPage();
-  page.__errors = [];
+  page.__errors = []; ALL_PAGES.push(page);
   page.on('console', m => { if (m.type() === 'error') page.__errors.push(m.text()); });
   page.on('pageerror', e => page.__errors.push('PAGEERROR ' + e.message));
   if (opts.init) await page.addInitScript(opts.init);
@@ -340,5 +341,7 @@ const txt = (page, sel) => page.locator(sel).first().innerText();
   require('fs').writeFileSync(OUT + 'results.json', JSON.stringify(R, null, 1));
   // gate: any console/page error (also nested) or section EXCEPTION -> exit 1
   { const bad = []; (function scan(o, p) { if (!o || typeof o !== 'object') return; for (const k of Object.keys(o)) { if (/EXCEPTION/.test(k) || (/errors$/i.test(k) && Array.isArray(o[k]) && o[k].length)) bad.push(p + k); else scan(o[k], p + k + '.'); } })(R, '');
+    const unlogged = ALL_PAGES.filter(p => p.__errors.length).map(p => JSON.stringify(p.__errors).slice(0, 200)); // contexts that never logged their errors
+    if (unlogged.length) bad.push('unlogged page errors: ' + unlogged.join('; '));
     if (bad.length) { console.log('GATE FAIL: ' + bad.join(', ')); process.exitCode = 1; } else console.log('GATE OK'); }
 })().catch(e => { console.error('FATAL', e); process.exit(1); });
