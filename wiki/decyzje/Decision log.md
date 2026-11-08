@@ -6,7 +6,7 @@ Format: data — decyzja. Krótko: co, dlaczego, kiedy wracamy. Otwarte sprawy s
 
 ### 2026-11-08 — B21, B22: lekki spec funkcji zamiast LLD modułów; pierwszy spec B14 (Alek)
 Decyzja B21: HLD zostaje katalogiem modułów. LLD modułu rośnie od dołu jako suma specyfikacji jego funkcji. Dla pozycji rozmiaru L (logika dnia/tygodnia, stan, timer, mapa, ocena) piszemy przed kodem jeden plik `wiki/specs/<ID>.md` wg [[Jak pisać spec]], a Alek go akceptuje. Tester dostaje scenariusze, recenzent dane i ryzyka. Backlog ma kolumny Rozmiar (S/M/L) i Spec. W [[Plan działania]] jest mapa „pętla HLD × kamienie”. Ślad bez macierzy: to samo ID w backlogu, specyfikacji, gałęzi i CHANGELOG. Bez Spec Kitu i Kiro (zgodnie z CLAUDE.md). Research: [[Planowanie pracy – research]]. Wracamy, gdy pojawi się drugi deweloper, produkt albo klasyfikacja jako wyrób medyczny.
-Decyzja B22: pierwszy spec to [[B14 Zadanie w terenie]] (szkic 8.11, treść tygodni 2–3 do akceptacji). Potem B15, potem T4–6.
+Decyzja B22: pierwszy spec to [[B14 Zadanie w terenie]], zaakceptowany 8.11 z treścią tygodni 2–3. Przy imieniu w tygodniu 3 miękki start zgodnie z tabelą progresji; pytanie o preparatory set na konsultację. Daily jako szczebel 2. Potem B15, potem T4–6.
 Do zrobienia poza vaultem: w `CLAUDE.md` wskazać `wiki/specs/` w kroku 2 workflow.
 
 ### 2026-11-08 — B15: zamiana słów i odpuszczone sytuacje jako fakty w dzienniku; zasada jednej skali doprecyzowana (Alek)

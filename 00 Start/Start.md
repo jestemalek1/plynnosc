@@ -32,13 +32,13 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - Decyzje: B12 (narzędzie Alka → aplikacja przez dogfooding; trening nadrzędny; silnik, ocena AI, wywiad później), B14 (zadanie w terenie przed 14.11), B15 (zamiana słów jako fakt w dzienniku; SR 0–8 jedyną skalą). [[Decision log]].
 - [[Backlog]]: każda pozycja ma moduł HLD; roadmapa M0–M4 + utrzymanie i lista na 2 tygodnie w [[Plan działania]].
 - v4 w przygotowaniu na `feature/dzien2-feedback` (tester przerwany: `feature/testy-v4-wip`). Opublikowana jest nadal v3.
-- Planowanie (B21, B22): spec funkcji dla pozycji L w `wiki/specs/` ([[Jak pisać spec]]); pierwszy: [[B14 Zadanie w terenie]] – szkic do akceptacji.
+- Planowanie (B21, B22): spec funkcji dla pozycji L w `wiki/specs/` ([[Jak pisać spec]]); pierwszy: [[B14 Zadanie w terenie]] – zaakceptowany, czeka na wydanie v4.
 - Otwarte decyzje: B13, B16, B17 (#12, #13).
 
 ## Następna akcja
 1. Okno B: domknąć v4 (tester + recenzent) i przygotować treść kart „Zadanie w terenie” tygodni 2–3 do akceptacji.
 2. Alek: konsultacja 10.11 – [[Kontekst i profil]], pytania z B2, kolejność szczebli hierarchii.
-3. Alek: zaakceptować treść w [[B14 Zadanie w terenie]] (sekcja 5).
+3. Okno B po wydaniu v4: B14 wg [[B14 Zadanie w terenie]].
 4. Poza vaultem: w `CLAUDE.md` doprecyzować zasadę „jedna skala” (B15) i wskazać `wiki/specs/` (B21).
 
 ## Inbox / Review

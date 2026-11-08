@@ -1,5 +1,5 @@
 ---
-status: szkic
+status: zaakceptowany
 id: B14
 hld: "05 (zasila 06, 08)"
 decyzja: B14
@@ -82,8 +82,8 @@ Moduł [[HLD v1]] 05 Trening komunikacji. Licznik zasila 06 (uczestnictwo) i 08 
 - **Po „Użyłem techniki”:** Zapisane. Imię powiedziane techniką w prawdziwej sytuacji – najtrudniejszy szczebel ruszył.
 - **Po „Dziś nie”:** Zapisane. Bez okazji też jest OK; jutro spróbuj ją stworzyć (np. „tu Aleksander” w wiadomości głosowej).
 
-**Do potwierdzenia przez Alka:**
-1. **Imię w tygodniu 3.** Program w sekcji „Imię i przedstawianie się” mówi „preparatory set zawsze”, ale tabela progresji wprowadza preparatory set dopiero w tygodniu 8. W tygodniu 3 trzymam się tabeli (miękki start). Preparatory set dochodzi w tygodniu 8. Warto zapytać 10.11.
+**Potwierdzone przez Alka 8.11** (treść i oba punkty):
+1. **Imię w tygodniu 3.** Program w sekcji „Imię i przedstawianie się” mówi „preparatory set zawsze”, ale tabela progresji wprowadza preparatory set dopiero w tygodniu 8. W tygodniu 3 trzymam się tabeli (miękki start). Preparatory set dochodzi w tygodniu 8. Decyzja: miękki start; pytanie na konsultację 10.11 (B2).
 2. **Daily jako szczebel 2.** Na daily nie masz bloków, więc to zadanie łatwe. Zgodnie z programem budujemy nawyk od najłatwiejszego szczebla.
 
 ## 6. Zasady i ryzyka
