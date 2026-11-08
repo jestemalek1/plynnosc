@@ -70,3 +70,35 @@ Część 2 – wdrożenie zaakceptowanych:
 
 Na koniec: lista uwag ze statusem (wdrożone / w backlogu / odrzucone / decyzja), wpis „Aktualny stan” w Start.md, commity po polsku. Raporty krótko, bez zgadywania: jeśli czegoś nie sprawdziłeś, napisz to.
 ```
+
+## Okno A – dzień 3 (pon. 9.11): test przed treningiem + uwagi po treningu
+
+```text
+Pracujesz w repo jestemalek1/plynnosc (vault Obsidiana + apka). Jesteś oknem A – Dogfood i testy. Dziś jest dzień 3 programu (poniedziałek 9.11.2026, program od 7.11). Trenuję na wersji opublikowanej, czyli v3 z main (https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P). v4 nie jest wydana: okno B kończy ją na feature/dzien2-feedback. Na tej gałęzi i w app/ nie pracujesz.
+
+Start: git fetch. Przeczytaj CLAUDE.md, „00 Start/Start.md”, „wiki/operacje/Testy.md”, „wiki/produkt/Plan działania.md” (pętla dogfoodingu), CHANGELOG.md i „wiki/program/Program płynności.md” (tydzień 1). Najnowsze notatki są na origin/feature/dzien2-feedback (git show origin/feature/dzien2-feedback:<ścieżka>).
+
+Zasady: NIE zmieniasz app/ ani test/. Skrypty testowe na dziś trzymasz w scratchpadzie, nie w repo. Notatki zmieniasz na gałęzi feature/uwagi-dzien3 od origin/feature/dzien2-feedback. Nie mergujesz jej do feature/dzien2-feedback, bo tam pracuje okno B; na koniec tylko push i informacja dla mnie. Moich wpisów z dziennika, transkryptów ani eksportu stanu nie zapisujesz w repo.
+
+Część 1 – przed treningiem (max 15 min, raport w 10 linijkach):
+1. Headless Chromium (Playwright, 390×844, file://, page.clock na 2026-11-09 08:00), app/index.html z origin/main (v3) i z origin/feature/dzien2-feedback (v4). Stan: dzień 1 z importu, dzień 2 zaliczony. Opcjonalnie wkleję Ci „Kopiuj dane” z telefonu – wtedy użyj go tylko w scratchpadzie.
+2. Dla dnia 3 sprawdź na obu wersjach:
+   - listę ćwiczeń i ich kolejność;
+   - czy instrukcje mają „Co robisz / Jak to ma brzmieć / Czego nie robić / Dlaczego”;
+   - czy timery liczą powtórzenia same i czy wznowienie po przeładowaniu działa;
+   - czy dzień się zalicza i streak = 3;
+   - błędy konsoli;
+   - czy mapa pokazuje dzień 3 jako dzisiejszy.
+3. Sprawdź, czy opublikowany artefakt = app/index.html z main (narzędzie Artifact, akcja read; porównaj treść).
+4. Raport dla mnie: co dziś działa, na co uważać w v3 (znane braki, które v4 naprawia: m.in. wdech 2 s zamiast 3 s, brak legendy SR, brak „Start na sygnał”), czy coś blokuje trening. Jeśli coś blokuje dzisiejszy trening: proponujesz hotfix/* od main, robisz go tylko po moim OK.
+
+Część 2 – po treningu (ja wracam i piszę „po treningu”):
+1. Pytasz mnie krótko, po jednym ekranie: Oddech A, Luźny monolog, Dziennik bloków, mapa/ekran Dziś, Postępy (jeśli zaglądałem). Przy każdym: co uwierało? przeszkadzało w treningu czy tylko irytowało? Odpowiedź „nic” jest OK. Nie podsuwasz uwag.
+2. Każdą uwagę zapisujesz jednym zdaniem w „00 Start/Inbox.md” (data, ekran, uwaga, przeszkadza/irytuje).
+3. Potem bierzesz je po kolei: jak rozumiesz, której wersji dotyczy (czy v4 już to naprawia – sprawdź w kodzie v4), moduł HLD 01–08, priorytet (przeszkadza w treningu / irytuje / pomysł), rekomendacja, zgodność z zasadami (SR 0–8 tylko dla nasilenia i techniki, poza tym tak/nie albo licznik; format instrukcji; treść tylko ze źródłem w programie; minimum kliknięć; prywatność). Czekasz na moje „tak / nie / inaczej”.
+4. Zaakceptowane → „wiki/produkt/Backlog.md” (HLD, okno A, fix/*, priorytet) albo „Decyzje do podjęcia”, jeśli to decyzja produktowa albo coś spoza HLD. Naprawione już w v4 → tylko odnotuj w Inbox „naprawione w v4”.
+5. Popraw „Plan działania” (pętla dogfoodingu): do czasu funkcji #18 uwagi lądują jednym zdaniem w „00 Start/Inbox.md”, nie w notatce dnia (folderu Daily/ nie ma).
+6. Na koniec: commit po polsku na feature/uwagi-dzien3, push, krótka lista uwag ze statusem i informacja, które pozycje czekają na v4 na develop.
+
+Raporty krótko, po polsku, bez zgadywania: jeśli czegoś nie sprawdziłeś, napisz to.
+```
