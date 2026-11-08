@@ -1,4 +1,4 @@
-// Round 2 acceptance tests for /home/claude/plynnosc/app/index.html
+// Round 2 acceptance tests for app/index.html (updated in round 3: 3 s breath gap, Start na sygnał, weekly SR)
 const { chromium } = require('playwright');
 const path = require('path');
 const APP = path.resolve(__dirname, '..', 'app', 'index.html');
@@ -42,7 +42,7 @@ async function section(name, fn) {
     const od = cardByTitle(page, 'Oddech A');
     const snap = async () => ({ cue: await od.locator('.cue').innerText(), sub: await od.locator('.sub').innerText(), clock: await od.locator('.clock').innerText(), reps: await od.locator('.reps').innerText(), btn: await od.locator('.timer button.big').innerText() });
     await od.locator('.timer button.big').click();
-    await page.clock.runFor(44000); // 5 reps complete at t=43s, now in gap before rep 6
+    await page.clock.runFor(48000); // round 3: 3 s gap -> 5 reps complete at t=47s, now in gap before rep 6
     log('A.after5reps', await snap());
     await flush(page);
     log('A.storeReps5', (await store(page)).days['2026-11-08'].reps);
@@ -217,7 +217,7 @@ async function section(name, fn) {
       out.srPickers = [...document.querySelectorAll('#s-' + tabId + ' .sr')].map(s => ({ chips: s.querySelectorAll('.chip').length, labels: [...s.querySelectorAll('.chip')].map(b => b.textContent).join(''), hasMeaning: !!s.querySelector('.meaning'), group: s.querySelector('.chips').getAttribute('aria-label') }));
       // scale text scan
       const body = document.getElementById('s-' + tabId).innerText;
-      out.scaleHits = (body.match(/0\s?[–-]\s?10\b|\/\s?10\b|\b1\s?[–-]\s?5\b|\b0\s?[–-]\s?5\b|\b1\s?[–-]\s?10\b|\/\s?5\b|skal[aiąę] 1|\b10\s?pkt/gi) || []);
+      out.scaleHits = (body.match(/0\s?[–-]\s?10\b|\/\s?10\b(?!\s*startów)|\b1\s?[–-]\s?5\b|\b0\s?[–-]\s?5\b|\b1\s?[–-]\s?10\b|\/\s?5\b|skal[aiąę] 1|\b10\s?pkt/gi) || []);
       out.inputsWithoutSR = [...document.querySelectorAll('#s-' + tabId + ' input[type=range], #s-' + tabId + ' input[type=number]')].length;
       return out;
     }, tabId);
@@ -226,17 +226,17 @@ async function section(name, fn) {
     log('F.tapTargets', res);
     // also measure Dziś on day 2 with nothing done (Start buttons, seg control, topic etc.)
     await c.close();
-    const v = await ctx(browser, { time: new Date(2026, 10, 8, 10, 0, 0) });
+    const v = await ctx(browser, { time: new Date(2026, 10, 13, 10, 0, 0) }); // round 3: day 7 (weekly SR card; day 2 has no SR chips until the monolog ran)
     await v.page.goto(URL); await v.page.waitForTimeout(100); await openToday(v.page);
     await v.page.evaluate(() => { document.querySelectorAll('.card.collapsed').forEach(x => x.classList.remove('collapsed')); document.querySelectorAll('details').forEach(d => d.open = true); });
-    log('F.tapTargetsDay2', await v.page.evaluate(() => {
+    log('F.tapTargetsDay7', await v.page.evaluate(() => {
       const out = [];
       document.querySelectorAll('#s-dzis button, #s-dzis summary, #s-dzis [role=button], #s-dzis textarea').forEach(el => { const r = el.getBoundingClientRect(); if (r.width && r.height && (r.width < 44 || r.height < 44)) out.push({ sel: el.tagName.toLowerCase() + '.' + el.className, text: el.textContent.trim().slice(0, 20), w: +r.width.toFixed(1), h: +r.height.toFixed(1) }); });
       return { small: out, segSizes: [...document.querySelectorAll('#s-dzis .seg button')].map(b => { const r = b.getBoundingClientRect(); return [b.textContent, +r.width.toFixed(1), +r.height.toFixed(1)]; }), chipSize: (() => { const r = document.querySelector('#s-dzis .sr .chip').getBoundingClientRect(); return [+r.width.toFixed(1), +r.height.toFixed(1)]; })() };
     }));
     // scan whole source for other scales
     const src = fs.readFileSync(APP, 'utf8');
-    log('F.sourceScaleScan', { '0-10': (src.match(/0\s?[–-]\s?10\b/g) || []).length, '/10': (src.match(/\/\s?10\b/g) || []).length, '1-5': (src.match(/\b1\s?[–-]\s?5\b/g) || []).length, 'range': (src.match(/type=["']?range/g) || []).length, 'SR 0–8': (src.match(/0–8/g) || []).length });
+    log('F.sourceScaleScan', { '0-10': (src.match(/0\s?[–-]\s?10\b/g) || []).length, '/10': (src.match(/(?<!\/)\/\s?10\b/g) || []).length, '1-5': (src.match(/\b1\s?[–-]\s?5\b/g) || []).length, 'range': (src.match(/type=["']?range/g) || []).length, 'SR 0–8': (src.match(/0–8/g) || []).length });
     await v.c.close();
   });
 
@@ -302,7 +302,7 @@ async function section(name, fn) {
     await od.locator('button.instoggle').click();
     // finish oddech: from startIndex (reps saved during run? the first phase did not complete) -> run full 12
     await od.locator('.timer button.big').click();
-    await page.clock.runFor(8 * 9000 + 4 * 9000 + 500);
+    await page.clock.runFor(12 * 10000 + 500); // round 3: 7 s + 3 s gap per rep
     await page.waitForTimeout(50);
     log('H.doneImmediate', (await layout()).filter(x => x.title === 'Oddech A'));
     await shot(page, 'H_oddech_done_immediate', false);
@@ -428,7 +428,7 @@ async function section(name, fn) {
       const od = cardByTitle(page, 'Oddech A');
       await od.locator('.timer button.big').click();
       const cues = [];
-      for (let i = 0; i < 12; i++) { cues.push({ cue: await od.locator('.cue').innerText(), sub: await od.locator('.sub').innerText(), reps: await od.locator('.reps').innerText() }); await page.clock.runFor(9000); }
+      for (let i = 0; i < 12; i++) { cues.push({ cue: await od.locator('.cue').innerText(), sub: await od.locator('.sub').innerText(), reps: await od.locator('.reps').innerText() }); await page.clock.runFor(10000); }
       await page.waitForTimeout(50);
       const dn = await page.evaluate(() => { const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Oddech A'); return { done: c.classList.contains('done'), small: c.querySelector('small').textContent, next: document.querySelector('#s-dzis .next').textContent, bar: document.querySelectorAll('#s-dzis .progress .on').length }; });
       log('N1.oddech', { fff: cues.filter(x => x.cue === 'fff').length, words: cues.filter(x => x.cue !== 'fff').map(x => x.cue), subs: cues.map(x => x.sub.split(' ·')[0]), done: dn });
@@ -461,7 +461,9 @@ async function section(name, fn) {
       const { c, page } = await ctx(browser, { time: new Date(2026, 10, 8, 10, 0, 0) });
       await page.goto(URL); await page.waitForTimeout(100); await openToday(page);
       // oddech
-      await cardByTitle(page, 'Oddech A').locator('.timer button.big').click(); await page.clock.runFor(12 * 9000 + 200); await page.waitForTimeout(50);
+      await cardByTitle(page, 'Oddech A').locator('.timer button.big').click(); await page.clock.runFor(12 * 10000 + 200); await page.waitForTimeout(50);
+      // round 3: Start na sygnał (10 x 2-6 s wait + 8 s answer)
+      await cardByTitle(page, 'Start na sygnał').locator('.timer button.big').click(); await page.clock.runFor(145000); await page.waitForTimeout(50);
       // monolog
       const mono = cardByTitle(page, 'Luźny monolog');
       await mono.locator('.timer button.big').click(); await page.clock.runFor(121000); await page.waitForTimeout(50);
@@ -469,11 +471,12 @@ async function section(name, fn) {
       await mono.locator('.sr .chip').nth(2).click(); await page.waitForTimeout(50);
       // dziennik
       const dz = cardByTitle(page, 'Dziennik bloków'); await dz.locator('textarea').click(); await page.keyboard.type('daily · start: ktoś · PL · szybko', { delay: 3 });
-      // sr
-      const sr = cardByTitle(page, 'SR dnia'); await sr.locator('.sr').nth(0).locator('.chip').nth(2).click(); await sr.locator('.sr').nth(1).locator('.chip').nth(4).click(); await page.waitForTimeout(50);
+      // round 3: no SR card on day 2 (weekly SR) -> the diary completes the day
+      await page.waitForTimeout(50);
       log('N3.day2done', await page.evaluate(() => ({ banner: (document.querySelector('#s-dzis .card.done h2') || {}).textContent, bannerP: (document.querySelector('#s-dzis .card.done p') || {}).textContent, doneCards: document.querySelectorAll('#s-dzis .card.done').length, bars: document.querySelectorAll('#s-dzis .progress .on').length + '/' + document.querySelectorAll('#s-dzis .progress span').length })));
       await shot(page, 'N3_day2_done', false);
       await shot(page, 'N3_day2_done_full');
+      await page.evaluate(() => document.activeElement.blur()); await page.waitForTimeout(250); // round 3: diary is the last card; the tab bar is hidden while the textarea has focus
       await tab(page, 'postepy');
       log('N3.postepy', await page.evaluate(() => ({ stats: [...document.querySelectorAll('#s-postepy .stat b')].map(b => b.textContent), chart: { polylines: document.querySelectorAll('#s-postepy svg.chart polyline').length, circles: document.querySelectorAll('#s-postepy svg.chart circle').length, h: Math.round(document.querySelector('#s-postepy svg.chart').getBoundingClientRect().height) }, rows: [...document.querySelectorAll('#s-postepy table tbody tr')].map(r => r.innerText.replace(/\s+/g, ' ')) })));
       await shot(page, 'N3_postepy');
@@ -517,10 +520,17 @@ async function section(name, fn) {
     await tab(page, 'postepy'); await shot(page, 'O_postepy_day2');
     await tab(page, 'dzis');
     await page.evaluate(() => document.querySelectorAll('.card.collapsed').forEach(x => x.classList.remove('collapsed')));
-    const sr = cardByTitle(page, 'SR dnia');
-    await sr.scrollIntoViewIfNeeded(); await shot(page, 'O_sr_dnia_card', false);
-    // day 1
     await c.close();
+    // round 3: weekly SR card (day 7)
+    const w7 = await ctx(browser, { time: new Date(2026, 10, 13, 10, 0, 0) });
+    await w7.page.goto(URL); await w7.page.waitForTimeout(100); await openToday(w7.page);
+    await w7.page.evaluate(() => document.querySelectorAll('.card.collapsed').forEach(x => x.classList.remove('collapsed')));
+    const sr = cardByTitle(w7.page, 'SR tygodnia');
+    await sr.scrollIntoViewIfNeeded(); await shot(w7.page, 'O_sr_tygodnia_card', false);
+    log('O.srTygodnia', await sr.evaluate(c => ({ pickers: c.querySelectorAll('.sr').length, keys: c.querySelectorAll('.srkey').length })));
+    log('O.errors', page.__errors.concat(w7.page.__errors));
+    await w7.c.close();
+    // day 1
     const v = await ctx(browser, { time: new Date(2026, 10, 7, 10, 0, 0) });
     await v.page.goto(URL); await v.page.waitForTimeout(100); await openToday(v.page);
     await shot(v.page, 'O_dzis_day1', true);
