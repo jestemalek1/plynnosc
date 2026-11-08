@@ -278,7 +278,7 @@
   function todayKey() { return dateKey(new Date()); }
   var DAY1 = '2026-11-07';
   function dayIndex(k) { return Math.round((parseKey(k) - parseKey(DAY1)) / 86400000) + 1; }
-  function weekOf(day) { return Math.max(1, Math.ceil(day / 7)); }
+  function weekOf(day) { return Math.min(12, Math.max(1, Math.ceil(day / 7))); } // R3 v3: po dniu 84 zostaje archipelag 12 (Utrzymanie)
   function fmtDate(k) {
     try { return parseKey(k).toLocaleDateString('pl-PL', { weekday: 'long', day: 'numeric', month: 'long' }); }
     catch (e) { return k; }
@@ -459,7 +459,7 @@
   function Timer(container, opts) {
     // opts: phases [{secs, cue, sub}], gap (s), startIndex, onStart, onRep(i), onDone, onReset, startLabel
     var phases = opts.phases, gap = opts.gap == null ? 2 : opts.gap;
-    var idx = opts.startIndex || 0, status = 'idle', endAt = 0, leftMs = 0, iv = null;
+    var idx = opts.startIndex || 0, status = 'idle', endAt = 0, leftMs = 0, pausedIn = 'run', iv = null;
     var cue = h('div', { class: 'cue', 'aria-live': 'polite' }), sub = h('div', { class: 'sub' }), clock = h('div', { class: 'clock' });
     var reps = h('div', { class: 'reps' }), barI = h('i'), bar = h('div', { class: 'bar' }, barI);
     var btn = h('button', { class: 'big', type: 'button', onclick: toggle });
@@ -473,14 +473,14 @@
     function draw() {
       root.classList.toggle('gap', status === 'gap');
       var p = cur();
-      if (status === 'gap') { cue.textContent = 'Wdech nosem'; cue.className = 'cue small'; sub.textContent = 'następne: ' + p.cue; }
+      if (status === 'gap' || (status === 'pause' && pausedIn === 'gap')) { cue.textContent = 'Wdech nosem'; cue.className = 'cue small'; sub.textContent = 'następne: ' + p.cue; }
       else if (status === 'done') { cue.textContent = 'Zrobione'; cue.className = 'cue'; sub.textContent = ''; }
       else { cue.textContent = p.cue; cue.className = 'cue'; sub.textContent = p.sub || ''; }
       var secs = status === 'run' || status === 'gap' ? (endAt - Date.now()) / 1000 : status === 'pause' ? leftMs / 1000 : p.secs;
       clock.textContent = status === 'done' ? fmtClock(0) : fmtClock(Math.ceil(secs));
       if (phases.length > 1) { clear(reps); append(reps, [h('b', { text: String(Math.min(idx, phases.length)) }), ' / ' + phases.length + ' powtórzeń']); }
       var total = status === 'gap' ? gap : p.secs;
-      var frac = status === 'run' || status === 'gap' ? 1 - Math.max(0, secs) / total : status === 'pause' ? 1 - leftMs / 1000 / p.secs : 0;
+      var frac = status === 'run' || status === 'gap' ? 1 - Math.max(0, secs) / total : status === 'pause' ? 1 - leftMs / 1000 / (pausedIn === 'gap' ? gap : p.secs) : 0;
       barI.style.width = Math.round(frac * 100) + '%';
       btn.textContent = status === 'run' || status === 'gap' ? 'Pauza' : status === 'pause' ? 'Wznów' : status === 'done' ? 'Jeszcze raz' : (opts.startLabel || 'Start');
       reset.classList.toggle('hidden', status === 'idle' && idx === 0);
@@ -501,11 +501,13 @@
     function stop() { if (iv) clearInterval(iv); iv = null; }
     function toggle() {
       primeAudio();
-      if (status === 'run' || status === 'gap') { leftMs = status === 'gap' ? cur().secs * 1000 : Math.max(0, endAt - Date.now()); status = 'pause'; stop(); draw(); return; }
-      if (status === 'pause') { status = 'run'; endAt = Date.now() + leftMs; run(); draw(); return; }
+      if (status === 'run' || status === 'gap') { pausedIn = status; leftMs = Math.max(0, endAt - Date.now()); status = 'pause'; stop(); draw(); return; }
+      if (status === 'pause') { status = pausedIn; endAt = Date.now() + leftMs; run(); draw(); return; }
       if (status === 'done') { idx = 0; if (opts.onReset) opts.onReset(); }
       if (opts.onStart) opts.onStart();
-      status = 'run'; endAt = Date.now() + cur().secs * 1000; run(); draw();
+      // v4: z przerwą na wdech (Oddech A) pierwsze powtórzenie też zaczyna się od odliczanego wdechu.
+      if (gap > 0) { status = 'gap'; endAt = Date.now() + gap * 1000; } else { status = 'run'; endAt = Date.now() + cur().secs * 1000; }
+      run(); draw();
     }
     draw();
     return self;
@@ -672,7 +674,7 @@
     oddech: {
       brief: ['Dłoń na brzuchu, spokojny wdech nosem przez 3 s (licznik odlicza).', '8× „fff” po 7 s, potem 4× słowo z ekranu na początku wydechu.', 'Bez zatrzymania na górze wdechu – wdech płynnie zawraca w wydech.'],
       co: 'Dłoń na brzuchu. Spokojny wdech nosem przez 3 s (licznik odlicza) i bez zatrzymania wydech: 8 razy na „fff” po 7 s, potem 4 razy ze słowem z ekranu na samym początku wydechu.',
-      jak: 'Wdech nosem 2–3 s i w chwili, gdy powietrze zaczyna wychodzić, mówisz „Aleksander” w normalnym tempie – tylko pierwszy dźwięk lekko wydłużony i cicho narastający („Aaaleksander”), jak westchnienie, które zamienia się w słowo. Nie wolno, nie szeptem, bez żadnego stopu między wdechem a głosem – ten stop to blok. Potrzebujesz chwili na myśl? Myśl w trakcie wdechu (słowo widać już w czasie wdechu), nie po nim.',
+      jak: 'Wdech nosem 3 s i w chwili, gdy powietrze zaczyna wychodzić, mówisz „Aleksander” w normalnym tempie – tylko pierwszy dźwięk lekko wydłużony i cicho narastający („Aaaleksander”), jak westchnienie, które zamienia się w słowo. Nie wolno, nie szeptem, bez żadnego stopu między wdechem a głosem – ten stop to blok. Potrzebujesz chwili na myśl? Myśl w trakcie wdechu (słowo widać już w czasie wdechu), nie po nim.',
       nie: 'Nie zatrzymuj powietrza na górze wdechu (nawet na sekundę), nie spinaj brzucha, nie mów wolniej niż zwykle.',
       dlaczego: 'Blok to zatrzymanie oddechu plus docisk w krtani. Tu ciało uczy się, że głos zaczyna się w trakcie wydechu, więc nie ma momentu, w którym można się zatrzymać.'
     },
@@ -710,6 +712,13 @@
       jak: 'Typowe 2 = słychać, ale nie przeszkadza; najgorsze 5 = w jednym momencie przekaz wyraźnie zwolnił.',
       nie: 'Nie licz bloków, nie oceniaj samych ćwiczeń, nie zaniżaj.',
       dlaczego: 'SR to skala terapeuty (Camperdown). Ocena raz w tygodniu wystarczy, żeby zobaczyć trend, a po 4 i 8 tygodniach porównujesz go z nagraniami bazowymi.'
+    },
+    srDzien: { // dzień 1 (baza): tekst z v3, SR dnia
+      brief: ['Dwie oceny dnia: typowe i najgorsze.', '0 brak … 4–5 spowalnia przekaz … 8 przekaz nie dochodzi.', 'Nie licz bloków, nie zaniżaj.'],
+      co: 'Oceń dzisiejszy dzień na skali 0–8: jak zwykle wyglądało mówienie (typowe) i jak było w najgorszym momencie (najgorsze).',
+      jak: 'Typowe 2 = słychać, ale nie przeszkadza; najgorsze 5 = w jednym momencie przekaz wyraźnie zwolnił.',
+      nie: 'Nie licz bloków, nie uśredniaj z wczoraj, nie zaniżaj.',
+      dlaczego: 'SR to ta sama skala, którą posługuje się terapeuta. Codzienny punkt na wykresie pokazuje trend, którego nie widać z dnia na dzień.'
     },
     sygnal: {
       brief: ['Czekasz: w losowym momencie sygnał i pytanie na ekranie.', 'Krótki wdech nosem i od razu odpowiedź 1–2 zdaniami, głos rusza z wydechem.', 'Bez zatrzymania po wdechu, nie zamieniaj słów, nie czekaj na „dobry moment”.'],
@@ -792,7 +801,7 @@
   function exTitle(k, ex) { var d = peekDay(k); return ex === 'sr' && d && d.baseline ? 'SR dnia' : EX_META[ex].title; }
   function isDone(k, ex) { var d = peekDay(k); return !!d && d.done.indexOf(ex) >= 0; }
   function refreshComplete(k) { var d = day(k); if (!d.complete && exercisesFor(k).every(function (e) { return d.done.indexOf(e) >= 0; })) d.complete = true; }
-  function markDone(k, ex) { var d = day(k); if (d.done.indexOf(ex) < 0) d.done.push(ex); refreshComplete(k); save(); recent[ex] = true; renderDzis(); scrollToNext(k); if (allListedDone(k)) scheduleReturn(k); }
+  function markDone(k, ex) { if (cards[ex] && isField(document.activeElement)) return markDoneInPlace(k, ex); var d = day(k); if (d.done.indexOf(ex) < 0) d.done.push(ex); refreshComplete(k); save(); recent[ex] = true; renderDzis(); scrollToNext(k); if (allListedDone(k)) scheduleReturn(k); }
   function scrollToNext(k) {
     var nextEx = exercisesFor(k).filter(function (e) { return !isDone(k, e); })[0];
     var target = nextEx ? cards[nextEx] : hdr.banner;
@@ -1180,7 +1189,8 @@
     },
 
     sr: function (body, k, d) {
-      body.appendChild(briefBlock('sr'));
+      var insId = d.baseline ? 'srDzien' : 'sr';
+      body.appendChild(briefBlock(insId));
       body.appendChild(h('div', { class: 'srlabel', text: 'Typowe' }));
       var kk = srKey();
       SRPicker(body, d.sr.typ, function (v) { d.sr.typ = v; save(); kk._mark([d.sr.typ, d.sr.max]); check(); }, { label: 'SR typowe', key: false });
@@ -1188,7 +1198,7 @@
       SRPicker(body, d.sr.max, function (v) { d.sr.max = v; save(); kk._mark([d.sr.typ, d.sr.max]); check(); }, { label: 'SR najgorsze', key: false });
       body.appendChild(kk); kk._mark([d.sr.typ, d.sr.max]);
       if (d.baseline) body.appendChild(h('p', { class: 'note', text: 'Dzień 1: wyliczone z nagrań bazowych (średnia i maksimum SR).' }));
-      fullInstructions(body, 'sr');
+      fullInstructions(body, insId);
       function check() {
         if (d.sr.typ != null && d.sr.max != null && !isDone(k, 'sr')) { markSeen('sr'); markDone(k, 'sr'); }
         else if (isDone(k, 'sr')) { var c = cards.sr; if (c) c.querySelector('small').textContent = 'Zrobione' + doneSummary(k, 'sr'); toast('Zapisano'); }

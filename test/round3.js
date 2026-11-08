@@ -130,6 +130,9 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
     const insText = await od.evaluate(c => c.querySelector('.brief').innerText + '\n' + c.querySelector('.ins').innerText + '\n' + [...c.querySelectorAll('.note')].map(n => n.textContent).join('\n'));
     await od.locator('.timer button.big').click();
     const t = {};
+    t['start'] = await snap();
+    await page.clock.runFor(1000); t['start+1'] = await snap();
+    await page.clock.runFor(2000); // v4: first rep also starts with the counted 3 s inhale
     t['0'] = await snap();
     await page.clock.runFor(7100); t['7.1'] = await snap();
     await page.clock.runFor(1000); t['8.1'] = await snap();
@@ -149,8 +152,28 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
     verdict('R2', gapOk, 'gap after rep1: t7.1 ' + JSON.stringify(t['7.1']) + ' t8.1 clock ' + t['8.1'].clock + ', t9.1 ' + t['9.1'].clock + ', t9.8 gap=' + t['9.8'].gap + ', t10.3 cue ' + t['10.3'].cue + ' reps "' + t['10.3'].reps + '"');
     verdict('R2', t['77.3'].gap && /następne: Aleksander/.test(t['77.3'].sub) && t['80.3'].cue === 'Aleksander', 'word cue visible during inhale: t77.3 sub "' + t['77.3'].sub + '", t80.3 cue ' + t['80.3'].cue);
     verdict('R2', done.done && st.days[KEY(2)].reps.oddech === 12 && st.days[KEY(2)].done.includes('oddech'), 'completes at 117 s: ' + JSON.stringify(done) + ' reps.oddech=' + st.days[KEY(2)].reps.oddech);
+    verdict('R2', t['start'].gap && t['start'].cue === 'Wdech nosem' && t['start'].clock === '0:03' && /następne: fff/.test(t['start'].sub) && t['start+1'].clock === '0:02' && !t['0'].gap && t['0'].cue === 'fff', 'Start -> counted inhale before rep 1: ' + JSON.stringify(t['start']) + ', +1 s clock ' + t['start+1'].clock + ', +3 s cue ' + t['0'].cue);
     verdict('R2', /Bez zatrzymania na górze wdechu/.test(insText) && /Nie zatrzymuj powietrza na górze wdechu/.test(insText) && /3 s/.test(insText), 'instructions mention 3 s inhale and no stop at the top of the inhale');
     log('R2.errors', page.__errors); await c.close();
+    // pause during the inhale keeps the inhale and its remaining time (v4)
+    {
+      const v = await ctx(browser, { time: D(2) });
+      await v.page.goto(URL); await v.page.waitForTimeout(100); await openToday(v.page);
+      const o2 = card(v.page, 'Oddech A');
+      const sn = () => o2.evaluate(c => ({ cue: c.querySelector('.cue').textContent, clock: c.querySelector('.clock').textContent, gap: c.querySelector('.timer').classList.contains('gap'), btn: c.querySelector('.timer button.big').textContent, reps: c.querySelector('.reps').textContent }));
+      await o2.locator('.timer button.big').click();
+      await v.page.clock.runFor(9000); // inhale 0-3 s, rep 1 3-10 s
+      await v.page.clock.runFor(2000); // t=11 s: gap after rep 1, 2 s left
+      const inGap = await sn();
+      await o2.locator('.timer button.big').click(); const paused = await sn();
+      await v.page.clock.runFor(6000); const later = await sn();
+      await o2.locator('.timer button.big').click(); const resumed = await sn();
+      await v.page.clock.runFor(2200); const afterInhale = await sn();
+      log('R2.pauseInInhale', { inGap, paused, later, resumed, afterInhale });
+      verdict('R2', inGap.gap && paused.btn === 'Wznów' && paused.cue === 'Wdech nosem' && paused.clock === '0:02' && later.clock === '0:02' && resumed.gap && resumed.clock === '0:02' && !afterInhale.gap && afterInhale.cue === 'fff' && afterInhale.reps.startsWith('1 '),
+        'pause during inhale: ' + JSON.stringify(paused) + '; 6 s later ' + later.clock + '; resume -> gap=' + resumed.gap + ' ' + resumed.clock + '; +2.2 s -> ' + afterInhale.cue + ' (' + afterInhale.reps + ')');
+      log('R2.pauseErrors', v.page.__errors); await v.c.close();
+    }
   });
 
   // ===== R3: SR weekly =====
@@ -319,6 +342,28 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
     }
   });
 
+  // ===== R6b: a timer that ends while typing in the diary keeps focus and the session (v4) =====
+  await section('R6', async () => {
+    const seed = { v: 2, days: { [KEY(9)]: { done: ['oddech', 'sygnal', 'monolog'], reps: { oddech: 12, sygnal: 10 }, monolog: { ran: true, breath: 'tak', sr: 2, lang: 'pl', topic: 1 } } } };
+    const { c, page } = await ctx(browser, { time: D(9), init: `localStorage.setItem('plynnosc', ${JSON.stringify(JSON.stringify(seed))})` });
+    await page.goto(URL); await page.waitForTimeout(100); await openToday(page);
+    const nap = await expand(page, 'Identyfikacja napięcia');
+    await nap.locator('.timer button.big').click();
+    const dz = await expand(page, 'Dziennik bloków');
+    await dz.locator('textarea').click(); await page.keyboard.type('czytanie raportu', { delay: 5 });
+    await page.clock.runFor(125000); await page.waitForTimeout(50);
+    const whileFocused = await page.evaluate(() => ({ onMap: !!document.querySelector('#s-dzis svg.map'), active: document.activeElement && document.activeElement.tagName, napDone: [...document.querySelectorAll('#s-dzis .card.done h2')].map(h => h.textContent) }));
+    await page.keyboard.type(' · start: ja', { delay: 5 });
+    const value = await page.evaluate(() => (document.querySelector('#s-dzis textarea') || {}).value);
+    await page.locator('#s-dzis h1').click(); await page.clock.runFor(2500); await page.waitForTimeout(50);
+    const afterBlur = await onMap(page);
+    await flush(page); const st = await store(page);
+    log('R6.timerEndsWhileTyping', { whileFocused, value, afterBlur, done: st.days[KEY(9)].done, complete: st.days[KEY(9)].complete });
+    verdict('R6', !whileFocused.onMap && whileFocused.active === 'TEXTAREA' && whileFocused.napDone.includes('Identyfikacja napięcia') && value === 'czytanie raportu · start: ja' && afterBlur && st.days[KEY(9)].complete,
+      'day 9: napięcie timer ends while typing -> focus kept (' + whileFocused.active + '), done ' + JSON.stringify(whileFocused.napDone) + ', value "' + value + '", after blur onMap=' + afterBlur);
+    log('R6.timerErrors', page.__errors); await c.close();
+  });
+
   // ===== R7: no console errors on any tab, days 1,2,7,8,15,22,85 =====
   await section('R7', async () => {
     const res = {};
@@ -360,4 +405,5 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
   fs.writeFileSync(OUT + 'round3_results.json', JSON.stringify(R, null, 1));
   console.log('\nSUMMARY');
   Object.keys(V).forEach(k => console.log(k, V[k].every(x => x.ok) ? 'PASS' : 'FAIL', '(' + V[k].filter(x => x.ok).length + '/' + V[k].length + ')'));
+  if (Object.keys(V).some(k => !V[k].every(x => x.ok))) process.exitCode = 1; // a FAIL verdict must not look green
 })().catch(e => { console.error('FATAL', e); process.exit(1); });

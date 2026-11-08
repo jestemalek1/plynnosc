@@ -119,7 +119,8 @@ const txt = (page, sel) => page.locator(sel).first().innerText();
     log('T3.startLabel', await tbtn.innerText());
     await tbtn.click();
     const snap = async () => ({ cue: await oddech.locator('.cue').innerText(), sub: await oddech.locator('.sub').innerText(), clock: await oddech.locator('.clock').innerText(), reps: await oddech.locator('.reps').innerText(), btn: await tbtn.innerText() });
-    log('T3.afterStart', await snap());
+    log('T3.afterStart', await snap()); // v4: starts with the 3 s counted inhale
+    await page.clock.runFor(3000); log('T3.afterFirstInhale', await snap());
     await page.clock.runFor(7100); log('T3.t7.1', await snap());
     await page.clock.runFor(3100); log('T3.t10.2', await snap()); // round 3: 3 s inhale gap
     await shot(page, '05_oddech_running');

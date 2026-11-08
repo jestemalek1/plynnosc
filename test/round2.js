@@ -42,7 +42,7 @@ async function section(name, fn) {
     const od = cardByTitle(page, 'Oddech A');
     const snap = async () => ({ cue: await od.locator('.cue').innerText(), sub: await od.locator('.sub').innerText(), clock: await od.locator('.clock').innerText(), reps: await od.locator('.reps').innerText(), btn: await od.locator('.timer button.big').innerText() });
     await od.locator('.timer button.big').click();
-    await page.clock.runFor(48000); // round 3: 3 s gap -> 5 reps complete at t=47s, now in gap before rep 6
+    await page.clock.runFor(51000); // v4: first inhale 3 s + 5 x (7 s + 3 s) -> 5 reps complete at t=50s, now in gap before rep 6
     log('A.after5reps', await snap());
     await flush(page);
     log('A.storeReps5', (await store(page)).days['2026-11-08'].reps);
@@ -428,6 +428,7 @@ async function section(name, fn) {
       const od = cardByTitle(page, 'Oddech A');
       await od.locator('.timer button.big').click();
       const cues = [];
+      await page.clock.runFor(3500); // v4: first counted inhale, sample mid-phase
       for (let i = 0; i < 12; i++) { cues.push({ cue: await od.locator('.cue').innerText(), sub: await od.locator('.sub').innerText(), reps: await od.locator('.reps').innerText() }); await page.clock.runFor(10000); }
       await page.waitForTimeout(50);
       const dn = await page.evaluate(() => { const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Oddech A'); return { done: c.classList.contains('done'), small: c.querySelector('small').textContent, next: document.querySelector('#s-dzis .next').textContent, bar: document.querySelectorAll('#s-dzis .progress .on').length }; });
