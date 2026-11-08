@@ -110,6 +110,7 @@
 
   /* Start na sygnał */
   .signal .cue { font-size: 26px; min-height: 63px; }
+  .signal .sub { min-height: 44px; } /* 2 linie: podpowiedź w czekaniu i w odpowiedzi ma tę samą wysokość */
   @media (max-width: 359px) { .signal .cue { min-height: 94px; } } /* wąskie telefony: część pytań ma 3 linie */ /* 2 linie: pytanie 1- albo 2-liniowe nie przesuwa kart pod spodem */
   .signal.wait .cue { color: var(--muted); font-size: 22px; }
 
@@ -1220,7 +1221,7 @@
       function maybeDone() {
         if (d.baseline) return;
         if (ta.value.trim().length >= 10 && !isDone(k, 'dziennik')) { markSeen('dziennik'); markDoneInPlace(k, 'dziennik'); }
-        else if (isDone(k, 'dziennik') && cards.dziennik) cards.dziennik.querySelector('small').textContent = 'Zrobione' + doneSummary(k, 'dziennik');
+        else if (isDone(k, 'dziennik') && cards.dziennik) keepFieldInPlace(function () { cards.dziennik.querySelector('small').textContent = 'Zrobione' + doneSummary(k, 'dziennik'); }); // podsumowanie może zawinąć się do 2 linii
       }
     },
 

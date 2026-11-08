@@ -294,14 +294,17 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
     // narrow phones: every question and the wait text give the same cue height
     {
       const hs = {};
+      const timerH = {};
       for (const width of [320, 360, 390]) {
         const nc = await browser.newContext({ viewport: { width, height: 700 }, isMobile: true, hasTouch: true }); const np = await nc.newPage(); np.__errors = []; ALL_PAGES.push(np);
         np.on('pageerror', e => np.__errors.push('PAGEERROR ' + e.message));
         await np.clock.install({ time: D(2) }); await np.goto(URL); await np.waitForTimeout(100); await openToday(np);
         hs[width] = await np.evaluate(() => { const src = document.querySelector('script:not([src])').textContent; const qs = eval('[' + src.match(/var SIGNAL_Q = \[([\s\S]*?)\];/)[1] + ']'); const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Start na sygnał'); c.classList.remove('collapsed'); const cue = c.querySelector('.cue'), tm = c.querySelector('.timer'); const set = new Set(); qs.forEach(q => { cue.textContent = q; set.add(Math.round(cue.getBoundingClientRect().height)); }); tm.classList.add('wait'); cue.textContent = 'Czekaj na sygnał…'; set.add(Math.round(cue.getBoundingClientRect().height)); return [...set]; });
+        timerH[width] = await np.evaluate(() => { const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Start na sygnał'); const tm = c.querySelector('.timer'), sub = c.querySelector('.sub'); const set = new Set(); ['dłoń na brzuchu, oddychasz normalnie', 'wdech nosem i od razu odpowiedź na wydechu', 'po wznowieniu znowu czekasz na sygnał', '', '10 pytań, każde w losowym momencie'].forEach(t => { sub.textContent = t; set.add(Math.round(tm.getBoundingClientRect().height)); }); return [...set]; });
         await nc.close();
       }
-      log('R4.cueHeights', hs);
+      log('R4.cueHeights', hs); log('R4.signalTimerHeights', timerH);
+      verdict('R4', Object.values(timerH).every(x => x.length === 1), 'whole signal timer height constant for every hint text, per width: ' + JSON.stringify(timerH));
       verdict('R4', Object.values(hs).every(x => x.length === 1), 'cue height per width (all ' + 'questions + wait): ' + JSON.stringify(hs));
     }
     // other day: different set
@@ -478,7 +481,19 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
         }
         r.errors = v.page.__errors; out[sc] = r; await v.c.close();
       }
+      // long sentence from the instructions: the header summary wraps while typing, the field must not move
+      for (const sc of ['long-auto', 'long-none']) {
+        const none = sc === 'long-none';
+        const v = await ctx(browser, { time: D(2), init: none ? `document.addEventListener('DOMContentLoaded', () => { const s = document.createElement('style'); s.textContent = '* { overflow-anchor: none !important; }'; document.head.appendChild(s); });` : undefined });
+        await v.page.goto(URL); await v.page.waitForTimeout(100); await openToday(v.page);
+        const dzL = await expand(v.page, 'Dziennik bloków');
+        await dzL.locator('textarea').click(); await v.page.clock.runFor(1000); await v.page.waitForTimeout(800);
+        const tops = [];
+        for (const ch of 'rozmowa z kolegą o nartach · start: ktoś · PL · szybko') { await v.page.keyboard.type(ch); tops.push(await v.page.evaluate(() => Math.round(document.querySelector('#s-dzis textarea').getBoundingClientRect().top))); }
+        out[sc] = { min: Math.min(...tops), max: Math.max(...tops), errors: v.page.__errors }; await v.c.close();
+      }
       log('R6.tagAndKeyboard', out);
+      verdict('R6', ['long-auto', 'long-none'].every(a => out[a].max - out[a].min <= 3), 'long diary sentence typed char by char: textarea top range ' + ['long-auto', 'long-none'].map(a => a + ' ' + out[a].min + '–' + out[a].max).join(', '));
       verdict('R6', ['tag-auto', 'tag-none'].every(a => out[a].complete && out[a].now.active === 'TEXTAREA' && Math.abs(out[a].now.top - out[a].before) <= 3 && Math.abs(out[a].later - out[a].before) <= 3),
         'diary tag completes the day: ' + ['tag-auto', 'tag-none'].map(a => a + ' ' + out[a].before + '→' + out[a].now.top + '→' + out[a].later + ' focus ' + out[a].now.active).join(', '));
       verdict('R6', !out.kbHeader.onMap && out.kbHeader.srOpen, 'keyboard Enter on SR header after diary completion: onMap ' + out.kbHeader.onMap + ', SR expanded ' + out.kbHeader.srOpen);
