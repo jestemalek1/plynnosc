@@ -4,6 +4,29 @@ Format: data — decyzja. Krótko: co, dlaczego, kiedy wracamy. Otwarte sprawy s
 
 ## Aktywne decyzje
 
+### 2026-11-08 — B12: apka to narzędzie Alka, które przez dogfooding staje się aplikacją z HLD (Alek)
+Decyzja: apka jest przede wszystkim narzędziem do własnego treningu Alka. Przez dogfooding ma stać się aplikacją z [[HLD v1]]. **Cel nadrzędny to trening Alka:** gdy funkcja „pod produkt” konkuruje z potrzebami treningu, wygrywa trening.
+Kolejność: najpierw dopracowujemy funkcjonalność w codziennym użyciu (04, 05, 06 jako samoocena, 08 jako raport, 02 jako dane). **Później**, po dopracowaniu: silnik planu (03), ocena mowy przez AI (B19), wywiad w apce (01) i 07.
+Zasada backlogu: w [[Backlog]] jest tylko to, co wynika z HLD albo bezpośrednio mu służy (fundament z przypisanym modułem). Pomysł spoza HLD najpierw trafia do HLD.
+Zapis: HLD §7. Prototyp n=1 nie dowodzi skuteczności klinicznej ani popytu.
+
+### 2026-11-08 — B18: utrzymanie i zapobieganie nawrotom w HLD (Alek)
+Decyzja: dopisane do HLD 03 (faza utrzymania z przeglądami wg Camperdown; niezaliczony przegląd cofa plan), 06 (sygnały nawrotu) i §4 (pętla utrzymania). Bez nowego modułu, bo to ta sama odpowiedzialność co plan i pomiar, tylko rozciągnięta w czasie. Powód: nawroty 20–70% po samym kształtowaniu płynności ([[Program płynności]]).
+
+### 2026-11-08 — B19: ocena mowy przez AI z nagrania i rozmowy na żywo w HLD (Alek)
+Decyzja: Alek chce nagrywać się albo rozmawiać na żywo i dostawać ocenę od AI. Dopisane do HLD 06 (ocena), 05 (rozmowa z AI głosem) i 01 (próbka mowy). Analiza nagrań wychodzi z odłożonego „korektora” (§5); korektor = tylko czas rzeczywisty.
+Zabezpieczenia: AI ocenia dźwięk, nie tylko transkrypt (transkrypt nie widzi cichych bloków); podstawowym pomiarem zostaje samoocena SR 0–8; ocena AI wpływa na plan dopiero po kilku tygodniach zgodności z samooceną.
+Termin: później, po dopracowaniu funkcjonalności (B12). Do sprawdzenia przy realizacji: mikrofon w artefakcie i model z wejściem audio (dziś `sample` przyjmuje tekst i obrazy). Do tego czasu zostaje „Oceń” na transkrypcie.
+
+### 2026-11-08 — B20: minimum bezpieczeństwa zapisane w HLD (Alek)
+Decyzja: tabela w HLD §6 przypisuje zasady do modułów: nagły początek → pilna ocena medyczna (01), brak diagnoz i etykiet emocji, ocena AI = informacja zwrotna (05, 06), pomoc kryzysowa (07), zgody i retencja nagrań (01, 05, 06, 08), weryfikacja kliniczna i regulacyjna przed udostępnieniem innym. Dla n=1 nic nie zmienia w apce.
+
+### 2026-11-08 — B17 (część): #14 jako „refleksja z nagrań” w HLD 07, bez ryzyka i poza MVP (Alek)
+Decyzja: funkcja wchodzi do HLD 07, ale tak zaprojektowana, żeby ryzyka nie było: tylko słowa użytkownika i jedno pytanie, bez wnioskowania o przyczynach i „podłożu”, bez diagnoz i nazywania emocji, wnioski formułuje użytkownik, przy treściach kryzysowych informacja o pomocy. Nie wchodzi do MVP. Interpretacja źródeł zachowań zostaje dla psychoterapeuty. Pozostała część B17 (#12, #13) otwarta.
+
+### 2026-11-08 — Poprawki w notatkach porównania
+(1) Zadanie w terenie z tygodnia 1 to luźny monolog, który apka ma; prawdziwe zadania w terenie startują w tygodniu 2 (14.11). (2) Raport dla logopedy (B16) nie zdąży na konsultację 10.11; na nią idzie ręcznie [[Kontekst i profil]]. (3) B1 (repo na GitHubie) zrobione.
+
 ### 2026-11-08 — v4 po feedbacku z dnia 2 (Alek)
 Feedback: oddech za szybki (potrzebna chwila między wdechem a wydechem), brak opisu skali przy ocenie SR, „SR dnia” bez sensu na tym etapie, za mało ćwiczeń.
 Decyzje:

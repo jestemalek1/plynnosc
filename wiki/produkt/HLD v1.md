@@ -2,13 +2,15 @@
 status: active
 owner: Alek
 updated: 2026-11-08
-source: HLD_aplikacja_wsparcie_jakania_v1.docx (assets/)
+source: HLD_aplikacja_wsparcie_jakania_v1.docx (assets/), zmiany B12–B20 w tej kopii
 tags: [produkt, hld]
 ---
 
 # HLD v1 – aplikacja wsparcia jąkania (8.11.2026)
 
 Kopia tekstowa dokumentu Alka; oryginał: `assets/HLD_aplikacja_wsparcie_jakania_v1.docx`. Porównanie z naszym planem: [[HLD v1 – porównanie z planem]].
+
+> **Zmiany po 8.11 (sesja decyzji B12–B20, [[Decision log]]).** Ta kopia jest teraz wersją wiodącą, a `.docx` to historia. Dopisane: utrzymanie i zapobieganie nawrotom w 03 i 06 (B18); ocena mowy przez AI z nagrania i rozmowy na żywo w 01, 05 i 06 (B19); minimum bezpieczeństwa w §6 z przypisaniem do modułów (B20); refleksja z nagrań z zabezpieczeniami w 07 (B17); §7 „Prototyp n=1 i kolejność budowy” (B12). Fragmenty dopisane oznaczone *[B1x]*.
 
 Stan ustaleń: 8 listopada 2026
 
@@ -66,6 +68,14 @@ sytuacje komunikacyjne, emocje, unikanie i cele użytkownika.
 mowy. Rezultatem jest profil potrzeb, a nie automatyczna diagnoza
 medyczna.
 
+*[B19]* Próbka mowy to nagranie albo krótka rozmowa na żywo (czytanie,
+monolog, rozmowa), oceniona przez AI tak samo jak w module 06. Jest
+punktem wyjścia do porównań, nie oceną kliniczną.
+
+*[B20]* Wywiad zawsze pyta, kiedy zaczęło się jąkanie. Nagły początek
+w dorosłości oznacza informację o potrzebie pilnej oceny medycznej przed
+dalszą pracą.
+
 **Powiązania:** Dostarcza danych do generatora planu, wsparcia
 psychologicznego i monitorowania postępów.
 
@@ -88,6 +98,13 @@ na podstawie potrzeb, celów i postępów.
 
 **Zakres na poziomie HLD:** Osobny silnik generujący plan. Szczegóły
 zasad doboru ćwiczeń nie są jeszcze projektowane.
+
+*[B18]* Plan nie kończy się na osiągnięciu celu. Obejmuje fazę
+utrzymania z rzadszymi przeglądami (wzorzec Camperdown: po 2, 2, 4, 4 i
+8 tygodniach, potem po 3 i 6 miesiącach). Niezaliczony przegląd albo
+sygnał nawrotu z modułu 06 cofa plan do wcześniejszego etapu.
+Uzasadnienie: nawroty po samym kształtowaniu płynności dotyczą 20–70%
+dorosłych, więc utrzymanie to część planu, a nie dodatek.
 
 **Powiązania:** Korzysta z wywiadu, biblioteki, monitorowania postępów i
 — gdy ma to zastosowanie — decyzji specjalisty.
@@ -112,6 +129,9 @@ rzeczywistych sytuacji komunikacyjnych.
 i zadania w prawdziwym świecie. Nie rozdzielamy ich na osobne moduły
 HLD.
 
+*[B19]* Symulowana rozmowa z AI odbywa się głosem, na żywo. Po rozmowie
+AI ocenia mowę jak w module 06, a wynik trafia do monitorowania postępów.
+
 **Powiązania:** Współpracuje z planem, wsparciem psychologicznym i
 monitorowaniem postępów.
 
@@ -124,6 +144,21 @@ planu pracy.
 komfort komunikacji, napięcie, unikanie rozmów i uczestnictwo w
 sytuacjach komunikacyjnych.
 
+*[B19]* **Ocena mowy przez AI z nagrania albo rozmowy na żywo.**
+Użytkownik nagrywa się albo rozmawia (z AI lub z kimś), a AI ocenia
+płynność i daje informację zwrotną. Zasady:
+- AI ocenia dźwięk, nie tylko transkrypt. Transkrypcja nie pokazuje
+  cichych bloków i wygładza niepłynności.
+- Podstawowym pomiarem pozostaje samoocena SR 0–8, a docelowo ocena
+  specjalisty. Ocena AI jest informacją zwrotną. Do decyzji o planie
+  (moduł 03) wchodzi dopiero wtedy, gdy przez kilka tygodni zgadza się
+  z samooceną.
+- Nagranie to dane o zdrowiu: wymaga zgody, krótkiej retencji i
+  możliwości usunięcia (§6).
+
+*[B18]* Wykrywa sygnały nawrotu (wzrost SR, powrót zamiany słów lub
+unikania, opuszczone przeglądy) i zgłasza je do generatora planu.
+
 **Powiązania:** Zbiera informacje z ćwiczeń, treningu i samooceny;
 zasila generator planu oraz panel logopedy.
 
@@ -135,6 +170,19 @@ wstydem i unikaniem rozmów związanych z jąkaniem.
 **Zakres na poziomie HLD:** Odrębna ścieżka wspierająca pracę nad
 barierami emocjonalnymi i podejmowaniem sytuacji komunikacyjnych. Nie
 zastępuje psychoterapeuty ani diagnozy psychologicznej.
+
+*[B17]* **Refleksja na podstawie nagrań** („jedno pytanie”, analiza
+wzorców). Dla bezpieczeństwa jest zaprojektowana tak:
+- opiera się wyłącznie na słowach użytkownika: oddaje to, co powiedział,
+  i zadaje jedno pytanie;
+- nie wnioskuje o przyczynach ani o „podłożu” zachowań, nie stawia
+  diagnoz i nie nazywa emocji, których użytkownik sam nie nazwał;
+- wnioski formułuje użytkownik, nie AI; funkcja jest dobrowolna i
+  wyłączalna;
+- przy treściach kryzysowych pokazuje informację o pomocy kryzysowej
+  (§6) zamiast analizy.
+Interpretacja źródeł zachowań należy do psychoterapeuty. Nie wchodzi do
+MVP.
 
 **Powiązania:** Wykorzystuje informacje z wywiadu; współdziała z
 treningiem komunikacji, monitorowaniem i generatorem planu.
@@ -155,7 +203,8 @@ monitorowaniem postępów.
 
 Ścieżka użytkownika: wywiad i ocena → indywidualny plan → realizacja
 ćwiczeń → trening komunikacji → monitorowanie postępów → aktualizacja
-planu.
+planu. *[B18]* Po osiągnięciu celu → utrzymanie (rzadsze przeglądy) →
+przy sygnale nawrotu powrót do wcześniejszego etapu planu.
 
 Biblioteka ćwiczeń jest zapleczem zasobowym planu i realizacji, a
 wsparcie psychologiczne działa równolegle. Panel logopedy może obejmować
@@ -168,10 +217,12 @@ generator planu. To nie jest kolejność ekranów aplikacji.
 ## 5. Pomysły odłożone / niezatwierdzone jako baza
 
 **Korektor jąkania:** możliwy osobny moduł wspierający mowę w czasie
-rzeczywistym (np. odsłuch lub inne wskazówki) albo analizujący nagrania.
-Pomysł pozostaje otwarty; nie podejmowaliśmy decyzji, czy i w jakiej
-postaci ma wejść do produktu. Nie należy zakładać, że trwale „usuwa”
-jąkanie.
+rzeczywistym (np. odsłuch lub inne wskazówki). Pomysł pozostaje otwarty;
+nie podejmowaliśmy decyzji, czy i w jakiej postaci ma wejść do produktu.
+Nie należy zakładać, że trwale „usuwa” jąkanie. Badania: sam DAF nie
+daje trwałego efektu, działa tylko w trakcie użycia (metaanaliza
+2000–2024). *[B19]* Analiza nagrań przestała być częścią korektora: jest
+teraz w bazie, w module 06.
 
 **Społeczność użytkowników:** potencjalny moduł wymiany doświadczeń i
 wzajemnego wsparcia; na ten moment poza zaakceptowaną ósemką.
@@ -198,6 +249,41 @@ wzajemnego wsparcia; na ten moment poza zaakceptowaną ósemką.
 - Do ustalenia później: zakres MVP, kryteria personalizacji, sposób
   pracy AI, rola specjalisty, pomiar skuteczności i kolejność
   implementacji.
+
+*[B20]* **Minimum bezpieczeństwa – kto za co odpowiada:**
+
+| Zasada | Moduł |
+| --- | --- |
+| Pytanie o początek jąkania; nagły początek w dorosłości → informacja o pilnej ocenie medycznej | 01 |
+| Nie obiecujemy wyleczenia, nie diagnozujemy, nie nazywamy emocji, których użytkownik nie nazwał | wszystkie, szczególnie 01, 06, 07 |
+| Ocena AI to informacja zwrotna, a nie ocena kliniczna; wyraźnie tak opisana | 05, 06 |
+| Informacja o pomocy kryzysowej przy treściach kryzysowych | 07 (i każde miejsce, gdzie AI czyta wypowiedzi) |
+| Zgoda na nagrania, krótka retencja, usuwanie danych; dane o zdrowiu traktowane jako szczególna kategoria (RODO art. 9) | 01, 05, 06, 08 |
+| Specjalista widzi tylko uzgodniony zakres danych, za zgodą użytkownika | 08 |
+| Funkcja o deklarowanym celu terapeutycznym przechodzi weryfikację kliniczną i regulacyjną przed udostępnieniem innym | 02, 03, 05, 06 |
+
+## 7. Prototyp n=1 i kolejność budowy *[B12]*
+
+- Dzisiejsza aplikacja to **narzędzie Alka do własnego treningu**, które
+  przez dogfooding ma stać się aplikacją z tego HLD. Moduły powstają
+  najpierw w wersji dla jednej osoby: bez kont, backendu i panelu.
+- **Cel nadrzędny: trening Alka.** Moduł budujemy wtedy, gdy pomaga
+  temu treningowi. Jeśli funkcja „pod produkt” konkuruje z tym, czego
+  trening potrzebuje w danym tygodniu, wygrywa trening.
+- **Kolejność:** najpierw dopracowujemy to, co jest w codziennym
+  użyciu: 04 Realizacja ćwiczeń, 05 Trening komunikacji (zadania w
+  terenie), 06 Monitorowanie (samoocena), 08 w wersji minimum (raport) i
+  02 jako dane. Później, po dopracowaniu funkcjonalności, dochodzą: 01
+  Wywiad w aplikacji, 03 Generator planu (silnik), ocena mowy przez AI z
+  nagrania i rozmowy na żywo (B19) oraz 07.
+- **Czego prototyp nie dowodzi:** sprawdza, czy z aplikacji da się
+  codziennie korzystać i czy pętla „plan → ćwiczenia → pomiar → zmiana
+  planu” działa. Nie dowodzi skuteczności klinicznej ani popytu
+  rynkowego.
+- **Zasada backlogu:** w backlogu jest tylko to, co wynika z tego HLD
+  (moduł 01–08) albo bezpośrednio mu służy (fundament techniczny z
+  przypisanym modułem). Nowy pomysł spoza HLD najpierw trafia do HLD
+  (decyzja Alka), potem do backlogu.
 
 Status dokumentu: zapis uzgodnionej struktury produktu i opisu
 odpowiedzialności modułów. Nie jest to ostateczna specyfikacja

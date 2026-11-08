@@ -49,7 +49,12 @@ Miary, czy apka robi robotę (zbierane w Review, nie w apce):
 | Kryterium tygodnia z programu spełnione | tak / nie (jeśli 2× nie → temat dla logopedy) |
 
 ## Związek z HLD
-HLD v1 (8.11) opisuje produkt z 8 modułów. Rekomendacja (decyzja B12): apka Alka to prototyp tych modułów w wersji dla jednej osoby; decyzja o produkcie rynkowym po M2/M3. Mapowanie i różnice: [[HLD v1 – porównanie z planem]].
+HLD v1 (8.11, z dopiskami B12–B20) opisuje produkt z 8 modułów. **Decyzja B12:** apka to narzędzie Alka, które przez dogfooding staje się aplikacją z HLD. Cel nadrzędny to trening Alka.
+- **Najpierw (M0–M2):** dopracowanie modułów w codziennym użyciu: 04 Realizacja, 05 Zadania w terenie, 06 Samoocena, 08 Raport (minimum), 02 jako `data.js`.
+- **Później (po dopracowaniu funkcjonalności):** 03 silnik planu, ocena mowy przez AI z nagrania i rozmowy na żywo (B19), 01 wywiad w apce, 07.
+- **Zasada:** w [[Backlog]] tylko pozycje z modułem HLD (albo fundament, który służy wskazanemu modułowi).
+- **Utrzymanie (B18):** program nie kończy się 30.01.2027. Przeglądy utrzymania (po 2, 2, 4, 4, 8 tygodniach, potem po 3 i 6 miesiącach) trzeba ująć w roadmapie – patrz roadmapa na koniec sesji decyzji.
+Mapowanie i różnice: [[HLD v1 – porównanie z planem]].
 
 ## Nasz obecny plan w skrócie (do porównania z HLD)
 Żeby porównanie z HLD było szybkie, tu są założenia, które dziś obowiązują:

@@ -16,29 +16,34 @@ Kierunek jest zgodny: ten sam cykl „ocena → plan → ćwiczenia → transfer
 ## Moduł po module
 | HLD | Co mamy dziś | Różnica | Propozycja (n=1, bez infrastruktury produktu) |
 | --- | --- | --- | --- |
-| 01 Wywiad i ocena wstępna | Wywiad zrobiony w czacie; dzień 1: 4 nagrania bazowe + hierarchia 10 sytuacji. Profil zaszyty w kodzie (data startu, tematy, wyniki bazowe). | Brak wywiadu w apce; profil nie jest danymi. | Wyciągnąć profil do `data.js` przy podziale plików (A5). Wywiad w apce dopiero przy produkcie. |
+| 01 Wywiad i ocena wstępna | Wywiad zrobiony w czacie; dzień 1: 4 nagrania bazowe + hierarchia 10 sytuacji. Profil zaszyty w kodzie (data startu, tematy, wyniki bazowe). | Brak wywiadu w apce; profil nie jest danymi. | Wyciągnąć profil do `data.js` przy podziale plików (A5). Wywiad w apce później, po dopracowaniu funkcjonalności (B12). |
 | 02 Biblioteka ćwiczeń | 7 ćwiczeń w kodzie (oddech, sygnał, monolog, napięcie, miękki start, dziennik, SR); program opisuje 9 procedur A–I. | Treść wymieszana z logiką. | `data.js` = biblioteka (opis + parametry ćwiczeń). Naturalny skutek A5. |
-| 03 Generator planu | `exercisesFor()`: lista wg numeru tygodnia, czyli wg daty. | HLD: plan indywidualny i aktualizowany wg postępów. **Nasz własny program też mówi „przechodzisz dalej, gdy spełnisz kryterium, nie dlatego, że minął tydzień” – apka tego nie robi.** | Generator v0: przejście do kolejnego tygodnia po kryterium z programu (samoocena w niedzielnym Review), w M2 razem z tygodniami 4–6. |
+| 03 Generator planu | `exercisesFor()`: lista wg numeru tygodnia, czyli wg daty. | HLD: plan indywidualny i aktualizowany wg postępów. **Nasz własny program też mówi „przechodzisz dalej, gdy spełnisz kryterium, nie dlatego, że minął tydzień” – apka tego nie robi.** | Silnik odłożony (B12): powstaje po dopracowaniu funkcjonalności. Co do tego czasu z kryterium przejścia – decyzja B13. |
 | 04 Realizacja ćwiczeń | Najmocniejsza część: ekran Dziś, timery z auto-licznikiem, mapa wysp. | Zgodne. | Bez zmian; poprawki z dogfoodingu (okno A). |
-| 05 Trening komunikacji | Monolog z kartą tematu, „Start na sygnał”. Program ma codzienne **zadanie w terenie** – apka go nie pokazuje. Brak symulacji rozmów z AI. | Transfer do prawdziwych sytuacji jest w programie, ale nie w apce. | Dodać „Zadanie w terenie” (1 zdanie dziennie + „zrobione/nie”) w M1. Symulacja rozmowy z AI tylko tekstowo (artefakt nie ma mikrofonu) – później. |
+| 05 Trening komunikacji | Monolog z kartą tematu, „Start na sygnał”. **Poprawka 8.11:** w tygodniu 1 zadaniem w terenie jest właśnie luźny monolog, więc apka go ma. Prawdziwe zadania w terenie (szczeble hierarchii, przedstawienie się) zaczynają się w tygodniu 2, czyli **14.11**, i tych apka nie pokazuje. Brak rozmów z AI. | Transfer do prawdziwych sytuacji od tygodnia 2 jest w programie, ale nie w apce. | „Zadanie w terenie” musi być gotowe przed 14.11, nie w M1 (decyzja B14). Rozmowa z AI głosem, na żywo – HLD 05 (B19), później. |
 | 06 Monitorowanie postępów | SR (teraz tygodniowo), streak, bloki z ocen, mapa napięcia, hierarchia. | HLD mierzy też komfort, napięcie, **unikanie** i uczestnictwo. My nie mierzymy unikania ani zamiany słów, choć zamiana słów to Twój cel do wygaszenia. | Do karty „SR tygodnia” dodać 2 pytania: zamiana słów (nigdy / czasem / często) i uniknięte sytuacje (liczba). Kwestionariusz typu OASES co 3 miesiące – później. |
 | 07 Wsparcie psychologiczne | Świadomie odsunięte: po wywiadzie CBT na lęk ma niski priorytet (bloki bez odczuwanego stresu). #12 to samorozwój, nie terapia. | Dla produktu to osobny moduł; dla Ciebie niski priorytet. | Zostaje w backlogu jako moduł „później”. Dobrowolne jąkanie i anulowanie (tyg. 6–7) pokrywają część „wstyd/unikanie”. |
-| 08 Panel logopedy | Brak. Jest „Kopiuj dane” (JSON). | Brak wglądu specjalisty. | **Raport dla logopedy**: jedna strona tekstu (baza, SR tygodniowe, kryteria, dziennik) do skopiowania przed konsultacją – M1. Prawdziwy panel wymaga backendu i kont – produkt. |
+| 08 Panel logopedy | Brak. Jest „Kopiuj dane” (JSON). | Brak wglądu specjalisty. | **Raport dla logopedy**: jedna strona tekstu (baza, SR tygodniowe, kryteria, dziennik) do skopiowania przed konsultacją (B16). **Poprawka 8.11:** konsultacja jest 10.11, czyli przed M1, więc na nią idzie ręcznie [[Kontekst i profil]]; raport w apce służy kolejnym konsultacjom. Prawdziwy panel wymaga backendu i kont – produkt. |
 
 ## Co jest u nas, a nie ma w HLD
 - **#13 angielski** (English card z nagrań) – poza zakresem HLD. Pasuje do modułu 05 tylko jako „komunikacja w języku obcym”. Dla Ciebie ważne, bo bloki po angielsku są najcięższe.
-- **#12 jedno pytanie / #14 „psychoanaliza”** – samorozwój, nie terapia jąkania. Poza HLD.
-- **Ocena nagrań przez Claude** – w HLD najbliżej „korektora jąkania (analiza nagrań)” z §5, który jest odłożony. U nas już działa.
+- **#12 jedno pytanie / #14 „psychoanaliza”** – #14 od B17 w HLD 07 jako „refleksja z nagrań” z zabezpieczeniami, poza MVP. #12 – do rozstrzygnięcia w B17.
+- ~~**Ocena nagrań przez Claude**~~ – od B19 w HLD (moduł 06, docelowo z dźwięku i rozmowy na żywo). Dzisiejsze „Oceń” działa na transkrypcie, więc nie widzi cichych bloków.
 - **Grywalizacja** (mapa wysp, streak, zachęty) – HLD jej nie opisuje; to warstwa UX modułu 04.
 
 ## Co jest w HLD, a nie ma u nas
 - Panel logopedy, wielu użytkowników, wywiad w apce (patrz tabela).
 - Korektor w czasie rzeczywistym (DAF/AAF) – według naszego researchu sam DAF nie daje istotnego efektu (metaanaliza 2000–2024), działa tylko w użyciu. Zgodne z decyzją HLD, żeby go odłożyć.
 - Społeczność – poza zakresem obu.
-- Granice z §6: informacja o pilnej ocenie medycznej przy nagłym jąkaniu u dorosłego; zgody i ochrona danych; weryfikacja kliniczna i regulacyjna funkcji terapeutycznych. Dla Ciebie (n=1) nieistotne; dla produktu obowiązkowe. Dane o zdrowiu to szczególna kategoria danych w RODO, a oprogramowanie o celu terapeutycznym może podlegać przepisom o wyrobach medycznych – do sprawdzenia przed jakimkolwiek udostępnieniem innym.
+- Granice z §6: od B20 rozpisane na moduły w HLD §6. Dla Ciebie (n=1) nic nie zmieniają w apce; dla produktu obowiązkowe. Dane o zdrowiu to szczególna kategoria danych w RODO, a oprogramowanie o celu terapeutycznym może podlegać przepisom o wyrobach medycznych – do sprawdzenia przed jakimkolwiek udostępnieniem innym.
 
 ## Technicznie
 HLD celowo nie wybiera technologii. Nasz runtime (artefakt claude.ai, localStorage, ocena przez `sample`) wystarcza dla jednej osoby, ale nie dla produktu: brak kont, współdzielenia danych z logopedą i mikrofonu w stronie. Produkt będzie potrzebował własnej aplikacji i backendu. Rekomendacja: nie budować tego teraz; decyzja po M2/M3, z danymi z własnego użycia.
 
+## Co HLD pomijał (dopisane 8.11)
+- **Utrzymanie i nawroty (B18)** – dopisane do HLD 03, 06 i §4.
+- **Ocena mowy przez AI (B19)** – dopisana do HLD 01, 05, 06; korektor w §5 zawężony do czasu rzeczywistego.
+- **Minimum bezpieczeństwa (B20)** – tabela w HLD §6.
+
 ## Decyzje dla Alka
-Przeniesione do [[Decyzje do podjęcia]] jako B12–B16.
+[[Decyzje do podjęcia]], B12–B20; rozstrzygnięte w [[Decision log]].

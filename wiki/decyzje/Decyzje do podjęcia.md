@@ -1,7 +1,7 @@
 ---
 status: active
 owner: Alek
-updated: 2026-11-07
+updated: 2026-11-08
 tags: [decyzje, otwarte]
 ---
 
@@ -23,7 +23,7 @@ Każda pozycja ma rekomendację i kroki. Odhaczasz `[x]`, dopisujesz jedną lini
 
 ## B. Biznesowe / produktowe — czekają na Ciebie
 
-- [ ] **B1. Repo na GitHubie.** Status 2026-11-08: lokalnie gotowe (`main`, `develop`, gałąź `feature/dzien2-feedback`), czeka na puste repo na GitHubie. Zasady: [[Git i gałęzie]]. Rekomendacja: prywatne repo `jestemalek1/plynnosc`, push od razu. Powód: kopia poza sesją w chmurze, sesje Claude Code mogą startować z repo, historia zmian apki.
+- [x] **B1. Repo na GitHubie.** Decyzja: zrobione – `jestemalek1/plynnosc` (prywatne), gałęzie `main`, `develop`, `feature/*`. Status 2026-11-08 (przed pushem): lokalnie gotowe (`main`, `develop`, gałąź `feature/dzien2-feedback`), czeka na puste repo na GitHubie. Zasady: [[Git i gałęzie]]. Rekomendacja: prywatne repo `jestemalek1/plynnosc`, push od razu. Powód: kopia poza sesją w chmurze, sesje Claude Code mogą startować z repo, historia zmian apki.
   Kroki: (1) github.com → New repository → `plynnosc`, Private, bez README. (2) W sesji Claude Code: „podłącz repo jestemalek1/plynnosc z prawem push i wypchnij `main`”. (3) Sprawdź, że `app/index.html` jest w repo. Alternatywa: zostawić zip z tej sesji jako kopię (słabsze).
 - [ ] **B2. Specjalista — poniedziałek 10.11.** Rekomendacja: najpierw Fundacja FIKS (793 001 160, darmowa diagnoza, Camperdown online), Jankiewicz (509 812 667, 145 zł) jako plan B.
   Na rozmowę weź: [[Kontekst i profil]] (profil + dane bazowe), pytania: (a) czy program zintegrowany w [[Program płynności]] jest OK dla bloków „na start wymuszony z zewnątrz”, (b) kolejność tygodni 4–12 (D wydłużona mowa / E frazowanie / G dobrowolne jąkanie / H anulowanie-wyślizg), (c) co z leczeniem ADHD a jąkaniem, (d) jak często kontrola. Wynik → jedna linia tu, agent przenosi do [[Decision log]] i do treści tygodni.
@@ -38,12 +38,15 @@ Każda pozycja ma rekomendację i kroki. Odhaczasz `[x]`, dopisujesz jedną lini
 - [ ] **B9. Diagnostyka ADHD a baseline.** Rekomendacja: umów diagnostykę; przed ewentualnym lekiem zrób eksport danych (B5) i cztery nagrania bazowe jak w dniu 1. Lekarzowi powiedz o jąkaniu (dobór leku).
 
 - [x] **B10. HLD.** Dostarczony 8.11, porównanie: [[HLD v1 – porównanie z planem]].
-- [ ] **B12. Czym jest ta apka: narzędziem dla Ciebie czy prototypem produktu z HLD?** Rekomendacja: prototyp dogfoodowany na sobie. Moduły HLD budujemy w wersji „dla jednej osoby” w obecnej apce (bez kont, backendu, panelu). Decyzję o produkcie rynkowym (stack, RODO, wyroby medyczne, MVP) podejmujemy po M2/M3 na podstawie własnych danych. Skutek: od teraz backlog jest przypisany do modułów 01–08.
-- [ ] **B13. Generator planu v0: przejście tygodnia po kryterium, nie po dacie.** Rekomendacja: TAK, w M2 razem z tygodniami 4–6. Tak mówi nasz własny program; dziś apka przesuwa tydzień z kalendarzem.
+- [x] **B12. Czym jest ta apka: narzędziem dla Ciebie czy prototypem produktu z HLD?** Decyzja: narzędzie dla mnie, które przez dogfooding zmieniam w aplikację z HLD; mój trening to cel nadrzędny. Silnik (03), ocena AI (B19), wywiad (01) i 07 – później, po dopracowaniu funkcjonalności. W backlogu tylko to, co wynika z HLD. Pierwotna rekomendacja: Rekomendacja: prototyp dogfoodowany na sobie. Moduły HLD budujemy w wersji „dla jednej osoby” w obecnej apce (bez kont, backendu, panelu). Decyzję o produkcie rynkowym (stack, RODO, wyroby medyczne, MVP) podejmujemy po M2/M3 na podstawie własnych danych. Skutek: od teraz backlog jest przypisany do modułów 01–08.
+- [ ] **B13. Generator planu v0: przejście tygodnia po kryterium, nie po dacie.** Stan po B12: silnik odłożony; do rozstrzygnięcia, co z kryterium do tego czasu. Pierwotna rekomendacja: TAK, w M2 razem z tygodniami 4–6. Tak mówi nasz własny program; dziś apka przesuwa tydzień z kalendarzem.
 - [ ] **B14. Zadanie w terenie w apce (moduł 05).** Rekomendacja: TAK, w M1. Jedno zadanie dziennie z programu + „zrobione / nie”. To jest transfer, którego brakowało w poprzedniej terapii.
 - [ ] **B15. Pomiar unikania i zamiany słów (moduł 06).** Rekomendacja: TAK, 2 pytania w karcie „SR tygodnia”, w M1.
 - [ ] **B16. Raport dla logopedy (moduł 08 w wersji minimum).** Rekomendacja: TAK, w M1. Jedna strona do skopiowania przed konsultacją.
-- [ ] **B17. #13 angielski i #12/#14 samorozwój są poza HLD.** Rekomendacja: zostają jako Twoje dodatki (M3/M4), oznaczone „poza HLD”; nie wchodzą do zakresu produktu bez osobnej decyzji.
+- [ ] **B17. #13 angielski i #12/#14 samorozwój są poza HLD.** Częściowo: #14 → HLD 07 jako „refleksja z nagrań” z zabezpieczeniami, poza MVP. Otwarte: #12, #13 (zasada B12: poza HLD = poza backlogiem). Pierwotnie: Rekomendacja: zostają jako Twoje dodatki (M3/M4), oznaczone „poza HLD”; nie wchodzą do zakresu produktu bez osobnej decyzji.
+- [x] **B18. Utrzymanie i nawroty w HLD.** Decyzja: dopisać do HLD (03, 06, §4).
+- [x] **B19. Ocena mowy przez AI z nagrania / rozmowy na żywo.** Decyzja: do HLD (01, 05, 06); realizacja później (B12).
+- [x] **B20. Minimum bezpieczeństwa z §6.** Decyzja: zapisać w HLD z przypisaniem do modułów.
 - [ ] **B11. Dwa okna.** Rekomendacja: TAK, okno A – Dogfood i okno B – Rozwój, ale dopiero po repo na GitHubie i podziale pliku (A5). Szczegóły: [[Plan działania]].
 
 ## Zrobione w tej sesji (do wiadomości)

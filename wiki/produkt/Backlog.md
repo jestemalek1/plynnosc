@@ -1,42 +1,51 @@
 # Płynność – backlog
 
 Właściciel: Alek. Aktualizacja: 2026-11-08. Kamienie milowe i zasady okien: [[Plan działania]].
-Moduły HLD: [[HLD v1 – porównanie z planem]]. Okno **A** = Dogfood (poprawki z codziennego używania), okno **B** = Rozwój (funkcje z planu). Status: ☐ do zrobienia · ◐ w toku · ☑ zrobione · ⏸ czeka na Alka.
+**Zasada (B12):** każda pozycja ma moduł z [[HLD v1]] (01–08). Fundament techniczny (**F→nn**) jest dopuszczony tylko wtedy, gdy służy wskazanemu modułowi. Pomysł spoza HLD najpierw trafia do HLD (decyzja Alka), potem tutaj. Cel nadrzędny: trening Alka.
+Okno **A** = Dogfood (poprawki z codziennego używania), okno **B** = Rozwój (funkcje z planu). Status: ☐ do zrobienia · ◐ w toku · ☑ zrobione · ⏸ czeka na Alka.
 
 ## Teraz – M0 Fundament (do 13.11)
-| Status | ID | Co | Okno | Uwagi |
-| --- | --- | --- | --- | --- |
-| ◐ | v4 | Feedback dnia 2: wdech 3 s, legenda SR, SR tygodniowo, „Start na sygnał”, dzień zaliczony zostaje | B | tester + recenzent w toku; wydanie po czystej rundzie |
-| ⏸ | B1 | Repo `jestemalek1/plynnosc` na GitHubie | Alek | warunek pracy w dwóch oknach |
-| ☐ | A5 | Podział `app/index.html` na `styles.css`, `data.js`, `map.js`, `app.js` | B | pierwsze zadanie okna B; do tego czasu okno A nie zmienia kodu |
-| ☐ | #18 | „Uwaga do apki”: jedno zdanie z dowolnego ekranu, lista uwag + kopiuj | A | zbieranie dogfoodu bez wychodzenia z treningu |
-| ☐ | #15 | Eksport/import danych (JSON) | B | dane są tylko w jednym telefonie |
+| Status | ID | Co | HLD | Okno | Uwagi |
+| --- | --- | --- | --- | --- | --- |
+| ◐ | v4 | Feedback dnia 2: wdech 3 s, legenda SR, SR tygodniowo, „Start na sygnał”, dzień zaliczony zostaje | 04, 06 | B | tester + recenzent w toku; wydanie po czystej rundzie |
+| ☑ | B1 | Repo `jestemalek1/plynnosc` na GitHubie | F→wszystkie | Alek | zrobione |
+| ☐ | A5 | Podział `app/index.html` na `styles.css`, `data.js`, `map.js`, `app.js` | F→02 | B | `data.js` = biblioteka ćwiczeń (02) i profil (01 n=1); do tego czasu okno A nie zmienia kodu |
+| ☐ | #18 | „Uwaga do apki”: jedno zdanie z dowolnego ekranu, lista uwag + kopiuj | F→04 | A | narzędzie dogfoodingu modułu 04; najsłabsze dopasowanie do HLD – usuwamy po okresie dogfoodingu |
+| ☐ | #15 | Eksport/import danych (JSON) | F→06, 08 | B | dane postępów są tylko w jednym telefonie; eksport jest też nośnikiem dla logopedy |
 
 ## Następne – M1 Stabilnie (do 21.11)
-| Status | ID | Co | Okno | Uwagi |
-| --- | --- | --- | --- | --- |
-| ☐ | R3–R7 | Poprawki z recenzji: błąd od dnia 85, sonda Claude bez kliknięcia, stary wynik oceny, pasek kart po klawiaturze, sanityzacja stanu | B | [[Review kodu v3 – niezależny]] |
-| ☐ | WL | Wake Lock w timerach (ekran nie gaśnie) | A | |
-| ⏸ | B14 | Zadanie w terenie dziennie (HLD 05) | B | czeka na decyzję B14 |
-| ⏸ | B15 | Zamiana słów + unikanie w karcie SR tygodnia (HLD 06) | A | czeka na decyzję B15 |
-| ⏸ | B16 | Raport dla logopedy – 1 strona do skopiowania (HLD 08) | B | czeka na decyzję B16 |
-| ⏸ | B4 | Transkrypcja PL: test Whisper na jednym monologu | Alek | [[Transkrypcja PL – research]] |
-| ⏸ | B2 | Konsultacja 10.11 → wnioski do programu | Alek | lista pytań w [[Decyzje do podjęcia]] |
+| Status | ID | Co | HLD | Okno | Uwagi |
+| --- | --- | --- | --- | --- | --- |
+| ☐ | R3–R7 | Poprawki z recenzji: błąd od dnia 85, sonda Claude bez kliknięcia, stary wynik oceny, pasek kart po klawiaturze, sanityzacja stanu | 04, 06 | B | [[Review kodu v3 – niezależny]] |
+| ☐ | WL | Wake Lock w timerach (ekran nie gaśnie) | 04 | A | |
+| ⏸ | B14 | Zadanie w terenie dziennie | 05 | B | **musi być przed 14.11** (tydzień 2 = pierwsze prawdziwe zadania); czeka na decyzję B14 |
+| ⏸ | B15 | Zamiana słów + unikanie w karcie SR tygodnia | 06 | A | czeka na decyzję B15 |
+| ⏸ | B16 | Raport dla logopedy – 1 strona do skopiowania | 08 | B | na 10.11 ręcznie [[Kontekst i profil]]; czeka na decyzję B16 |
+| ⏸ | B4 | Transkrypcja PL: test Whisper na jednym monologu | 06 | Alek | pomost do czasu oceny z dźwięku (B19); [[Transkrypcja PL – research]] |
+| ⏸ | B2 | Konsultacja 10.11 → wnioski do programu | 08, 02 | Alek | lista pytań w [[Decyzje do podjęcia]] |
 
 ## M2 Tydzień 4 gotowy (do 27.11)
-| Status | ID | Co | Okno |
-| --- | --- | --- | --- |
-| ☐ | T4–6 | Treść tygodni 4–6: wydłużona mowa (D), cykle Camperdown, dobrowolne jąkanie (G), anulowanie (H) | B |
-| ⏸ | B13 | Generator planu v0: przejście tygodnia po kryterium (HLD 03) | B |
+| Status | ID | Co | HLD | Okno |
+| --- | --- | --- | --- | --- |
+| ☐ | T4–6 | Treść tygodni 4–6: wydłużona mowa (D), cykle Camperdown, dobrowolne jąkanie (G), anulowanie (H) | 02, 04 | B |
+| ⏸ | B13 | Kryterium przejścia tygodnia (silnik odłożony wg B12; zakres do decyzji B13) | 03 | B |
 
-## Później – M3/M4
-| ID | Co | Kamień |
+## Później – po dopracowaniu funkcjonalności (B12)
+| ID | Co | HLD | Kamień |
+| --- | --- | --- | --- |
+| B7 | Tryb szybki 10 min (decyzja po tyg. 3) | 04 | M3 |
+| T7–12 | Treść tygodni 7–12 | 02, 04 | M4 |
+| B18 | Utrzymanie: przeglądy po 2, 2, 4, 4, 8 tyg., potem po 3 i 6 mies.; sygnały nawrotu | 03, 06 | M4 |
+| B19 | Ocena mowy przez AI z nagrania i rozmowy na żywo (dźwięk, nie transkrypt) | 06, 05, 01 | po M2, termin do ustalenia |
+| 03 | Silnik planu (generator) | 03 | po M2 |
+| 01 | Wywiad i ocena wstępna w apce | 01 | produkt |
+| #14 | Refleksja z nagrań – wersja bezpieczna wg HLD 07; po dostarczeniu plików z sesji „AI lab” | 07 | poza MVP |
+
+## Do rozstrzygnięcia w B17 (poza HLD = nie mogą zostać w backlogu bez decyzji)
+| ID | Co | Gdzie mogłoby pasować |
 | --- | --- | --- |
-| #12 | Jedno pytanie z monologu (samorozwój) | M3 |
-| #13 | English card z nagrania EN | M3 |
-| B7 | Tryb szybki 10 min (decyzja po tyg. 3) | M3 |
-| T7–12 | Treść tygodni 7–12 i utrzymanie | M4 |
-| #14 | „Psychoanaliza” z nagrań – po dostarczeniu plików z sesji „AI lab” | M4 |
+| #12 | Jedno pytanie z monologu (samorozwój) | 07 (część „refleksji z nagrań”) |
+| #13 | English card z nagrania EN | 05 (komunikacja w języku obcym) |
 
 ## Zgłoszenia (historia, w kolejności)
 
