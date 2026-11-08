@@ -170,7 +170,7 @@ Bez pomiaru nie zobaczysz postępu – jest wolny, nieliniowy i zależny od dnia
 
 **Skale:**
 
-- **SR 0–8** (Camperdown): 0 – brak; 1 – jest, ale słuchacz nie zauważa; 2–3 – lekkie; 4–5 – umiarkowane; 6–7 – ciężkie; 8 – przekaz nie dochodzi. Zapisujesz **typowe** i **najgorsze** SR dnia. Cel końcowy: SR 0–1 przy technice 1–2.
+- **SR 0–8** (Camperdown): 0 – brak; 1 – jest, ale słuchacz nie zauważa; 2–3 – lekkie; 4–5 – umiarkowane; 6–7 – ciężkie; 8 – przekaz nie dochodzi. Zapisujesz **typowe** i **najgorsze** SR z ostatnich 7 dni, raz w tygodniu (zmiana 2026-11-08: wcześniej codziennie; codzienną mowę opisuje dziennik bloków). Cel końcowy: SR 0–1 przy technice 1–2.
 - **Technika 0–8**: 0 – naturalnie, 8 – maksymalnie przesadnie.
 - **%SS** (procent zająkniętych sylab): 3–5-minutowe nagranie monologu lub telefonu; zająknięte sylaby ÷ wszystkie × 100. Jedna osoba oceniająca jest mało rzetelna – policz dwa razy (Ty + partnerka/logopedka) i uśrednij ([Karimi i in.](https://research.bond.edu.au/en/publications/absolute-and-relative-reliability-of-percentage-of-syllables-stut/)).
 - **SUDS 0–10** – subiektywny stres w danej sytuacji; **unikanie**: rzadko / czasem / zwykle.

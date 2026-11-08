@@ -11,8 +11,13 @@ Repo = vault Obsidiana + kod. Zacznij od `00 Start/Start.md`, potem `wiki/decyzj
 - Treści medyczne: aplikacja wspiera terapię, nie zastępuje logopedy; nie diagnozujemy; nie etykietujemy emocji, których użytkownik nie nazwał. Treść ćwiczeń tylko ze źródłem w `wiki/program/Program płynności.md` albo po akceptacji Alka.
 - Target, nie proces: nie dodajemy CI, linterów, Spec Kitu, frameworków, dopóki nie boli. Każda decyzja z rekomendacją, nie „wybierz sam”.
 
+## Git i dwa okna
+- Gitflow lekki: `main` = opublikowana wersja (tag `vN`), `develop` = integracja, `feature/*` (okno B – Rozwój), `fix/*` (okno A – Dogfood), `hotfix/*` z `main`. Szczegóły: `wiki/operacje/Git i gałęzie.md`.
+- Nigdy nie commituj prosto na `main`/`develop`; publikuj artefakt tylko z `main` po wydaniu. Przed pracą i przed PR: `git fetch && git rebase origin/develop`.
+- Plan, kamienie milowe i podział pracy okien: `wiki/produkt/Plan działania.md`. Zmiany widoczne dla Alka dopisuj do `CHANGELOG.md`.
+
 ## Workflow
-1. Zmiana → `node --check` na wyekstrahowanym skrypcie → `node test/run.js && node test/round2.js` (Playwright, headless Chromium, 390×844, `file://`; szczegóły `wiki/operacje/Testy.md`). Zielone = exit 0, puste `*.errors`, brak `*.EXCEPTION` w `test/*results.json`.
+1. Zmiana → `node --check` na wyekstrahowanym skrypcie → `node test/run.js && node test/round2.js && node test/round3.js` (Playwright, headless Chromium, 390×844, `file://`; szczegóły `wiki/operacje/Testy.md`). Zielone = exit 0, puste `*.errors`, brak `*.EXCEPTION` w `test/*results.json`.
 2. Większe funkcje (logika dnia/tygodnia, stan, timer, mapa, ocena): budowniczy → niezależny tester + recenzent kodu (osobni agenci, bez twierdzeń budowniczego) → poprawki → publikacja.
 3. Publikacja: narzędzie Artifact `read` + `publish` na https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P (slug `6d11a925-4902-461b-9300-077502bbab5e`), bez podawania `capabilities` (zostaje `sample`).
 4. Po pracy: wpis w `wiki/decyzje/Decision log.md` (jeśli decyzja), „Aktualny stan” w `00 Start/Start.md`, commit.

@@ -1,8 +1,40 @@
-# Płynność – backlog i plan rozwoju aplikacji
+# Płynność – backlog
 
-Właściciel: Alek. Stan na 2026-11-07.
+Właściciel: Alek. Aktualizacja: 2026-11-08. Kamienie milowe i zasady okien: [[Plan działania]].
+Okno **A** = Dogfood (poprawki z codziennego używania), okno **B** = Rozwój (funkcje z planu). Status: ☐ do zrobienia · ◐ w toku · ☑ zrobione · ⏸ czeka na Alka.
 
-## Pomysły od Alka (w kolejności zgłoszenia)
+## Teraz – M0 Fundament (do 13.11)
+| Status | ID | Co | Okno | Uwagi |
+| --- | --- | --- | --- | --- |
+| ◐ | v4 | Feedback dnia 2: wdech 3 s, legenda SR, SR tygodniowo, „Start na sygnał”, dzień zaliczony zostaje | B | tester + recenzent w toku; wydanie po czystej rundzie |
+| ⏸ | B1 | Repo `jestemalek1/plynnosc` na GitHubie | Alek | warunek pracy w dwóch oknach |
+| ☐ | A5 | Podział `app/index.html` na `styles.css`, `data.js`, `map.js`, `app.js` | B | pierwsze zadanie okna B; do tego czasu okno A nie zmienia kodu |
+| ☐ | #18 | „Uwaga do apki”: jedno zdanie z dowolnego ekranu, lista uwag + kopiuj | A | zbieranie dogfoodu bez wychodzenia z treningu |
+| ☐ | #15 | Eksport/import danych (JSON) | B | dane są tylko w jednym telefonie |
+
+## Następne – M1 Stabilnie (do 21.11)
+| Status | ID | Co | Okno | Uwagi |
+| --- | --- | --- | --- | --- |
+| ☐ | R3–R7 | Poprawki z recenzji: błąd od dnia 85, sonda Claude bez kliknięcia, stary wynik oceny, pasek kart po klawiaturze, sanityzacja stanu | B | [[Review kodu v3 – niezależny]] |
+| ☐ | WL | Wake Lock w timerach (ekran nie gaśnie) | A | |
+| ⏸ | B4 | Transkrypcja PL: test Whisper na jednym monologu | Alek | [[Transkrypcja PL – research]] |
+| ⏸ | B2 | Konsultacja 10.11 → wnioski do programu | Alek | lista pytań w [[Decyzje do podjęcia]] |
+
+## M2 Tydzień 4 gotowy (do 27.11)
+| Status | ID | Co | Okno |
+| --- | --- | --- | --- |
+| ☐ | T4–6 | Treść tygodni 4–6: wydłużona mowa (D), cykle Camperdown, dobrowolne jąkanie (G), anulowanie (H) | B |
+
+## Później – M3/M4
+| ID | Co | Kamień |
+| --- | --- | --- |
+| #12 | Jedno pytanie z monologu (samorozwój) | M3 |
+| #13 | English card z nagrania EN | M3 |
+| B7 | Tryb szybki 10 min (decyzja po tyg. 3) | M3 |
+| T7–12 | Treść tygodni 7–12 i utrzymanie | M4 |
+| #14 | „Psychoanaliza” z nagrań – po dostarczeniu plików z sesji „AI lab” | M4 |
+
+## Zgłoszenia (historia, w kolejności)
 
 1. **Jedna skala wszędzie** – SR 0–8 jako kolorowy pasek do kliknięcia; żadnych innych skal (0–10 wypada).
 2. **Ściągawka SR na stronie** – widoczna, intuicyjna, nie tekst.
@@ -24,6 +56,9 @@ Właściciel: Alek. Stan na 2026-11-07.
 
 15. **Eksport/import danych (JSON)** – dane tylko w localStorage jednego telefonu; eksport przez capability `downloads`, import przez wklejenie. Zgłoszone 2026-11-07 (sesja Claude Code), decyzja B5 w [[Decyzje do podjęcia]].
 16. **Poprawki z niezależnej recenzji v3 (R1–R11)** – [[Review kodu v3 – niezależny]]; R1–R6 przed treścią tygodnia 4. Zgłoszone 2026-11-07.
+
+18. **„Uwaga do apki” (dogfooding)** – szybkie zapisywanie uwag do apki w trakcie treningu. Zgłoszone 2026-11-08 (wniosek z podejścia dogfoodingowego).
+17. **Feedback dnia 2** – wdech za szybki, brak legendy SR przy ocenie, SR dnia zbędny na starcie, za mało ćwiczeń. Zgłoszone 2026-11-08. Wdrożone w v4 (patrz [[Decision log]] 2026-11-08).
 
 ## Dane bazowe (dzień 1, 2026-11-07)
 

@@ -23,7 +23,7 @@ Każda pozycja ma rekomendację i kroki. Odhaczasz `[x]`, dopisujesz jedną lini
 
 ## B. Biznesowe / produktowe — czekają na Ciebie
 
-- [ ] **B1. Repo na GitHubie.** Rekomendacja: prywatne repo `jestemalek1/plynnosc`, push od razu. Powód: kopia poza sesją w chmurze, sesje Claude Code mogą startować z repo, historia zmian apki.
+- [ ] **B1. Repo na GitHubie.** Status 2026-11-08: lokalnie gotowe (`main`, `develop`, gałąź `feature/dzien2-feedback`), czeka na puste repo na GitHubie. Zasady: [[Git i gałęzie]]. Rekomendacja: prywatne repo `jestemalek1/plynnosc`, push od razu. Powód: kopia poza sesją w chmurze, sesje Claude Code mogą startować z repo, historia zmian apki.
   Kroki: (1) github.com → New repository → `plynnosc`, Private, bez README. (2) W sesji Claude Code: „podłącz repo jestemalek1/plynnosc z prawem push i wypchnij `main`”. (3) Sprawdź, że `app/index.html` jest w repo. Alternatywa: zostawić zip z tej sesji jako kopię (słabsze).
 - [ ] **B2. Specjalista — poniedziałek 10.11.** Rekomendacja: najpierw Fundacja FIKS (793 001 160, darmowa diagnoza, Camperdown online), Jankiewicz (509 812 667, 145 zł) jako plan B.
   Na rozmowę weź: [[Kontekst i profil]] (profil + dane bazowe), pytania: (a) czy program zintegrowany w [[Program płynności]] jest OK dla bloków „na start wymuszony z zewnątrz”, (b) kolejność tygodni 4–12 (D wydłużona mowa / E frazowanie / G dobrowolne jąkanie / H anulowanie-wyślizg), (c) co z leczeniem ADHD a jąkaniem, (d) jak często kontrola. Wynik → jedna linia tu, agent przenosi do [[Decision log]] i do treści tygodni.
@@ -36,6 +36,9 @@ Każda pozycja ma rekomendację i kroki. Odhaczasz `[x]`, dopisujesz jedną lini
 - [ ] **B7. Tryb „szybki” 10 min.** Rekomendacja: odłożyć do końca tygodnia 3 — wtedy zobaczymy w Postępach, czy są dni opuszczone z braku czasu.
 - [ ] **B8. #14 „psychoanaliza” z nagrań.** Rekomendacja: #12 (jedno pytanie dziennie, już zresearchowane) wchodzi pierwsze; #14 czeka, aż dostarczysz pliki designu z sesji „AI lab” (repo/eksport/plik). Bez tych plików agent nie adaptuje pipeline'u.
 - [ ] **B9. Diagnostyka ADHD a baseline.** Rekomendacja: umów diagnostykę; przed ewentualnym lekiem zrób eksport danych (B5) i cztery nagrania bazowe jak w dniu 1. Lekarzowi powiedz o jąkaniu (dobór leku).
+
+- [ ] **B10. HLD.** Alek ma gotowy HLD; porównanie z [[Plan działania]] (sekcja „Nasz obecny plan w skrócie”) po dostarczeniu pliku. Do tego czasu nie zmieniamy architektury.
+- [ ] **B11. Dwa okna.** Rekomendacja: TAK, okno A – Dogfood i okno B – Rozwój, ale dopiero po repo na GitHubie i podziale pliku (A5). Szczegóły: [[Plan działania]].
 
 ## Zrobione w tej sesji (do wiadomości)
 - Harness testowy uruchomiony w repo: oba skrypty zielone (exit 0, brak błędów konsoli i wyjątków), 38 zrzutów.

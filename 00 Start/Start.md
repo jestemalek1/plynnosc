@@ -7,7 +7,9 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - [[Kontekst i profil]] — po co to jest, kim jest użytkownik, co już ustalone
 - [[Decyzje do podjęcia]] — co czeka na Alka, z instrukcją krok po kroku (TL;DR z sesji 7.11: `wiki/decyzje/TLDR 2026-11-07.html`)
 - [[Decision log]] — co już postanowione i dlaczego
-- [[Backlog]] — pomysły i plan funkcji (14 pozycji)
+- [[Plan działania]] — kamienie milowe, dwa okna, pętla dogfoodingu
+- [[Backlog]] — co teraz, co następne, kto (okno A / B)
+- [[Git i gałęzie]] — gitflow lekki, wydania, hotfix
 - [[Program płynności]] — źródło prawdy dla treści ćwiczeń i progresji
 - [[Architektura aplikacji]] — jak zbudowana jest apka i plan podziału na pliki
 - [[Publikacja (artefakt claude.ai)]] — ograniczenia środowiska i jak publikować

@@ -4,6 +4,16 @@ Format: data — decyzja. Krótko: co, dlaczego, kiedy wracamy. Otwarte sprawy s
 
 ## Aktywne decyzje
 
+### 2026-11-08 — v4 po feedbacku z dnia 2 (Alek)
+Feedback: oddech za szybki (potrzebna chwila między wdechem a wydechem), brak opisu skali przy ocenie SR, „SR dnia” bez sensu na tym etapie, za mało ćwiczeń.
+Decyzje:
+- **Wdech 3 s z odliczaniem, bez zatrzymania na górze.** Timer dawał 2 s, a instrukcja mówiła 2–3 s, więc to był błąd. Pauzy na górze wdechu nie dodajemy: wstrzymane powietrze plus docisk to mechanizm bloku ([[Program płynności]], reguła 1). Czas na myśl jest w trakcie wdechu, bo słowo widać już wtedy.
+- **Legenda SR zawsze widoczna** pod każdą skalą (jedna na kartę).
+- **SR raz w tygodniu** (dzień 7, 14, …: „SR tygodnia”, typowe i najgorsze z 7 dni) zamiast codziennie. Zgodne z [[02 Protokoły ćwiczeń – raport agenta]] §3 „Pomiar (tygodniowo)” i tygodniowym trackerem w programie. Codzienną mowę opisuje dziennik. Wracamy w tygodniu 9 (kryterium „typowe dzienne SR ≈ 1”).
+- **Nowe ćwiczenie „Start na sygnał”** w tygodniach 1–3: losowe 2–6 s czekania, sygnał i krótkie pytanie (PL/EN), odpowiedź na wydechu, 10 rund. Źródło: zalecenie treningu startu „na sygnał” w [[Program płynności]] (profil: bloki przy starcie wyznaczonym z zewnątrz).
+- **Zaliczony dzień zostaje zaliczony** (flaga `complete`, migracja v1→v2). Poprawka R1 i R2 z [[Review kodu v3 – niezależny]].
+Dawka: realny czas mówienia w tygodniu 1 rośnie z ok. 4 do ok. 6–7 min. To nadal poniżej 10–15 min z programu; pełna dawka przychodzi z blokiem głównym (cykle Camperdown) od tygodnia 4–5.
+
 ### 2026-11-07 — Jedno repo = vault Obsidian + kod
 Decyzja: `plynnosc` jest jednocześnie vaultem Obsidiana (`.obsidian/`, `00 Start/`, `wiki/`, `templates/`) i repo kodu (`app/`, `test/`). W `intradero-knowledge` wiedza i kod były osobno — tu projekt jest jednoosobowy i ma jedną apkę, więc dwa repo to koszt bez zysku.
 Konsekwencje: Obsidian pokazuje tylko `.md` (pliki `.html`/`.js` ukryte). Wracamy, gdy pojawi się drugi produkt albo drugi współpracownik.
