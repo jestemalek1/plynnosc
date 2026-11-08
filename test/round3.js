@@ -387,6 +387,24 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
       verdict('R6', r.active === 'TEXTAREA' && r.value === 'spotkanie XYZ' && !r.onMap && r.monoQuestions, 'day 2: monolog timer ends while typing -> focus ' + r.active + ', value "' + r.value + '", monolog questions shown ' + r.monoQuestions);
       log('R6.monologErrors', v.page.__errors); await v.c.close();
     }
+    // Oddech A ends while typing in the diary: the next card auto-expands above the diary; the field must stay where it was (also without scroll anchoring, as in Safari)
+    {
+      const res = {};
+      for (const anchoring of ['auto', 'none']) {
+        const v = await ctx(browser, { time: D(2), init: anchoring === 'none' ? `document.addEventListener('DOMContentLoaded', () => { const s = document.createElement('style'); s.textContent = '* { overflow-anchor: none !important; }'; document.head.appendChild(s); });` : undefined });
+        await v.page.goto(URL); await v.page.waitForTimeout(100); await openToday(v.page);
+        await card(v.page, 'Oddech A').locator('.timer button.big').click();
+        const dz4 = await expand(v.page, 'Dziennik bloków');
+        await dz4.locator('textarea').click(); await v.page.keyboard.type('rozmowa', { delay: 5 });
+        const before = await v.page.evaluate(() => Math.round(document.querySelector('#s-dzis textarea').getBoundingClientRect().top));
+        await v.page.clock.runFor(121000); await v.page.waitForTimeout(50);
+        const after = await v.page.evaluate(() => ({ top: Math.round(document.querySelector('#s-dzis textarea').getBoundingClientRect().top), active: document.activeElement.tagName, oddechDone: [...document.querySelectorAll('#s-dzis .card.done h2')].some(h => h.textContent === 'Oddech A') }));
+        res[anchoring] = { before, after, errors: v.page.__errors }; await v.c.close();
+      }
+      log('R6.fieldStaysInPlace', res);
+      verdict('R6', ['auto', 'none'].every(a => res[a].after.oddechDone && res[a].after.active === 'TEXTAREA' && Math.abs(res[a].after.top - res[a].before) <= 3),
+        'Oddech A ends while typing: textarea top ' + ['auto', 'none'].map(a => a + ' ' + res[a].before + '→' + res[a].after.top).join(', ') + ' (overflow-anchor), focus ' + res.none.after.active);
+    }
     // day completed by the diary, user keeps typing, then taps „Zmień” on SR tygodnia: no deferred jump to the map (v3 behaviour)
     {
       const seed3 = { v: 2, days: { [KEY(7)]: { done: ['oddech', 'sygnal', 'monolog', 'sr'], reps: { oddech: 12, sygnal: 10 }, monolog: { ran: true, breath: 'tak', sr: 2, lang: 'pl', topic: 1 }, sr: { typ: 2, max: 4 } } } };
