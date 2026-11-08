@@ -501,7 +501,11 @@
     function stop() { if (iv) clearInterval(iv); iv = null; }
     function toggle() {
       primeAudio();
-      if (status === 'run' || status === 'gap') { pausedIn = status; leftMs = Math.max(0, endAt - Date.now()); status = 'pause'; stop(); draw(); return; }
+      if (status === 'run' || status === 'gap') {
+        // v4: z przerwą na wdech po pauzie zawsze pełny odliczany wdech, a przerwane powtórzenie liczy się od nowa.
+        if (gap > 0) { pausedIn = 'gap'; leftMs = gap * 1000; } else { pausedIn = status; leftMs = Math.max(0, endAt - Date.now()); }
+        status = 'pause'; stop(); draw(); return;
+      }
       if (status === 'pause') { status = pausedIn; endAt = Date.now() + leftMs; run(); draw(); return; }
       if (status === 'done') { idx = 0; if (opts.onReset) opts.onReset(); }
       if (opts.onStart) opts.onStart();
@@ -801,7 +805,14 @@
   function exTitle(k, ex) { var d = peekDay(k); return ex === 'sr' && d && d.baseline ? 'SR dnia' : EX_META[ex].title; }
   function isDone(k, ex) { var d = peekDay(k); return !!d && d.done.indexOf(ex) >= 0; }
   function refreshComplete(k) { var d = day(k); if (!d.complete && exercisesFor(k).every(function (e) { return d.done.indexOf(e) >= 0; })) d.complete = true; }
-  function markDone(k, ex) { if (cards[ex] && isField(document.activeElement)) return markDoneInPlace(k, ex); var d = day(k); if (d.done.indexOf(ex) < 0) d.done.push(ex); refreshComplete(k); save(); recent[ex] = true; renderDzis(); scrollToNext(k); if (allListedDone(k)) scheduleReturn(k); }
+  function markDone(k, ex) {
+    if (cards[ex] && isField(document.activeElement)) {
+      // Fokus w polu (np. dziennik): bez przebudowy ekranu. Pole w tej samej karcie – łatka w miejscu; w innej karcie – przebudowa tylko tej karty.
+      if (cards[ex].contains(document.activeElement)) return markDoneInPlace(k, ex);
+      var dd = day(k); if (dd.done.indexOf(ex) < 0) dd.done.push(ex); refreshComplete(k); save(); recent[ex] = true;
+      rebuildCard(k, ex); if (allListedDone(k)) scheduleReturn(k); return;
+    }
+    var d = day(k); if (d.done.indexOf(ex) < 0) d.done.push(ex); refreshComplete(k); save(); recent[ex] = true; renderDzis(); scrollToNext(k); if (allListedDone(k)) scheduleReturn(k); }
   function scrollToNext(k) {
     var nextEx = exercisesFor(k).filter(function (e) { return !isDone(k, e); })[0];
     var target = nextEx ? cards[nextEx] : hdr.banner;
@@ -817,6 +828,11 @@
     updateHeader();
     if (allListedDone(k)) scheduleReturn(k);
   }
+  function rebuildCard(k, ex) {
+    var old = cards[ex]; if (!old || !old.parentNode) { renderDzis(); return; }
+    var c = exerciseCard(k, ex, old.classList.contains('current')); old.parentNode.replaceChild(c, old); cards[ex] = c; updateHeader();
+  }
+  function renderOrRebuild(k, ex) { var ae = document.activeElement; if (cards[ex] && isField(ae) && !cards[ex].contains(ae)) rebuildCard(k, ex); else renderDzis(); }
   function unmark(k, ex) { var d = day(k); d.done = d.done.filter(function (x) { return x !== ex; }); delete recent[ex]; save(); }
   function allListedDone(k) { var d = peekDay(k); return !!d && exercisesFor(k).every(function (e) { return d.done.indexOf(e) >= 0; }); }
   function isDayDone(k) { var d = peekDay(k); if (!d) return false; if (d.complete) return true; return exercisesFor(k).every(function (e) { return d.done.indexOf(e) >= 0; }); }
@@ -1114,7 +1130,7 @@
         TopicCard(body, m, function () { save(); phase.cue = cueFor(); if (timer) timer.redraw(); });
         timer = Timer(body, { phases: [phase], gap: 0, startLabel: 'Start 2:00',
           onStart: function () { markSeen('monolog'); if (ins) ins.collapse(); },
-          onDone: function () { m.ran = true; save(); renderDzis(); } });
+          onDone: function () { m.ran = true; save(); renderOrRebuild(k, 'monolog'); } });
         body.appendChild(h('div', { class: 'row' }, h('button', { class: 'plain', type: 'button', text: 'Już mówiłem – przejdź do pytań', onclick: function () { m.ran = true; markSeen('monolog'); save(); renderDzis(); } })));
         ins = fullInstructions(body, 'monolog');
         return;

@@ -168,10 +168,20 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
       await o2.locator('.timer button.big').click(); const paused = await sn();
       await v.page.clock.runFor(6000); const later = await sn();
       await o2.locator('.timer button.big').click(); const resumed = await sn();
-      await v.page.clock.runFor(2200); const afterInhale = await sn();
-      log('R2.pauseInInhale', { inGap, paused, later, resumed, afterInhale });
-      verdict('R2', inGap.gap && paused.btn === 'Wznów' && paused.cue === 'Wdech nosem' && paused.clock === '0:02' && later.clock === '0:02' && resumed.gap && resumed.clock === '0:02' && !afterInhale.gap && afterInhale.cue === 'fff' && afterInhale.reps.startsWith('1 '),
-        'pause during inhale: ' + JSON.stringify(paused) + '; 6 s later ' + later.clock + '; resume -> gap=' + resumed.gap + ' ' + resumed.clock + '; +2.2 s -> ' + afterInhale.cue + ' (' + afterInhale.reps + ')');
+      await v.page.clock.runFor(1200); const resumed1 = await sn();
+      await v.page.clock.runFor(2000); const afterInhale = await sn();
+      log('R2.pauseInInhale', { inGap, paused, later, resumed, resumed1, afterInhale });
+      verdict('R2', inGap.gap && paused.btn === 'Wznów' && paused.cue === 'Wdech nosem' && paused.clock === '0:03' && later.clock === '0:03' && resumed.gap && resumed.clock === '0:03' && resumed1.gap && resumed1.clock === '0:02' && !afterInhale.gap && afterInhale.cue === 'fff' && afterInhale.clock === '0:07' && afterInhale.reps.startsWith('1 '),
+        'pause during inhale: ' + JSON.stringify(paused) + '; 6 s later ' + later.clock + '; resume -> full inhale gap=' + resumed.gap + ' ' + resumed.clock + ', +1.2 s ' + resumed1.clock + '; +3.2 s -> ' + afterInhale.cue + ' ' + afterInhale.clock + ' (' + afterInhale.reps + ')');
+      // pause during an exhale: resume starts with the full inhale and the interrupted rep again in full
+      await v.page.clock.runFor(2000); const inRun = await sn(); // rep 2 running, ~5 s left
+      await o2.locator('.timer button.big').click(); const pausedRun = await sn();
+      await v.page.clock.runFor(4000);
+      await o2.locator('.timer button.big').click(); const resumedRun = await sn();
+      await v.page.clock.runFor(3200); const repAgain = await sn();
+      log('R2.pauseInExhale', { inRun, pausedRun, resumedRun, repAgain });
+      verdict('R2', !inRun.gap && inRun.cue === 'fff' && pausedRun.cue === 'Wdech nosem' && pausedRun.clock === '0:03' && resumedRun.gap && resumedRun.clock === '0:03' && repAgain.cue === 'fff' && repAgain.clock === '0:07' && repAgain.reps.startsWith('1 '),
+        'pause during exhale (' + inRun.clock + ' left): paused shows ' + pausedRun.cue + ' ' + pausedRun.clock + '; resume -> gap ' + resumedRun.clock + '; +3.2 s -> ' + repAgain.cue + ' ' + repAgain.clock + ' (' + repAgain.reps + ', rep restarts)');
       log('R2.pauseErrors', v.page.__errors); await v.c.close();
     }
   });
@@ -362,6 +372,21 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
     verdict('R6', !whileFocused.onMap && whileFocused.active === 'TEXTAREA' && whileFocused.napDone.includes('Identyfikacja napięcia') && value === 'czytanie raportu · start: ja' && afterBlur && st.days[KEY(9)].complete,
       'day 9: napięcie timer ends while typing -> focus kept (' + whileFocused.active + '), done ' + JSON.stringify(whileFocused.napDone) + ', value "' + value + '", after blur onMap=' + afterBlur);
     log('R6.timerErrors', page.__errors); await c.close();
+    // monolog timer ends while typing in the diary: focus and text stay, monolog card switches to the questions
+    {
+      const seed2 = { v: 2, days: { [KEY(2)]: { done: ['oddech', 'sygnal'], reps: { oddech: 12, sygnal: 10 }, monolog: { lang: 'pl', topic: 1 } } } };
+      const v = await ctx(browser, { time: D(2), init: `localStorage.setItem('plynnosc', ${JSON.stringify(JSON.stringify(seed2))})` });
+      await v.page.goto(URL); await v.page.waitForTimeout(100); await openToday(v.page);
+      await (await expand(v.page, 'Luźny monolog')).locator('.timer button.big').click();
+      const dz2 = await expand(v.page, 'Dziennik bloków');
+      await dz2.locator('textarea').click(); await v.page.keyboard.type('spotkanie', { delay: 5 });
+      await v.page.clock.runFor(121000); await v.page.waitForTimeout(50);
+      await v.page.keyboard.type(' XYZ', { delay: 5 });
+      const r = await v.page.evaluate(() => ({ active: document.activeElement && document.activeElement.tagName, value: (document.querySelector('#s-dzis textarea') || {}).value, onMap: !!document.querySelector('#s-dzis svg.map'), monoQuestions: [...document.querySelectorAll('#s-dzis .card h3')].some(h => h.textContent === 'Po monologu') }));
+      log('R6.monologEndsWhileTyping', r);
+      verdict('R6', r.active === 'TEXTAREA' && r.value === 'spotkanie XYZ' && !r.onMap && r.monoQuestions, 'day 2: monolog timer ends while typing -> focus ' + r.active + ', value "' + r.value + '", monolog questions shown ' + r.monoQuestions);
+      log('R6.monologErrors', v.page.__errors); await v.c.close();
+    }
   });
 
   // ===== R7: no console errors on any tab, days 1,2,7,8,15,22,85 =====
@@ -396,11 +421,15 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
       await c.close();
     }
     log('R7.days', res);
+    verdict('R7', res[85].steps.includes('session:Dzień 85'), 'day 85 session opens (arrow from day 84): ' + JSON.stringify(res[85].steps.slice(0, 2)));
     const bad = Object.keys(res).filter(n => res[n].errors.length);
     verdict('R7', bad.length === 0, bad.length ? 'errors on days ' + bad.join(',') + ': ' + bad.map(n => n + ' ' + JSON.stringify(res[n].errors.slice(0, 2))).join('; ') : 'no console/page errors on days 1,2,7,8,15,22,84,85 across all tabs');
   });
 
   await browser.close();
+  // every console/page error logged anywhere (also nested, e.g. R1.detail.*Errors) fails the run
+  const errs = []; (function scan(o, p) { if (!o || typeof o !== 'object') return; for (const k of Object.keys(o)) { if (/errors$/i.test(k) && Array.isArray(o[k]) && o[k].length) errs.push(p + k + ': ' + JSON.stringify(o[k]).slice(0, 200)); else scan(o[k], p + k + '.'); } })(R, '');
+  verdict('ERR', errs.length === 0, errs.length ? errs.join('; ') : 'no console/page errors in any section');
   R.verdicts = V;
   fs.writeFileSync(OUT + 'round3_results.json', JSON.stringify(R, null, 1));
   console.log('\nSUMMARY');
