@@ -26,17 +26,17 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - [[Transkrypcja PL – research]]
 - [[Review kodu v3 – niezależny]]
 
-## Aktualny stan (2026-11-07)
-- v3 opublikowana jako artefakt (slug `6d11a925-4902-461b-9300-077502bbab5e`, capability `sample`). Plik `app/index.html` w repo jest bajt w bajt tą wersją.
-- Harness testowy przeniesiony do repo i uniezależniony od ścieżek (patrz [[Testy]]).
-- Tygodnie 1–3 mają treść; tygodnie 4–12 to placeholder (dziennik + SR). Termin: przed 28.11.2026.
-- Konsultacje ze specjalistą: poniedziałek 10.11 (FIKS / Jankiewicz) — patrz [[Decyzje do podjęcia]].
-- Niezależna recenzja kodu: 11 ryzyk, R1–R6 do poprawy przed treścią tygodnia 4 ([[Review kodu v3 – niezależny]]). Research transkrypcji PL gotowy ([[Transkrypcja PL – research]]).
-- Repo lokalne z pierwszym commitem; nie wypchnięte na GitHub (decyzja B1).
+## Aktualny stan (2026-11-08, sesja decyzji HLD)
+- [[HLD v1]] uzupełniony i wiodący (kopia w vaultcie, `.docx` = historia): utrzymanie (B18), ocena mowy przez AI z nagrania i rozmowy na żywo (B19), minimum bezpieczeństwa (B20), refleksja z nagrań z zabezpieczeniami (B17), §7 prototyp n=1 (B12).
+- Decyzje: B12 (narzędzie Alka → aplikacja przez dogfooding; trening nadrzędny; silnik, ocena AI, wywiad później), B14 (zadanie w terenie przed 14.11), B15 (zamiana słów jako fakt w dzienniku; SR 0–8 jedyną skalą). [[Decision log]].
+- [[Backlog]]: każda pozycja ma moduł HLD; roadmapa M0–M4 + utrzymanie i lista na 2 tygodnie w [[Plan działania]].
+- v4 w przygotowaniu na `feature/dzien2-feedback` (tester przerwany: `feature/testy-v4-wip`). Opublikowana jest nadal v3.
+- Otwarte decyzje: B13, B16, B17 (#12, #13).
 
 ## Następna akcja
-1. Alek: przejrzeć [[Decyzje do podjęcia]] i odhaczyć.
-2. Agent: po decyzjach — podział `app/index.html` na pliki (Opcja A) i treść tygodni 4–6.
+1. Okno B: domknąć v4 (tester + recenzent) i przygotować treść kart „Zadanie w terenie” tygodni 2–3 do akceptacji.
+2. Alek: konsultacja 10.11 – [[Kontekst i profil]], pytania z B2, kolejność szczebli hierarchii.
+3. Poza vaultem: doprecyzować w `CLAUDE.md` zasadę „jedna skala” wg B15.
 
 ## Inbox / Review
 - [[Inbox]] · [[Review]]

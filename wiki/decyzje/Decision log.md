@@ -4,6 +4,12 @@ Format: data — decyzja. Krótko: co, dlaczego, kiedy wracamy. Otwarte sprawy s
 
 ## Aktywne decyzje
 
+### 2026-11-08 — B15: zamiana słów i odpuszczone sytuacje jako fakty w dzienniku; zasada jednej skali doprecyzowana (Alek)
+Decyzja (HLD 06): w dzienniku bloków dwa przełączniki jednym dotknięciem: „zamieniłem słowo” i „odpuściłem sytuację”. Karta „SR tygodnia” pokazuje sumę z 7 dni. Bez pytań z pamięci o cały tydzień, bez SUDS i skali komfortu. OASES – z logopedką.
+**Zasada pomiaru:** jedna skala SR 0–8 tylko dla nasilenia jąkania i poziomu techniki; wszystko inne to fakt tak/nie albo licznik liczony przez apkę. Wyjątek: „Oddech po frazach: tak / częściowo / nie” zostaje.
+Rozważone i odrzucone: wszystko w skali 0–5 z przeliczeniami. Powody: progi programu leżą na dole 0–8 (cel SR 0–1, powrót przy ≥2, tydz. 10 „najgorsze ≤ 2”) i w 0–5 znikają; przeliczenie jest jednokierunkowe; logopeda (Camperdown, FIKS) pracuje w 0–8; dane bazowe są w 0–8. Mniej wyborów daje rezygnacja z dodatkowych skal, nie zmiana skali.
+Termin: M1, okno B, w rundzie z R3–R7. Do wdrożenia zamiany zapisywane w notatce dnia. Do zrobienia poza vaultem: doprecyzować w `CLAUDE.md` brzmienie zasady „jedna skala”.
+
 ### 2026-11-08 — B14: zadanie w terenie w apce od tygodnia 2, w M0 (Alek)
 Decyzja (HLD 05): na ekranie Dziś od tygodnia 2 jedna karta „Zadanie w terenie” z tabeli progresji [[Program płynności]] (szczebel + technika, format „Co robisz / Jak to ma brzmieć / Czego nie robić / Dlaczego”). Dwa przyciski: „Użyłem techniki” / „Dziś nie”, bez skali – cel to użycie techniki, nie płynność.
 - Karta **nie blokuje zaliczenia dnia**: zadanie dzieje się zwykle poza sesją; inaczej psułby się streak (błąd tej samej klasy co R1).

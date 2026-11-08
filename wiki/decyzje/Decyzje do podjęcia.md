@@ -41,7 +41,7 @@ Każda pozycja ma rekomendację i kroki. Odhaczasz `[x]`, dopisujesz jedną lini
 - [x] **B12. Czym jest ta apka: narzędziem dla Ciebie czy prototypem produktu z HLD?** Decyzja: narzędzie dla mnie, które przez dogfooding zmieniam w aplikację z HLD; mój trening to cel nadrzędny. Silnik (03), ocena AI (B19), wywiad (01) i 07 – później, po dopracowaniu funkcjonalności. W backlogu tylko to, co wynika z HLD. Pierwotna rekomendacja: Rekomendacja: prototyp dogfoodowany na sobie. Moduły HLD budujemy w wersji „dla jednej osoby” w obecnej apce (bez kont, backendu, panelu). Decyzję o produkcie rynkowym (stack, RODO, wyroby medyczne, MVP) podejmujemy po M2/M3 na podstawie własnych danych. Skutek: od teraz backlog jest przypisany do modułów 01–08.
 - [ ] **B13. Generator planu v0: przejście tygodnia po kryterium, nie po dacie.** Stan po B12: silnik odłożony; do rozstrzygnięcia, co z kryterium do tego czasu. Pierwotna rekomendacja: TAK, w M2 razem z tygodniami 4–6. Tak mówi nasz własny program; dziś apka przesuwa tydzień z kalendarzem.
 - [x] **B14. Zadanie w terenie w apce (moduł 05).** Decyzja: TAK, w M0 przed 14.11; karta nie blokuje zaliczenia dnia; szczeble z mojej hierarchii z dnia 1; #18 do M1. Pierwotnie: Rekomendacja: TAK, w M1. Jedno zadanie dziennie z programu + „zrobione / nie”. To jest transfer, którego brakowało w poprzedniej terapii.
-- [ ] **B15. Pomiar unikania i zamiany słów (moduł 06).** Rekomendacja: TAK, 2 pytania w karcie „SR tygodnia”, w M1.
+- [x] **B15. Pomiar unikania i zamiany słów (moduł 06).** Decyzja: przełączniki „zamieniłem słowo” / „odpuściłem sytuację” w dzienniku, suma w SR tygodnia; bez SUDS i komfortu; SR 0–8 zostaje, poza nim tylko tak/nie albo licznik („Oddech po frazach: częściowo” zostaje). Pierwotnie: Rekomendacja: TAK, 2 pytania w karcie „SR tygodnia”, w M1.
 - [ ] **B16. Raport dla logopedy (moduł 08 w wersji minimum).** Rekomendacja: TAK, w M1. Jedna strona do skopiowania przed konsultacją.
 - [ ] **B17. #13 angielski i #12/#14 samorozwój są poza HLD.** Częściowo: #14 → HLD 07 jako „refleksja z nagrań” z zabezpieczeniami, poza MVP. Otwarte: #12, #13 (zasada B12: poza HLD = poza backlogiem). Pierwotnie: Rekomendacja: zostają jako Twoje dodatki (M3/M4), oznaczone „poza HLD”; nie wchodzą do zakresu produktu bez osobnej decyzji.
 - [x] **B18. Utrzymanie i nawroty w HLD.** Decyzja: dopisać do HLD (03, 06, §4).
@@ -49,7 +49,10 @@ Każda pozycja ma rekomendację i kroki. Odhaczasz `[x]`, dopisujesz jedną lini
 - [x] **B20. Minimum bezpieczeństwa z §6.** Decyzja: zapisać w HLD z przypisaniem do modułów.
 - [ ] **B11. Dwa okna.** Rekomendacja: TAK, okno A – Dogfood i okno B – Rozwój, ale dopiero po repo na GitHubie i podziale pliku (A5). Szczegóły: [[Plan działania]].
 
-## Zrobione w tej sesji (do wiadomości)
+## Zostało otwarte po sesji HLD (8.11)
+B13 (kryterium przejścia tygodnia przy odłożonym silniku), B16 (raport dla logopedy w M1), B17 (#12 i #13: do HLD czy poza; poza HLD = poza backlogiem). Do tego czasu nie są realizowane. Pytania na później (MVP, RODO, wyroby medyczne, stack): [[Plan działania]].
+
+## Zrobione w sesji 7.11 (do wiadomości)
 - Harness testowy uruchomiony w repo: oba skrypty zielone (exit 0, brak błędów konsoli i wyjątków), 38 zrzutów.
 - Opublikowana wersja apki = `app/index.html` (sprawdzone bajt w bajt). Nic nie republikowałem.
 - Vault Obsidiana postawiony, dokumenty z handoffu rozłożone po `wiki/`, HANDOFF w archiwum.

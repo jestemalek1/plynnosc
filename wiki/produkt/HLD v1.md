@@ -159,6 +159,13 @@ płynność i daje informację zwrotną. Zasady:
 *[B18]* Wykrywa sygnały nawrotu (wzrost SR, powrót zamiany słów lub
 unikania, opuszczone przeglądy) i zgłasza je do generatora planu.
 
+*[B15]* **Zasada pomiaru:** jedna skala SR 0–8 dla nasilenia jąkania i
+poziomu techniki; pozostałe obszary jako fakty tak/nie albo liczniki,
+nie kolejne skale. Wersja n=1 mierzy: SR tygodnia (typowe, najgorsze),
+zamianę słów i odpuszczone sytuacje (dni z faktem), uczestnictwo
+(zadania w terenie z użytą techniką), miejsce napięcia. Komfort i
+kwestionariusze wpływu (OASES) – ze specjalistą albo w produkcie.
+
 **Powiązania:** Zbiera informacje z ćwiczeń, treningu i samooceny;
 zasila generator planu oraz panel logopedy.
 
