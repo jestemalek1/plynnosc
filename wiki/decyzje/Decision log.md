@@ -4,6 +4,13 @@ Format: data — decyzja. Krótko: co, dlaczego, kiedy wracamy. Otwarte sprawy s
 
 ## Aktywne decyzje
 
+### 2026-11-08 — B14: zadanie w terenie w apce od tygodnia 2, w M0 (Alek)
+Decyzja (HLD 05): na ekranie Dziś od tygodnia 2 jedna karta „Zadanie w terenie” z tabeli progresji [[Program płynności]] (szczebel + technika, format „Co robisz / Jak to ma brzmieć / Czego nie robić / Dlaczego”). Dwa przyciski: „Użyłem techniki” / „Dziś nie”, bez skali – cel to użycie techniki, nie płynność.
+- Karta **nie blokuje zaliczenia dnia**: zadanie dzieje się zwykle poza sesją; inaczej psułby się streak (błąd tej samej klasy co R1).
+- Źródłem szczebli jest **hierarchia Alka z dnia 1** (lista w apce), nie przykładowa lista z programu; dopisek w programie.
+- Licznik „użyłem / 7” zasila 06 (uczestnictwo), 08 (raport), później 03 (kryterium szczebla).
+Termin: przed 14.11 (start tygodnia 2), w M0. W zamian #18 „Uwaga do apki” przechodzi do M1 (B12: trening wygrywa). Treść kart tygodni 2–3 do akceptacji Alka przed wdrożeniem. Pełna pętla budowniczy → tester → recenzent (logika dnia).
+
 ### 2026-11-08 — B12: apka to narzędzie Alka, które przez dogfooding staje się aplikacją z HLD (Alek)
 Decyzja: apka jest przede wszystkim narzędziem do własnego treningu Alka. Przez dogfooding ma stać się aplikacją z [[HLD v1]]. **Cel nadrzędny to trening Alka:** gdy funkcja „pod produkt” konkuruje z potrzebami treningu, wygrywa trening.
 Kolejność: najpierw dopracowujemy funkcjonalność w codziennym użyciu (04, 05, 06 jako samoocena, 08 jako raport, 02 jako dane). **Później**, po dopracowaniu: silnik planu (03), ocena mowy przez AI (B19), wywiad w apce (01) i 07.

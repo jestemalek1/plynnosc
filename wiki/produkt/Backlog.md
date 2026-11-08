@@ -10,7 +10,7 @@ Okno **A** = Dogfood (poprawki z codziennego używania), okno **B** = Rozwój (f
 | ◐ | v4 | Feedback dnia 2: wdech 3 s, legenda SR, SR tygodniowo, „Start na sygnał”, dzień zaliczony zostaje | 04, 06 | B | tester + recenzent w toku; wydanie po czystej rundzie |
 | ☑ | B1 | Repo `jestemalek1/plynnosc` na GitHubie | F→wszystkie | Alek | zrobione |
 | ☐ | A5 | Podział `app/index.html` na `styles.css`, `data.js`, `map.js`, `app.js` | F→02 | B | `data.js` = biblioteka ćwiczeń (02) i profil (01 n=1); do tego czasu okno A nie zmienia kodu |
-| ☐ | #18 | „Uwaga do apki”: jedno zdanie z dowolnego ekranu, lista uwag + kopiuj | F→04 | A | narzędzie dogfoodingu modułu 04; najsłabsze dopasowanie do HLD – usuwamy po okresie dogfoodingu |
+| ☐ | B14 | Zadanie w terenie: karta od tyg. 2, „Użyłem techniki” / „Dziś nie”, nie blokuje zaliczenia dnia, licznik /7 | 05 (→06, 08) | B | **przed 14.11**; treść tyg. 2–3 do akceptacji Alka; pełna pętla tester + recenzent |
 | ☐ | #15 | Eksport/import danych (JSON) | F→06, 08 | B | dane postępów są tylko w jednym telefonie; eksport jest też nośnikiem dla logopedy |
 
 ## Następne – M1 Stabilnie (do 21.11)
@@ -18,7 +18,7 @@ Okno **A** = Dogfood (poprawki z codziennego używania), okno **B** = Rozwój (f
 | --- | --- | --- | --- | --- | --- |
 | ☐ | R3–R7 | Poprawki z recenzji: błąd od dnia 85, sonda Claude bez kliknięcia, stary wynik oceny, pasek kart po klawiaturze, sanityzacja stanu | 04, 06 | B | [[Review kodu v3 – niezależny]] |
 | ☐ | WL | Wake Lock w timerach (ekran nie gaśnie) | 04 | A | |
-| ⏸ | B14 | Zadanie w terenie dziennie | 05 | B | **musi być przed 14.11** (tydzień 2 = pierwsze prawdziwe zadania); czeka na decyzję B14 |
+| ☐ | #18 | „Uwaga do apki”: jedno zdanie z dowolnego ekranu, lista uwag + kopiuj | F→04 | A | przesunięte z M0 (B14); do tego czasu notatka dnia; usuwamy po okresie dogfoodingu |
 | ⏸ | B15 | Zamiana słów + unikanie w karcie SR tygodnia | 06 | A | czeka na decyzję B15 |
 | ⏸ | B16 | Raport dla logopedy – 1 strona do skopiowania | 08 | B | na 10.11 ręcznie [[Kontekst i profil]]; czeka na decyzję B16 |
 | ⏸ | B4 | Transkrypcja PL: test Whisper na jednym monologu | 06 | Alek | pomost do czasu oceny z dźwięku (B19); [[Transkrypcja PL – research]] |

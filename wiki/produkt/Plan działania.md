@@ -14,8 +14,8 @@ Terminy wynikają z programu: dzień 22 (28.11.2026) zaczyna tydzień 4, dzień 
 ## Kamienie milowe
 | Kamień | Termin | Cel (co ma działać dla Alka) | Główne pozycje |
 | --- | --- | --- | --- |
-| M0 Fundament | do 13.11 (koniec tyg. 1) | Repo na GitHubie, wydanie v4, dwa okna mogą pracować bez kolizji, uwagi z treningu zbierane w apce | v4, repo, podział na pliki, „Uwaga do apki”, eksport danych |
-| M1 Stabilnie | do 21.11 (koniec tyg. 2) | Apka nie gubi danych i nie psuje się; transkrypcja PL ustalona; wnioski z konsultacji w programie | poprawki R3–R7, Wake Lock, transkrypcja PL, wnioski z 10.11 |
+| M0 Fundament | do 13.11 (koniec tyg. 1) | Repo na GitHubie, wydanie v4, dwa okna mogą pracować bez kolizji, uwagi z treningu zbierane w apce | v4 → zadanie w terenie (B14, przed 14.11) → podział na pliki → eksport danych |
+| M1 Stabilnie | do 21.11 (koniec tyg. 2) | Apka nie gubi danych i nie psuje się; transkrypcja PL ustalona; wnioski z konsultacji w programie | poprawki R3–R7, Wake Lock, „Uwaga do apki”, transkrypcja PL, wnioski z 10.11 |
 | M2 Tydzień 4 gotowy | do 27.11 | Tygodnie 4–6 mają prawdziwe ćwiczenia (wydłużona mowa, cykle Camperdown, dobrowolne jąkanie i anulowanie) | treść tyg. 4–6 + nowe typy ćwiczeń |
 | M3 Rozwój z nagrań | grudzień | Ocena nagrania daje „jedno pytanie” i English card | #12, #13, decyzja o trybie szybkim |
 | M4 Cały program | do 29.01.2027 | Tygodnie 7–12 i utrzymanie; ewentualnie #14 | treść tyg. 7–12, #14 po dostarczeniu plików |
