@@ -541,4 +541,7 @@ async function section(name, fn) {
 
   await browser.close();
   fs.writeFileSync(OUT + 'round2_results.json', JSON.stringify(R, null, 1));
+  // gate: any console/page error (also nested) or section EXCEPTION -> exit 1
+  { const bad = []; (function scan(o, p) { if (!o || typeof o !== 'object') return; for (const k of Object.keys(o)) { if (/EXCEPTION/.test(k) || (/errors$/i.test(k) && Array.isArray(o[k]) && o[k].length)) bad.push(p + k); else scan(o[k], p + k + '.'); } })(R, '');
+    if (bad.length) { console.log('GATE FAIL: ' + bad.join(', ')); process.exitCode = 1; } else console.log('GATE OK'); }
 })().catch(e => { console.error('FATAL', e); process.exit(1); });

@@ -830,7 +830,9 @@
   }
   function rebuildCard(k, ex) {
     var old = cards[ex]; if (!old || !old.parentNode) { renderDzis(); return; }
+    var ae = document.activeElement, top = isField(ae) ? ae.getBoundingClientRect().top : null;
     var c = exerciseCard(k, ex, old.classList.contains('current')); old.parentNode.replaceChild(c, old); cards[ex] = c; updateHeader();
+    if (top != null && ae.isConnected) { var dy = ae.getBoundingClientRect().top - top; if (Math.abs(dy) > 1) try { window.scrollBy(0, dy); } catch (e) { /* ignore */ } }
   }
   function renderOrRebuild(k, ex) { var ae = document.activeElement; if (cards[ex] && isField(ae) && !cards[ex].contains(ae)) rebuildCard(k, ex); else renderDzis(); }
   function unmark(k, ex) { var d = day(k); d.done = d.done.filter(function (x) { return x !== ex; }); delete recent[ex]; save(); }
@@ -857,18 +859,21 @@
   function openDay(k) { viewKey = k; dzisView = 'session'; recent = {}; expanded = {}; renderDzis(); try { window.scrollTo(0, 0); } catch (e) { /* ignore */ } }
   function backToMap() { dzisView = 'map'; renderDzis(); flushAfterShow(); }
   var justDone = null, mapMsg = '';
-  function scheduleReturn(k) {
+  var returnGen = 0; // podbijany przy każdej przebudowie sesji: odłożony powrót na mapę nie przerywa późniejszej akcji (np. „Zmień” SR)
+  function scheduleReturn(k, gen) {
+    if (gen == null) gen = returnGen;
     setTimeout(function () {
-      if (currentTab !== 'dzis' || dzisView !== 'session' || viewKey !== k || !allListedDone(k)) return;
+      if (gen !== returnGen || currentTab !== 'dzis' || dzisView !== 'session' || viewKey !== k || !allListedDone(k)) return;
       // Review R2: never pull the screen away while the user is typing (diary is often the last exercise).
       var ae = document.activeElement;
-      if (isField(ae)) { ae.addEventListener('focusout', function once() { ae.removeEventListener('focusout', once); scheduleReturn(k); }); return; }
+      if (isField(ae)) { ae.addEventListener('focusout', function once() { ae.removeEventListener('focusout', once); scheduleReturn(k, gen); }); return; }
       var w = weekOf(dayIndex(k));
       justDone = k; mapMsg = 'Archipelag ' + w + ': ' + weekDoneCount(w) + '/7';
       dzisView = 'map'; renderDzis(); afterShow = null; scrollToArch(w);
     }, 1800);
   }
   function renderSession() {
+    returnGen++;
     killTimers();
     var root = document.getElementById('s-dzis'); clear(root);
     cards = {};
@@ -1032,7 +1037,7 @@
     Object.keys(cards).forEach(function (ex) {
       var c = cards[ex], cur = ex === nextEx;
       c.classList.toggle('current', cur);
-      if (cur && expanded[ex] == null) c.classList.remove('collapsed');
+      if (cur && expanded[ex] == null) { c.classList.remove('collapsed'); var ch = c.querySelector('.chead'); if (ch) ch.setAttribute('aria-expanded', 'true'); }
     });
   }
 

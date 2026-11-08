@@ -387,6 +387,28 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
       verdict('R6', r.active === 'TEXTAREA' && r.value === 'spotkanie XYZ' && !r.onMap && r.monoQuestions, 'day 2: monolog timer ends while typing -> focus ' + r.active + ', value "' + r.value + '", monolog questions shown ' + r.monoQuestions);
       log('R6.monologErrors', v.page.__errors); await v.c.close();
     }
+    // day completed by the diary, user keeps typing, then taps „Zmień” on SR tygodnia: no deferred jump to the map (v3 behaviour)
+    {
+      const seed3 = { v: 2, days: { [KEY(7)]: { done: ['oddech', 'sygnal', 'monolog', 'sr'], reps: { oddech: 12, sygnal: 10 }, monolog: { ran: true, breath: 'tak', sr: 2, lang: 'pl', topic: 1 }, sr: { typ: 2, max: 4 } } } };
+      const res = {};
+      for (const mode of ['playwright', 'domclick']) { // domclick = tap that does not move focus (iOS-like)
+        const v = await ctx(browser, { time: D(7), init: `localStorage.setItem('plynnosc', ${JSON.stringify(JSON.stringify(seed3))})` });
+        await v.page.goto(URL); await v.page.waitForTimeout(100); await openToday(v.page);
+        const dz3 = await expand(v.page, 'Dziennik bloków');
+        await dz3.locator('textarea').click(); await v.page.keyboard.type('telefon do banku', { delay: 5 });
+        await v.page.clock.runFor(60000); await v.page.keyboard.type(' · start: ktoś', { delay: 5 });
+        const zm = card(v.page, 'SR tygodnia').locator('.chead .act');
+        if (mode === 'playwright') await zm.click(); else await zm.evaluate(b => b.click());
+        await v.page.clock.runFor(3000); await v.page.waitForTimeout(50);
+        const r = await v.page.evaluate(() => ({ onMap: !!document.querySelector('#s-dzis svg.map'), srOpen: [...document.querySelectorAll('#s-dzis .card')].some(c => c.querySelector('h2').textContent === 'SR tygodnia' && !c.classList.contains('collapsed')) }));
+        if (!r.onMap) { await card(v.page, 'SR tygodnia').locator('.sr').nth(0).locator('.chip').nth(3).click(); await v.page.clock.runFor(3000); await v.page.waitForTimeout(50); }
+        r.afterChange = { onMap: await onMap(v.page), typ: (await store(v.page)).days[KEY(7)].sr.typ, diary: (await store(v.page)).days[KEY(7)].diary };
+        r.errors = v.page.__errors; res[mode] = r; await v.c.close();
+      }
+      log('R6.zmienAfterDiary', res);
+      verdict('R6', ['playwright', 'domclick'].every(m => !res[m].onMap && res[m].srOpen && !res[m].afterChange.onMap && res[m].afterChange.typ === 3 && res[m].afterChange.diary === 'telefon do banku · start: ktoś'),
+        'day 7 done by diary, 60 s later „Zmień” on SR tygodnia (playwright click / DOM click): ' + JSON.stringify(res));
+    }
   });
 
   // ===== R7: no console errors on any tab, days 1,2,7,8,15,22,85 =====
