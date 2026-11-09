@@ -38,7 +38,7 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 1. Okno B: B14 wg [[B14 Zadanie w terenie]] – przed 14.11 (start tygodnia 2).
 2. Alek: konsultacja 10.11 – [[Kontekst i profil]], pytania z B2 (w tym kolejność szczebli i imię w tygodniu 3); decyzje B21–B28 z weryfikacji v4.
 3. Okno B potem: A5 podział, #15 eksport; spec B15 (+ B13 w tej samej karcie).
-4. Poza vaultem: w `CLAUDE.md` doprecyzować zasadę „jedna skala” (B15) i wskazać `wiki/specs/` (B29).
+4. Alek (opcjonalnie): na GitHubie włączyć „Automatically delete head branches” (Settings → General).
 
 ## Inbox / Review
 - [[Inbox]] · [[Review]]
