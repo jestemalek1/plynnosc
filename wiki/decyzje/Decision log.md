@@ -40,6 +40,9 @@ Decyzja: funkcja wchodzi do HLD 07, ale tak zaprojektowana, żeby ryzyka nie by�
 ### 2026-11-08 — Poprawki w notatkach porównania
 (1) Zadanie w terenie z tygodnia 1 to luźny monolog, który apka ma; prawdziwe zadania w terenie startują w tygodniu 2 (14.11). (2) Raport dla logopedy (B16) nie zdąży na konsultację 10.11; na nią idzie ręcznie [[Kontekst i profil]]. (3) B1 (repo na GitHubie) zrobione.
 
+### 2026-11-09 — Bramka harnessu i weryfikacja v4
+Decyzja: „zielone” = `node test/run.js && node test/round2.js && node test/round3.js` z exit 0, przy czym `run.js`/`round2.js` kończą się exit 1 przy każdym błędzie konsoli (także z kontekstu, który go nie zalogował) albo `*.EXCEPTION`, a `round3.js` przy każdym werdykcie FAIL. Powód: w v4 runda z błędem dnia 85 wyglądała na zieloną, bo błędy siedziały w zagnieżdżonym kluczu, a round3 kończył się exit 0 mimo FAIL. v4 przeszła 8 rund niezależnego testera i recenzenta; każdy poprawiony defekt ma test w `round3.js`, który pada na kodzie sprzed poprawki. Reguła powrotu na mapę po zaliczeniu dnia czeka na weto (B25). Szczegóły: [[Testy]].
+
 ### 2026-11-08 — v4 po feedbacku z dnia 2 (Alek)
 Feedback: oddech za szybki (potrzebna chwila między wdechem a wydechem), brak opisu skali przy ocenie SR, „SR dnia” bez sensu na tym etapie, za mało ćwiczeń.
 Decyzje:

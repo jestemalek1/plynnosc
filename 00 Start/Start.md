@@ -32,6 +32,7 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - [[Backlog]]: każda pozycja ma moduł HLD; roadmapa M0–M4 + utrzymanie i lista na 2 tygodnie w [[Plan działania]].
 - v4 w przygotowaniu na `feature/dzien2-feedback` (tester przerwany: `feature/testy-v4-wip`). Opublikowana jest nadal v3.
 - Otwarte decyzje: B13, B16, B17 (#12, #13).
+- 2026-11-09 (okno B): v4 zweryfikowana – 8 rund niezależnego testera i recenzenta, runda 8 czysta, harness z bramką (run/round2/round3) zielony. Czeka na „wydaj”. Nowe decyzje z weryfikacji: B21–B28.
 
 ## Następna akcja
 1. Okno B: domknąć v4 (tester + recenzent) i przygotować treść kart „Zadanie w terenie” tygodni 2–3 do akceptacji.

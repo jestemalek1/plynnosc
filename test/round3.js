@@ -124,12 +124,16 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
       const wr = {};
       for (const width of [320, 360, 390]) {
         const nc = await browser.newContext({ viewport: { width, height: 844 }, isMobile: true, hasTouch: true }); const np = await nc.newPage(); np.__errors = []; ALL_PAGES.push(np);
+        np.on('pageerror', e => np.__errors.push('PAGEERROR ' + e.message)); np.on('console', m => { if (m.type() === 'error') np.__errors.push(m.text()); });
         await np.clock.install({ time: D(2) }); await np.goto(URL); await np.waitForTimeout(100); await tab(np, 'sciagawka');
+        wr['overflow' + width] = await np.evaluate(() => [...document.querySelectorAll('#s-sciagawka .srkey')].some(k => k.scrollWidth > k.clientWidth) || document.documentElement.scrollWidth > window.innerWidth);
         wr[width] = await np.evaluate(() => [...document.querySelectorAll('#s-sciagawka .srkey b')].map(b => { const r = b.getBoundingClientRect(); return b.textContent + ':' + Math.round(r.height); }));
         await nc.close();
       }
+      const overflow = Object.keys(wr).filter(k => k.startsWith('overflow') && wr[k]);
+      Object.keys(wr).filter(k => k.startsWith('overflow')).forEach(k => delete wr[k]);
       const maxH = Math.max(...Object.values(wr).flat().map(x => +x.split(':')[1]));
-      verdict('R1', maxH <= 20, 'legend labels one line (max height ' + maxH + ' px): ' + JSON.stringify(wr));
+      verdict('R1', maxH <= 20 && overflow.length === 0, 'no horizontal overflow (' + (overflow.join(',') || 'none') + '); legend labels one line (max height ' + maxH + ' px): ' + JSON.stringify(wr));
     }
     log('R1.detail', res);
   });
