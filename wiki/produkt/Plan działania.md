@@ -100,8 +100,8 @@ Warunki, żeby to działało:
 5. Decyzje produktowe podejmuje Alek; okna nie rozstrzygają ich same, tylko dopisują do [[Decyzje do podjęcia]] z rekomendacją.
 
 ## Pętla dogfoodingu
-- **W trakcie treningu:** uwaga do apki od razu, jednym zdaniem. Do czasu funkcji „Uwaga do apki” w notatce dnia (szablon [[Dzień]], sekcja „Apka – co uwierało”).
-- **Codziennie, okno A:** przegląd uwag z wczoraj → małe poprawki → wydanie, jeśli coś przeszkadzało w treningu.
+- **W trakcie albo po treningu:** uwaga do apki jednym zdaniem w [[Inbox]] (data · ekran · uwaga · przeszkadza / irytuje). Tak do czasu funkcji #18 „Uwaga do apki”; notatek dnia nie prowadzimy (folderu `Daily/` nie ma).
+- **Codziennie, okno A:** przegląd uwag z Inbox → klasyfikacja (wersja, moduł HLD, priorytet, rekomendacja) → decyzja Alka → [[Backlog]] albo [[Decyzje do podjęcia]] → małe poprawki → wydanie. Kolejność: najpierw „przeszkadza w treningu”, potem „irytuje” – irytacje też zamykamy (B33, user friendly first).
 - **Niedziela, 15 min ([[Review]]):** SR tygodnia i dziennik bloków; kryterium przejścia tygodnia z [[Program płynności]]; ile dni treningu na 7; które uwagi zamknięte; decyzje na kolejny tydzień; aktualizacja kamieni milowych.
 
 Miary, czy apka robi robotę (zbierane w Review, nie w apce):

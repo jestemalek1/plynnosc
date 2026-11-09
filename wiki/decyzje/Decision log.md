@@ -4,6 +4,9 @@ Format: data — decyzja. Krótko: co, dlaczego, kiedy wracamy. Otwarte sprawy s
 
 ## Aktywne decyzje
 
+### 2026-11-09 — B33: user friendly first (Alek)
+Apka (i produkt z HLD) ma być miła i przyjemna w użyciu. Uwagi z dogfoodingu oznaczone „irytuje” też naprawiamy, nie odkładamy na „kiedyś”; kolejność: najpierw „przeszkadza w treningu”, potem „irytuje”. Zasada wpisana do `CLAUDE.md`. Powód: przy 12 tygodniach codziennego treningu drobne irytacje decydują, czy się wraca; dla przyszłych użytkowników tym bardziej.
+
 ### 2026-11-08 — B31, B32: nowe moduły HLD 09 „Trening języka obcego” i 10 „Refleksja i wzorce” (Alek)
 - **09:** po wypowiedzi karta z najwyżej 5 poprawkami i frazami, użytkownik sam wypowiada poprawki, bank fraz z własnych potknięć. Granice: poprawki tylko po wypowiedzi, niepłynność nie jest błędem językowym, tempo nie jest celem. Pierwsza wersja dla Alka: #13 (M3).
 - **10:** wzorce widziane w słowach użytkownika, z datami i cytatami, potwierdzane przez niego i zamieniane w plany „jeśli X, to Y”. Bez etykiet schematów, diagnoz i interpretacji źródeł; pomoc kryzysowa; przeznaczenie wellbeing, bez „terapii” i „psychoanalizy” w nazwie. #12 to pierwsza wersja (M3), #14 przechodzi z 07 do 10.

@@ -28,7 +28,7 @@ Okno **A** = Dogfood (poprawki z codziennego używania), okno **B** = Rozwój (f
 | ☐ | R3–R7 | Poprawki z recenzji: błąd od dnia 85, sonda Claude bez kliknięcia, stary wynik oceny, pasek kart po klawiaturze, sanityzacja stanu | 04, 06 | L | [[Review kodu v3 – niezależny]] | B | [[Review kodu v3 – niezależny]] |
 | ☐ | B15 | Dziennik: przełączniki „zamieniłem słowo” i „odpuściłem sytuację” (1 dotknięcie); suma z 7 dni w karcie SR tygodnia | 06 | L | do napisania (następny) | B | w tej samej rundzie co R3–R7; do wdrożenia zamiany zapisuj w notatce dnia |
 | ☐ | WL | Wake Lock w timerach (ekran nie gaśnie) | 04 | S | — | A | |
-| ☐ | #18 | „Uwaga do apki”: jedno zdanie z dowolnego ekranu, lista uwag + kopiuj | F→04 | M | — | A | przesunięte z M0 (B14); do tego czasu notatka dnia; usuwamy po okresie dogfoodingu |
+| ☐ | #18 | „Uwaga do apki”: jedno zdanie z dowolnego ekranu, lista uwag + kopiuj | F→04 | M | — | A | przesunięte z M0 (B14); do tego czasu uwagi jednym zdaniem w [[Inbox]]; usuwamy po okresie dogfoodingu |
 | ☐ | B16 | Raport dla logopedy – 1 strona do skopiowania: baza, SR tygodni, kryteria (B13), zadania w terenie, zamiany słów | 08 | M | — | B | po B14 i B15; na 10.11 ręcznie [[Kontekst i profil]] |
 | ⏸ | B4 | Transkrypcja PL: test Whisper na jednym monologu | 06 | — | — | Alek | pomost do czasu oceny z dźwięku (B19); [[Transkrypcja PL – research]] |
 | ⏸ | B2 | Konsultacja 10.11 → wnioski do programu (w tym kolejność szczebli hierarchii) | 08, 02 | — | — | Alek | lista pytań w [[Decyzje do podjęcia]] |
