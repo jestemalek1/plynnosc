@@ -1,6 +1,6 @@
 ---
 status: active
-updated: 2026-11-08
+updated: 2026-11-09
 tags: [operacje, git, gitflow]
 ---
 
@@ -24,7 +24,7 @@ Nazwy po polsku bez ogonków, z myślnikami: `feature/eksport-danych`, `fix/lege
 2. Zmiana + harness (`node test/run.js && node test/round2.js && node test/round3.js`) zielony.
 3. Większa zmiana: niezależny tester + recenzent (osobni agenci) → poprawki.
 4. Commit(y) z sensownym opisem po polsku → `git push -u origin feature/...` → PR do `develop` z opisem „co / dlaczego / jak sprawdzone”.
-5. Merge PR (squash) do `develop`, usuń gałąź.
+5. Merge PR (squash) do `develop`, **od razu usuń gałąź zdalnie i lokalnie** (patrz „Sprzątanie”).
 
 ## Wydanie (develop → main → artefakt)
 1. Na `develop` harness zielony, `CHANGELOG.md` uzupełniony w sekcji nowej wersji.
@@ -41,6 +41,22 @@ Hotfix: `hotfix/*` z `main` → PR do `main` → tag `vN.1` → publikacja → m
 - Publikuje tylko ten, kto robi wydanie z `main`; drugie okno w tym czasie nie publikuje.
 - Pliki wspólne vaultu (`00 Start/Start.md`, [[Decision log]]): tylko dopisywanie na końcu sekcji, bez przepisywania cudzych fragmentów. Konflikty rozwiązuje się, zachowując oba wpisy.
 - Dopóki apka jest jednym plikiem, oba okna mogą konfliktować w `app/index.html`. Dlatego pierwsze zadanie okna „Rozwój” to podział na pliki (patrz [[Plan działania]]).
+
+## Sprzątanie (zawsze, bez pytania)
+Alek nie chce starych gałęzi ani na GitHubie, ani lokalnie. Repo ma być czyste.
+1. **Po każdym merge PR:** `git push origin --delete <gałąź>` i `git branch -D <gałąź>`.
+2. **Na koniec każdej sesji:**
+   - `git fetch --prune origin`;
+   - `git branch -a`.
+
+   Zdalnie zostają tylko `main`, `develop` i gałęzie z otwartym PR albo w aktywnej pracy drugiego okna (najwyżej jedna na okno). Lokalnie tylko `main`, `develop` i bieżąca gałąź.
+3. **Zanim usuniesz:** sprawdź, czy zmiany są w `develop`:
+   - PR zmergowany, albo
+   - `git diff origin/develop origin/<gałąź> -- app test` jest pusty, a notatki są w `develop`.
+
+   Niezmergowane zmiany: nie usuwasz, pytasz Alka.
+4. **Bez gałęzi „na zapas”.** Przerwana praca to szkic PR (draft) z opisem stanu albo usunięcie, nie porzucony WIP.
+5. **Na GitHubie** warto włączyć Settings → General → „Automatically delete head branches”. Wtedy gałąź znika sama po merge PR (krok 1 robi się sam).
 
 ## Bez GitHuba (awaryjnie)
 Gałęzie i merge lokalnie tak samo, wydanie = merge do `main` + tag. Kopia: zip repo z historią.
