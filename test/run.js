@@ -7,10 +7,11 @@ const UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/6
 const R = {};
 function log(k, v) { R[k] = v; console.log(k, JSON.stringify(v)); }
 
+const ALL_PAGES = []; // every page, so the GATE also sees contexts that never log their errors
 async function ctx(browser, opts = {}) {
   const c = await browser.newContext({ viewport: { width: 390, height: 844 }, userAgent: UA, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
   const page = await c.newPage();
-  page.__errors = [];
+  page.__errors = []; ALL_PAGES.push(page);
   page.on('console', m => { if (m.type() === 'error') page.__errors.push(m.text()); });
   page.on('pageerror', e => page.__errors.push('PAGEERROR ' + e.message));
   if (opts.init) await page.addInitScript(opts.init);
@@ -49,7 +50,7 @@ const txt = (page, sel) => page.locator(sel).first().innerText();
       await tab(page, t);
       await page.evaluate(() => document.querySelectorAll('details').forEach(d => d.open = true));
       const body = await page.locator('main').innerText();
-      scaleHits[t] = (body.match(/0\s?[–-]\s?10|\/\s?10\b|1\s?[–-]\s?5\b|0\s?[–-]\s?5\b|\b10\s?pkt/g) || []);
+      scaleHits[t] = (body.match(/0\s?[–-]\s?10|\/\s?10\b(?!\s*startów)|1\s?[–-]\s?5\b|0\s?[–-]\s?5\b|\b10\s?pkt/g) || []);
     }
     log('T1.scaleHits', scaleHits);
     // chip rows per tab
@@ -119,20 +120,28 @@ const txt = (page, sel) => page.locator(sel).first().innerText();
     log('T3.startLabel', await tbtn.innerText());
     await tbtn.click();
     const snap = async () => ({ cue: await oddech.locator('.cue').innerText(), sub: await oddech.locator('.sub').innerText(), clock: await oddech.locator('.clock').innerText(), reps: await oddech.locator('.reps').innerText(), btn: await tbtn.innerText() });
-    log('T3.afterStart', await snap());
+    log('T3.afterStart', await snap()); // v4: starts with the 3 s counted inhale
+    await page.clock.runFor(3000); log('T3.afterFirstInhale', await snap());
     await page.clock.runFor(7100); log('T3.t7.1', await snap());
-    await page.clock.runFor(2100); log('T3.t9.2', await snap());
+    await page.clock.runFor(3100); log('T3.t10.2', await snap()); // round 3: 3 s inhale gap
     await shot(page, '05_oddech_running');
-    // run to phase 9 (8 fff done): each phase 7s + 2s gap = 9s; 8 phases => 72s
-    await page.clock.runFor(72000 - 9200 + 300); log('T3.afterFff', await snap());
+    // run to phase 9 (8 fff done): each phase 7s + 3s gap = 10s; 8 phases => 80s
+    await page.clock.runFor(80000 - 10200 + 300); log('T3.afterFff', await snap());
     await page.clock.runFor(2000); log('T3.wordPhase', await snap());
     await shot(page, '06_oddech_word');
-    await page.clock.runFor(9000); log('T3.word2', await snap());
-    await page.clock.runFor(9000 * 3); await page.waitForTimeout(100);
+    await page.clock.runFor(10000); log('T3.word2', await snap());
+    await page.clock.runFor(10000 * 3); await page.waitForTimeout(100);
     log('T3.doneCard', await page.evaluate(() => { const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Oddech A'); return { cls: c.className, small: c.querySelector('small').textContent, enc: c.querySelector('.enc') ? c.querySelector('.enc').textContent : null }; }));
     log('T3.clicksNeeded', 1);
     await shot(page, '07_oddech_done');
     log('T3.nextAfterOddech', await txt(page, '#s-dzis .next'));
+    // round 3: Start na sygnał (weeks 1-3, after Oddech A): 10 x (2-6 s wait + 8 s answer), counted automatically
+    const syg = page.locator('#s-dzis .card').filter({ has: page.locator('h2', { hasText: 'Start na sygnał' }) });
+    await syg.locator('.timer button.big').click();
+    log('T3.sygnalStart', await syg.locator('.cue').innerText());
+    await page.clock.runFor(145000); await page.waitForTimeout(50);
+    log('T3.sygnalDone', await page.evaluate(() => { const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Start na sygnał'); return { cls: c.className, small: c.querySelector('small').textContent }; }));
+    log('T3.nextAfterSygnal', await txt(page, '#s-dzis .next'));
 
     // Monolog (R7, R9)
     const mono = page.locator('#s-dzis .card').filter({ has: page.locator('h2', { hasText: 'Luźny monolog' }) });
@@ -159,12 +168,8 @@ const txt = (page, sel) => page.locator(sel).first().innerText();
     await dz.locator('textarea').fill('rozmowa o nartach · start: ktoś · EN · szybko');
     await page.waitForTimeout(50); // autosave: done at >= 10 chars, no save button
     log('T4.dzEnc', await page.evaluate(() => { const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Dziennik bloków'); return c.querySelector('.enc') && c.querySelector('.enc').textContent; }));
-    // SR dnia
-    const sr = page.locator('#s-dzis .card').filter({ has: page.locator('h2', { hasText: 'SR dnia' }) });
-    await sr.locator('.sr').nth(0).locator('.chip').nth(2).click();
-    log('T4.srMeaning', await sr.locator('.sr').nth(0).locator('.meaning').innerText());
-    await sr.locator('.sr').nth(1).locator('.chip').nth(5).click(); await page.waitForTimeout(50);
-    log('T4.srEnc', await page.evaluate(() => { const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'SR dnia'); return c.querySelector('.enc') && c.querySelector('.enc').textContent; }));
+    // round 3: SR is weekly, so day 2 has no SR card and is complete after the diary (SR card: T4b, day 7)
+    log('T4.noSrCardDay2', await page.evaluate(() => ![...document.querySelectorAll('#s-dzis .card h2')].some(h => /SR/.test(h.textContent))));
     log('T4.sessionDone', await page.evaluate(() => { const d = document.querySelector('#s-dzis .card.done h2'); const p = document.querySelector('#s-dzis .card.done p'); return { h2: d && d.textContent, p: p && p.textContent, next: !!document.querySelector('#s-dzis .next'), barOn: document.querySelectorAll('#s-dzis .progress .on').length }; }));
     await shot(page, '10_day2_done');
     // reload persist
@@ -177,6 +182,23 @@ const txt = (page, sel) => page.locator(sel).first().innerText();
     log('T5.table', await page.locator('#s-postepy table').first().innerText());
     await shot(page, '11_postepy_streak2');
     log('T3.errors', page.__errors);
+    await c.close();
+  }
+
+  // ---------- T4b: weekly SR card on day 7 (replaces daily 'SR dnia' on day 2) ----------
+  {
+    const { c, page } = await ctx(browser, { time: new Date(2026, 10, 13, 10, 0, 0) });
+    await page.goto(URL); await page.waitForTimeout(100); await openToday(page);
+    log('T4b.cards', await page.evaluate(() => [...document.querySelectorAll('#s-dzis .card h2')].map(h => h.textContent)));
+    const sr = page.locator('#s-dzis .card').filter({ has: page.locator('h2', { hasText: 'SR tygodnia' }) });
+    await sr.locator('.chead').click(); // not the current card on a fresh day -> collapsed
+    await sr.locator('.sr').nth(0).locator('.chip').nth(2).click();
+    log('T4.srMeaning', await sr.locator('.sr').nth(0).locator('.meaning').innerText());
+    await sr.locator('.sr').nth(1).locator('.chip').nth(5).click(); await page.waitForTimeout(50);
+    log('T4.srEnc', await page.evaluate(() => { const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'SR tygodnia'); return c.querySelector('.enc') && c.querySelector('.enc').textContent; }));
+    await page.clock.runFor(400);
+    log('T4b.store', await page.evaluate(() => { const d = JSON.parse(localStorage.getItem('plynnosc')).days['2026-11-13']; return { done: d.done, sr: d.sr }; }));
+    log('T4b.errors', page.__errors);
     await c.close();
   }
 
@@ -295,14 +317,14 @@ const txt = (page, sel) => page.locator(sel).first().innerText();
   }
   // ---------- T10: localStorage throwing ----------
   {
-    const { c, page } = await ctx(browser, { time: new Date(2026, 10, 8, 10, 0, 0), init: `Object.defineProperty(window, 'localStorage', { get() { throw new Error('SecurityError: localStorage blocked'); }, configurable: true });` });
+    const { c, page } = await ctx(browser, { time: new Date(2026, 10, 13, 10, 0, 0), init: `Object.defineProperty(window, 'localStorage', { get() { throw new Error('SecurityError: localStorage blocked'); }, configurable: true });` }); // day 7: weekly SR card
     await page.goto(URL); await page.waitForTimeout(100); await openToday(page);
     log('T10.h1', await txt(page, '#s-dzis h1'));
-    const sr = page.locator('#s-dzis .card').filter({ has: page.locator('h2', { hasText: 'SR dnia' }) });
+    const sr = page.locator('#s-dzis .card').filter({ has: page.locator('h2', { hasText: 'SR tygodnia' }) });
     await page.evaluate(() => { document.querySelectorAll('.card.collapsed').forEach(c => c.classList.remove('collapsed')); });
     await sr.locator('.sr').nth(0).locator('.chip').nth(2).click();
     await sr.locator('.sr').nth(1).locator('.chip').nth(4).click(); await page.waitForTimeout(50);
-    log('T10.srDone', await page.evaluate(() => { const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'SR dnia'); return c.className; }));
+    log('T10.srDone', await page.evaluate(() => { const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'SR tygodnia'); return c.className; }));
     for (const t of ['ocena', 'postepy', 'sciagawka', 'dzis']) await tab(page, t);
     log('T10.errors', page.__errors);
     await c.close();
@@ -317,4 +339,9 @@ const txt = (page, sel) => page.locator(sel).first().innerText();
   }
   await browser.close();
   require('fs').writeFileSync(OUT + 'results.json', JSON.stringify(R, null, 1));
+  // gate: any console/page error (also nested) or section EXCEPTION -> exit 1
+  { const bad = []; (function scan(o, p) { if (!o || typeof o !== 'object') return; for (const k of Object.keys(o)) { if (/EXCEPTION/.test(k) || (/errors$/i.test(k) && Array.isArray(o[k]) && o[k].length)) bad.push(p + k); else scan(o[k], p + k + '.'); } })(R, '');
+    const unlogged = ALL_PAGES.filter(p => p.__errors.length).map(p => JSON.stringify(p.__errors).slice(0, 200)); // contexts that never logged their errors
+    if (unlogged.length) bad.push('unlogged page errors: ' + unlogged.join('; '));
+    if (bad.length) { console.log('GATE FAIL: ' + bad.join(', ')); process.exitCode = 1; } else console.log('GATE OK'); }
 })().catch(e => { console.error('FATAL', e); process.exit(1); });

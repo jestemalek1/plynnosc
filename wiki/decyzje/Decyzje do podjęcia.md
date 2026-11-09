@@ -1,7 +1,7 @@
 ---
 status: active
 owner: Alek
-updated: 2026-11-07
+updated: 2026-11-08
 tags: [decyzje, otwarte]
 ---
 
@@ -23,7 +23,7 @@ Każda pozycja ma rekomendację i kroki. Odhaczasz `[x]`, dopisujesz jedną lini
 
 ## B. Biznesowe / produktowe — czekają na Ciebie
 
-- [ ] **B1. Repo na GitHubie.** Rekomendacja: prywatne repo `jestemalek1/plynnosc`, push od razu. Powód: kopia poza sesją w chmurze, sesje Claude Code mogą startować z repo, historia zmian apki.
+- [x] **B1. Repo na GitHubie.** Decyzja: zrobione – `jestemalek1/plynnosc` (prywatne), gałęzie `main`, `develop`, `feature/*`. Status 2026-11-08 (przed pushem): lokalnie gotowe (`main`, `develop`, gałąź `feature/dzien2-feedback`), czeka na puste repo na GitHubie. Zasady: [[Git i gałęzie]]. Rekomendacja: prywatne repo `jestemalek1/plynnosc`, push od razu. Powód: kopia poza sesją w chmurze, sesje Claude Code mogą startować z repo, historia zmian apki.
   Kroki: (1) github.com → New repository → `plynnosc`, Private, bez README. (2) W sesji Claude Code: „podłącz repo jestemalek1/plynnosc z prawem push i wypchnij `main`”. (3) Sprawdź, że `app/index.html` jest w repo. Alternatywa: zostawić zip z tej sesji jako kopię (słabsze).
 - [ ] **B2. Specjalista — poniedziałek 10.11.** Rekomendacja: najpierw Fundacja FIKS (793 001 160, darmowa diagnoza, Camperdown online), Jankiewicz (509 812 667, 145 zł) jako plan B.
   Na rozmowę weź: [[Kontekst i profil]] (profil + dane bazowe), pytania: (a) czy program zintegrowany w [[Program płynności]] jest OK dla bloków „na start wymuszony z zewnątrz”, (b) kolejność tygodni 4–12 (D wydłużona mowa / E frazowanie / G dobrowolne jąkanie / H anulowanie-wyślizg), (c) co z leczeniem ADHD a jąkaniem, (d) jak często kontrola. Wynik → jedna linia tu, agent przenosi do [[Decision log]] i do treści tygodni.
@@ -37,7 +37,31 @@ Każda pozycja ma rekomendację i kroki. Odhaczasz `[x]`, dopisujesz jedną lini
 - [ ] **B8. #14 „psychoanaliza” z nagrań.** Rekomendacja: #12 (jedno pytanie dziennie, już zresearchowane) wchodzi pierwsze; #14 czeka, aż dostarczysz pliki designu z sesji „AI lab” (repo/eksport/plik). Bez tych plików agent nie adaptuje pipeline'u.
 - [ ] **B9. Diagnostyka ADHD a baseline.** Rekomendacja: umów diagnostykę; przed ewentualnym lekiem zrób eksport danych (B5) i cztery nagrania bazowe jak w dniu 1. Lekarzowi powiedz o jąkaniu (dobór leku).
 
-## Zrobione w tej sesji (do wiadomości)
+- [x] **B10. HLD.** Dostarczony 8.11, porównanie: [[HLD v1 – porównanie z planem]].
+- [x] **B12. Czym jest ta apka: narzędziem dla Ciebie czy prototypem produktu z HLD?** Decyzja: narzędzie dla mnie, które przez dogfooding zmieniam w aplikację z HLD; mój trening to cel nadrzędny. Silnik (03), ocena AI (B19), wywiad (01) i 07 – później, po dopracowaniu funkcjonalności. W backlogu tylko to, co wynika z HLD. Pierwotna rekomendacja: Rekomendacja: prototyp dogfoodowany na sobie. Moduły HLD budujemy w wersji „dla jednej osoby” w obecnej apce (bez kont, backendu, panelu). Decyzję o produkcie rynkowym (stack, RODO, wyroby medyczne, MVP) podejmujemy po M2/M3 na podstawie własnych danych. Skutek: od teraz backlog jest przypisany do modułów 01–08.
+- [ ] **B13. Generator planu v0: przejście tygodnia po kryterium, nie po dacie.** Stan po B12: silnik odłożony; do rozstrzygnięcia, co z kryterium do tego czasu. Pierwotna rekomendacja: TAK, w M2 razem z tygodniami 4–6. Tak mówi nasz własny program; dziś apka przesuwa tydzień z kalendarzem.
+- [x] **B14. Zadanie w terenie w apce (moduł 05).** Decyzja: TAK, w M0 przed 14.11; karta nie blokuje zaliczenia dnia; szczeble z mojej hierarchii z dnia 1; #18 do M1. Pierwotnie: Rekomendacja: TAK, w M1. Jedno zadanie dziennie z programu + „zrobione / nie”. To jest transfer, którego brakowało w poprzedniej terapii.
+- [x] **B15. Pomiar unikania i zamiany słów (moduł 06).** Decyzja: przełączniki „zamieniłem słowo” / „odpuściłem sytuację” w dzienniku, suma w SR tygodnia; bez SUDS i komfortu; SR 0–8 zostaje, poza nim tylko tak/nie albo licznik („Oddech po frazach: częściowo” zostaje). Pierwotnie: Rekomendacja: TAK, 2 pytania w karcie „SR tygodnia”, w M1.
+- [ ] **B16. Raport dla logopedy (moduł 08 w wersji minimum).** Rekomendacja: TAK, w M1. Jedna strona do skopiowania przed konsultacją.
+- [ ] **B17. #13 angielski i #12/#14 samorozwój są poza HLD.** Częściowo: #14 → HLD 07 jako „refleksja z nagrań” z zabezpieczeniami, poza MVP. Otwarte: #12, #13 (zasada B12: poza HLD = poza backlogiem). Pierwotnie: Rekomendacja: zostają jako Twoje dodatki (M3/M4), oznaczone „poza HLD”; nie wchodzą do zakresu produktu bez osobnej decyzji.
+- [x] **B18. Utrzymanie i nawroty w HLD.** Decyzja: dopisać do HLD (03, 06, §4).
+- [x] **B19. Ocena mowy przez AI z nagrania / rozmowy na żywo.** Decyzja: do HLD (01, 05, 06); realizacja później (B12).
+- [x] **B20. Minimum bezpieczeństwa z §6.** Decyzja: zapisać w HLD z przypisaniem do modułów.
+- [ ] **B11. Dwa okna.** Rekomendacja: TAK, okno A – Dogfood i okno B – Rozwój, ale dopiero po repo na GitHubie i podziale pliku (A5). Szczegóły: [[Plan działania]].
+
+- [ ] **B21. Czytelność v4 przy SR i Oddechu A (z weryfikacji v4, 8.11).** Dwie drobne rzeczy, nie blokują wydania. (a) Na karcie „SR tygodnia” legenda jest jedna, pod drugą skalą: ok. 300 px pod pierwszym rzędem chipów i na telefonie dotyka paska zakładek. (b) W trakcie wdechu słowo widać tylko małym szarym napisem „następne: Aleksander”; duży napis to „Wdech nosem”. Rekomendacja: (a) zostawić, bo przewija się razem z kartą (zgodne z decyzją „jedna legenda na kartę”); (b) zmienić w `fix/` po wydaniu: słowo dużym napisem już w czasie wdechu, „Wdech nosem” małym. Zmiana tylko wizualna, bez zmiany treści ćwiczenia. (c) W Postępach → Hierarchia jedna legenda stoi nad 10 skalami; przy skalach 3–10 jest poza ekranem. Rekomendacja: legenda przyklejona (sticky) u góry karty przy przewijaniu – drobna zmiana w `fix/`. (d) Legenda ma `aria-hidden` – czytnik ekranu jej nie czyta; do poprawy przy okazji (c).
+- [ ] **B22. Opuszczony dzień 7, 14, … = brak SR tygodnia.** SR jest tylko na karcie ostatniego dnia archipelagu. Jeśli ten dzień wypadnie, w tym tygodniu nie ma punktu SR, a dzień 8 o tym nie przypomina. Rekomendacja: na razie nic nie zmieniać; jeśli w tygodniach 1–3 zdarzy się choć raz, dodać „SR tygodnia” do pierwszego dnia następnego archipelagu, gdy poprzedni nie ma oceny.
+- [ ] **B23. Po dniu 84 (od 30.01.2027) mapa nie ma wyspy „dziś”.** Dzień 85+ otwiera się bez błędu (v4), ale tylko przez wyspę 84 i strzałkę „›”. Rekomendacja: zdecydować razem z treścią tygodnia 12 / utrzymania (B18): albo karta „Dziś (dzień N)” nad mapą, albo osobny ekran utrzymania. Do tego czasu nic nie dodajemy; jest czas do stycznia.
+- [ ] **B24. Sygnały w Oddechu A i „Start na sygnał” (z weryfikacji v4).** (a) Przed Startem Oddech A pokazuje „fff 0:07”, a pierwszą rzeczą po Starcie jest wdech 3 s. (b) Koniec wdechu (start wydechu) ma tylko sygnał wizualny; dźwięk jest na końcu wydechu. (c) iPhone w trybie cichym wycisza dźwięk strony, a wibracji w Safari nie ma, więc sygnał w „Start na sygnał” jest wtedy tylko wizualny. Rekomendacja: (a) pokazać „Wdech nosem 0:03” już przed Startem – drobny `fix/`; (b) zostawić (ćwiczenie robisz z oczami na ekranie); (c) dopisać w karcie „Start na sygnał” jedno zdanie „wyłącz tryb cichy” – to zmiana treści, więc tylko po Twojej akceptacji.
+- [ ] **B25. Kiedy po zaliczeniu dnia ekran sam wraca na mapę (v4).** Wybrałem regułę (do Twojego weta): po zaliczeniu ostatniego ćwiczenia mapa pokazuje się po ok. 2 s, chyba że w tym czasie (albo, gdy piszesz, po wyjściu z pola) zrobisz w sesji coś świadomie – dotkniesz przycisku, chipa, nagłówka karty, „Zmień”. Wtedy zostajesz w sesji i wracasz „← Mapa”. Wyjście z pola bez innej akcji (klawiatura „Gotowe”, tap w puste miejsce) nadal wraca na mapę. Różnica wobec v3: tam szybka korekta SR w ciągu 2 s i tak przenosiła na mapę. Domyślnie: zostaje tak. Alternatywa: bez automatycznego powrotu w ogóle (zawsze „← Mapa”) – prostsze, +1 tapnięcie dziennie.
+- [ ] **B26. Treść „Start na sygnał” – dwie rzeczy bez pokrycia w [[Program płynności]] (z recenzji v4).** (a) „Jak to ma brzmieć” mówi „krótki wdech nosem (ok. 1 s)”; liczby 1 s nie ma w programie, a Oddech A uczy 3 s. (b) 4 z 32 pytań to imię / przedstawienie się, a program (sekcja „Imię i przedstawianie się”) każe przy imieniu zawsze robić preparatory set z pauzą – „od razu” z karty temu przeczy. Rekomendacja: (a) usunąć „(ok. 1 s)”, zostaje „spokojny wdech nosem”; (b) zostawić pytania o imię, ale dopisać w „Czego nie robić”: „przy imieniu wolno zrobić krótką pauzę i wdech – to nie odkładanie startu”. Zmieniam dopiero po Twojej akceptacji (treść ćwiczenia).
+- [ ] **B27. Nowe instrukcje v4 schowane po aktualizacji (z testów v4).** Pełne instrukcje Oddechu A (wdech 3 s, bez zatrzymania) i SR tygodnia są zwinięte za „Pokaż instrukcję”, bo w v3 były już oznaczone jako przeczytane. Skrót nad timerem jest zaktualizowany. Rekomendacja: przy pierwszym uruchomieniu v4 jednorazowo rozwinąć te dwie instrukcje (wyczyścić „przeczytane” dla oddech i sr w migracji) – drobny `fix/` zaraz po wydaniu albo przeczytasz je sam po aktualizacji („Pokaż instrukcję”).
+- [ ] **B28. Oceń przy 320 px (z v3, nie regresja).** Kafel metryk „restarty” wystaje poza ekran (350 px na 320), telefon pomniejsza stronę. Rekomendacja: `fix/` po wydaniu, jeśli używasz telefonu węższego niż 360 px; na iPhonie 390 px nie występuje.
+
+## Zostało otwarte po sesji HLD (8.11)
+B13 (kryterium przejścia tygodnia przy odłożonym silniku), B16 (raport dla logopedy w M1), B17 (#12 i #13: do HLD czy poza; poza HLD = poza backlogiem). Do tego czasu nie są realizowane. Pytania na później (MVP, RODO, wyroby medyczne, stack): [[Plan działania]].
+
+## Zrobione w sesji 7.11 (do wiadomości)
 - Harness testowy uruchomiony w repo: oba skrypty zielone (exit 0, brak błędów konsoli i wyjątków), 38 zrzutów.
 - Opublikowana wersja apki = `app/index.html` (sprawdzone bajt w bajt). Nic nie republikowałem.
 - Vault Obsidiana postawiony, dokumenty z handoffu rozłożone po `wiki/`, HANDOFF w archiwum.

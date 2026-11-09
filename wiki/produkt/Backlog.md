@@ -1,8 +1,57 @@
-# Płynność – backlog i plan rozwoju aplikacji
+---
+status: active
+owner: Alek
+updated: 2026-11-08
+tags: [backlog, hld]
+---
 
-Właściciel: Alek. Stan na 2026-11-07.
+# Płynność – backlog
 
-## Pomysły od Alka (w kolejności zgłoszenia)
+Właściciel: Alek. Aktualizacja: 2026-11-08 (sesja decyzji HLD). Roadmapa i lista na 2 tygodnie: [[Plan działania]].
+**Zasada (B12):** każda pozycja ma moduł z [[HLD v1]] (01–08). Fundament techniczny (**F→nn**) jest dopuszczony tylko wtedy, gdy służy wskazanemu modułowi. Pomysł spoza HLD najpierw trafia do HLD (decyzja Alka), potem tutaj. Cel nadrzędny: trening Alka.
+**Zasada pomiaru (B15):** jedna skala SR 0–8 tylko dla nasilenia jąkania i poziomu techniki; wszystko inne to fakt tak/nie (jedno dotknięcie) albo licznik liczony przez apkę. Wyjątek: „Oddech po frazach: tak / częściowo / nie” w monologu zostaje.
+Okno **A** = Dogfood (poprawki z codziennego używania), okno **B** = Rozwój (funkcje z planu). Status: ☐ do zrobienia · ◐ w toku · ☑ zrobione · ⏸ czeka na Alka.
+
+## Teraz – M0 Fundament (do 13.11)
+| Status | ID | Co | HLD | Okno | Uwagi |
+| --- | --- | --- | --- | --- | --- |
+| ◐ | v4 | Feedback dnia 2: wdech 3 s, legenda SR, SR tygodniowo, „Start na sygnał”, dzień zaliczony zostaje | 04, 06 | B | tester + recenzent (gałąź `feature/testy-v4-wip` przerwana); wydanie po czystej rundzie |
+| ☐ | B14 | Zadanie w terenie: karta od tyg. 2, „Użyłem techniki” / „Dziś nie”, nie blokuje zaliczenia dnia, licznik /7 | 05 (→06, 08) | B | **przed 14.11**; treść tyg. 2–3 do akceptacji Alka; pełna pętla tester + recenzent |
+| ☐ | A5 | Podział `app/index.html` na `styles.css`, `data.js`, `map.js`, `app.js` | F→02 | B | `data.js` = biblioteka ćwiczeń (02) i profil (01 n=1); do tego czasu okno A nie zmienia kodu; może zejść na 14–15.11, B14 nie |
+| ☐ | #15 | Eksport/import danych (JSON) | F→06, 08 | B | dane postępów są tylko w jednym telefonie; eksport jest też nośnikiem dla logopedy |
+| ☑ | B1 | Repo `jestemalek1/plynnosc` na GitHubie | F→wszystkie | Alek | zrobione |
+
+## Następne – M1 Stabilnie (do 21.11)
+| Status | ID | Co | HLD | Okno | Uwagi |
+| --- | --- | --- | --- | --- | --- |
+| ☐ | R3–R7 | Poprawki z recenzji: błąd od dnia 85, sonda Claude bez kliknięcia, stary wynik oceny, pasek kart po klawiaturze, sanityzacja stanu | 04, 06 | B | [[Review kodu v3 – niezależny]] |
+| ☐ | B15 | Dziennik: przełączniki „zamieniłem słowo” i „odpuściłem sytuację” (1 dotknięcie); suma z 7 dni w karcie SR tygodnia | 06 | B | w tej samej rundzie co R3–R7; do wdrożenia zamiany zapisuj w notatce dnia |
+| ☐ | WL | Wake Lock w timerach (ekran nie gaśnie) | 04 | A | |
+| ☐ | #18 | „Uwaga do apki”: jedno zdanie z dowolnego ekranu, lista uwag + kopiuj | F→04 | A | przesunięte z M0 (B14); do tego czasu notatka dnia; usuwamy po okresie dogfoodingu |
+| ⏸ | B16 | Raport dla logopedy – 1 strona do skopiowania | 08 | B | czeka na decyzję B16; na 10.11 ręcznie [[Kontekst i profil]] |
+| ⏸ | B4 | Transkrypcja PL: test Whisper na jednym monologu | 06 | Alek | pomost do czasu oceny z dźwięku (B19); [[Transkrypcja PL – research]] |
+| ⏸ | B2 | Konsultacja 10.11 → wnioski do programu (w tym kolejność szczebli hierarchii) | 08, 02 | Alek | lista pytań w [[Decyzje do podjęcia]] |
+
+## M2 Tydzień 4 gotowy (do 27.11)
+| Status | ID | Co | HLD | Okno |
+| --- | --- | --- | --- | --- |
+| ☐ | T4–6 | Treść tygodni 4–6: wydłużona mowa (D), cykle Camperdown, dobrowolne jąkanie (G), anulowanie (H) | 02, 04 | B |
+| ⏸ | B13 | Kryterium przejścia tygodnia (silnik odłożony wg B12; zakres do decyzji B13) | 03 | B |
+
+## Później – po dopracowaniu funkcjonalności (B12)
+| ID | Co | HLD | Kamień |
+| --- | --- | --- | --- |
+| B7 | Tryb szybki 10 min (decyzja po tyg. 3) | 04 | M3 |
+| T7–12 | Treść tygodni 7–12 | 02, 04 | M4 |
+| B18 | Utrzymanie: przeglądy po 2, 2, 4, 4, 8 tyg., potem po 3 i 6 mies.; sygnały nawrotu | 03, 06 | M4 → utrzymanie |
+| B19 | Ocena mowy przez AI z nagrania i rozmowy na żywo (dźwięk, nie transkrypt) | 06, 05, 01 | po przeglądzie M3 |
+| 03 | Silnik planu (generator) | 03 | po przeglądzie M3 |
+| 01 | Wywiad i ocena wstępna w apce | 01 | produkt |
+| #14 | Refleksja z nagrań – wersja bezpieczna wg HLD 07; po dostarczeniu plików z sesji „AI lab” | 07 | poza MVP |
+
+## Zgłoszenia (historia – źródło numerów #)
+
+To jest historia zgłoszeń, nie backlog. Co z każdym zrobiono: tabele wyżej, [[Decision log]] i `CHANGELOG.md`. #12 i #13 nie są w backlogu, dopóki B17 nie przypisze ich do modułu HLD.
 
 1. **Jedna skala wszędzie** – SR 0–8 jako kolorowy pasek do kliknięcia; żadnych innych skal (0–10 wypada).
 2. **Ściągawka SR na stronie** – widoczna, intuicyjna, nie tekst.
@@ -25,41 +74,7 @@ Właściciel: Alek. Stan na 2026-11-07.
 15. **Eksport/import danych (JSON)** – dane tylko w localStorage jednego telefonu; eksport przez capability `downloads`, import przez wklejenie. Zgłoszone 2026-11-07 (sesja Claude Code), decyzja B5 w [[Decyzje do podjęcia]].
 16. **Poprawki z niezależnej recenzji v3 (R1–R11)** – [[Review kodu v3 – niezależny]]; R1–R6 przed treścią tygodnia 4. Zgłoszone 2026-11-07.
 
-## Dane bazowe (dzień 1, 2026-11-07)
+18. **„Uwaga do apki” (dogfooding)** – szybkie zapisywanie uwag do apki w trakcie treningu. Zgłoszone 2026-11-08 (wniosek z podejścia dogfoodingowego).
+17. **Feedback dnia 2** – wdech za szybki, brak legendy SR przy ocenie, SR dnia zbędny na starcie, za mało ćwiczeń. Zgłoszone 2026-11-08. Wdrożone w v4 (patrz [[Decision log]] 2026-11-08).
 
-| Nagranie | Bloki | SR |
-| --- | --- | --- |
-| Czytanie PL | 1 | 5 |
-| Monolog PL | 1 | 4 |
-| Monolog EN | 1 | 3 |
-| Rozmowa | 1 | 2 |
-
-Hierarchia (przeliczona 0–10 → 0–8): 1=2, 2=2, 3=3, 4=5 (wtrącenie), 5=4 (szybka odpowiedź), 6=2, 7=2, 8=4 (spotkanie EN), 9=2, 10=4 (prezentacja EN).
-Oddech A: nie wykonane (0/12). Monolog: brak oddechu po frazach, brzuch spięty, 2 bloki.
-Dziennik: „za wolno myślę, nie wiem co powiedzieć, brakuje mi treningu w rozmowie”.
-
-## Plan wdrożenia – wersja 2 (jedna aplikacja zamiast strony na dzień)
-
-**Architektura:** jeden samodzielny plik HTML, publikowany jako artefakt (capability `sample` = pytanie Claude ze strony). Stan w localStorage pod kluczem `plynnosc` (dzień 1 zaimportowany z danych wyżej). Ekrany:
-
-1. **Dziś** – sesja dnia wg progresji (tydzień 1: oddech A, monolog z kartą tematu, dziennik). Każde ćwiczenie: instrukcja jednym zdaniem + „jak to ma brzmieć”, timer, automatyczny licznik powtórzeń (koniec odliczenia = +1, sygnał, auto‑start kolejnego po 2 s), po ćwiczeniu krótka zachęta + co poszło dobrze.
-2. **Oceń nagranie** – wklej transkrypt (+ język, czas trwania) → metryki lokalne (słowa/min, wypełniacze, powtórzenia, restarty) → „Oceń z Claude”: płynność, angielski (tabela powiedziałeś → lepiej, 3 zwroty do zapamiętania), treść/samorozwój (co mówisz o sobie, słabe punkty, jedno pytanie do przemyślenia), zadanie na jutro.
-3. **Postępy** – SR dzienne (typowe/najgorsze) na jednym pasku 0–8, streak dni, bloki PL/EN, hierarchia.
-4. **Ściągawka** – SR 0–8 kolorowo, zasady w bloku (5 kroków), 3 reguły programu.
-
-**Komponenty wspólne:** `SRPicker` (9 chipów 0–8, kolor zielony→czerwony, opis po dotknięciu), `Timer` (auto‑powtórzenia), `Card` z zachętą, `TopicCard` (losowy temat PL/EN z puli ~60, tagi: sport, praca, książki, kuchnia azjatycka, samorozwój).
-
-**Kolejność prac:** (1) szkielet + SRPicker + Timer z auto‑licznikiem; (2) sesja dnia 2 (niedziela 8.11) i import dnia 1; (3) ocena transkryptu z `sample`; (4) postępy; (5) treści: karty tematów, zachęty, instrukcje „jak to ma brzmieć”.
-
-## Status
-
-- 2026-11-07 (sesja Claude Code): repo + vault Obsidiana, harness zielony lokalnie (exit 0, 0 błędów), niezależna recenzja kodu i research transkrypcji PL w `wiki/research/`. Decyzje: [[Decyzje do podjęcia]].
-
-- 2026-11-07: v2 opublikowana (https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P), 3 rundy build → tester + code review → poprawki; 15/15 testów akceptacyjnych PASS, harnessy: test/run.js, test/round2.js. Pokryte pomysły 1–9. Pomysł 10 (transkrypcja PL) otwarty.
-
-- 2026-11-07 (wieczór): v3 – mapa wysp (#11) opublikowana; 12 archipelagów, odblokowanie po dacie, zablokowane etapy pokazują plan. Tygodnie 4–12: placeholder (dziennik + SR) – treść do dodania przed 28.11.2026. Architekt: decyzja A/B szablonu czeka na Alka (research/szablony-decyzja.md).
-
-## Otwarte
-
-- Transkrypcja PL: sprawdzić dyktowanie w Notatkach iOS (PL) lub wgrywanie m4a do czatu.
-- Czy sesja ma mieć tryb „szybki” (10 min) na dni bez czasu.
+Dane bazowe z dnia 1: [[Kontekst i profil]]. Dawny „Plan wdrożenia v2” i statusy wersji: [[Architektura aplikacji]], [[Decision log]], `CHANGELOG.md`.

@@ -2,6 +2,7 @@
 test/*.png
 test/results.json
 test/round2_results.json
+test/round3_results.json
 test/*.log
 # obsidian workspace state (per-device)
 .obsidian/workspace.json
