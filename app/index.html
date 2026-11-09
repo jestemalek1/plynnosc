@@ -86,7 +86,7 @@
   .timer { text-align: center; padding: 6px 0 4px; }
   .timer .cue { font-size: 34px; font-weight: 700; min-height: 44px; line-height: 1.2; word-break: break-word; }
   .timer .cue.small { font-size: 22px; color: var(--muted); font-weight: 600; }
-  .timer .sub { color: var(--muted); font-size: 15px; min-height: 22px; }
+  .timer .sub { color: var(--muted); font-size: 15px; min-height: 44px; } /* 2 linie: podpowiedź 1- albo 2-liniowa nie przesuwa kart pod spodem */
   .timer .clock { font-variant-numeric: tabular-nums; font-size: 48px; font-weight: 700; margin: 4px 0; line-height: 1.1; }
   .timer .reps { font-size: 15px; color: var(--muted); margin-bottom: 8px; }
   .timer .reps b { color: var(--ink); font-size: 17px; }
@@ -109,9 +109,8 @@
   .srkey span.on { color: var(--ink); font-weight: 600; }
 
   /* Start na sygnał */
-  .signal .cue { font-size: 26px; min-height: 63px; }
-  .signal .sub { min-height: 44px; } /* 2 linie: podpowiedź w czekaniu i w odpowiedzi ma tę samą wysokość */
-  @media (max-width: 359px) { .signal .cue { min-height: 94px; } } /* wąskie telefony: część pytań ma 3 linie */ /* 2 linie: pytanie 1- albo 2-liniowe nie przesuwa kart pod spodem */
+  .signal .cue { font-size: 26px; min-height: 63px; } /* 2 linie pytania: karty pod spodem nie drgają */
+  @media (max-width: 359px) { .signal .cue { min-height: 94px; } } /* wąskie telefony: część pytań ma 3 linie */
   .signal.wait .cue { color: var(--muted); font-size: 22px; }
 
   /* Choice chips */

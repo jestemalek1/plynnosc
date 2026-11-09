@@ -303,6 +303,22 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
         timerH[width] = await np.evaluate(() => { const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Start na sygnał'); const tm = c.querySelector('.timer'), sub = c.querySelector('.sub'); const set = new Set(); ['dłoń na brzuchu, oddychasz normalnie', 'wdech nosem i od razu odpowiedź na wydechu', 'po wznowieniu znowu czekasz na sygnał', '', '10 pytań, każde w losowym momencie'].forEach(t => { sub.textContent = t; set.add(Math.round(tm.getBoundingClientRect().height)); }); return [...set]; });
         await nc.close();
       }
+      // every timer (Oddech A, Miękki start, Identyfikacja napięcia, monolog) keeps its height across all its phase hints, per width
+      const allH = {};
+      for (const width of [320, 360, 375, 390]) {
+        const nc = await browser.newContext({ viewport: { width, height: 700 }, isMobile: true, hasTouch: true }); const np = await nc.newPage(); np.__errors = []; ALL_PAGES.push(np);
+        np.on('pageerror', e => np.__errors.push('PAGEERROR ' + e.message));
+        await np.clock.install({ time: D(15) }); await np.goto(URL); await np.waitForTimeout(100); await openToday(np);
+        allH[width] = await np.evaluate(() => {
+          const subs = ['wydech 1/8 · brzuch miękki', 'słowo na początku wydechu, potem dalej „fff”', 'następne: Aleksander', 'następne: fff', 'frazy 3–5 słów, oddech po każdej', 'w bloku: zostań, poczuj, stuknij', ''];
+          const res = {};
+          [...document.querySelectorAll('#s-dzis .card')].forEach(c => { const tm = c.querySelector('.timer:not(.signal)'); if (!tm) return; c.classList.remove('collapsed'); const sub = tm.querySelector('.sub'), keep = sub.textContent; const set = new Set(); subs.concat([keep]).forEach(t => { sub.textContent = t; set.add(Math.round(tm.getBoundingClientRect().height)); }); sub.textContent = keep; res[c.querySelector('h2').textContent] = [...set]; });
+          return res;
+        });
+        await nc.close();
+      }
+      log('R4.allTimerHeights', allH);
+      verdict('R4', Object.values(allH).every(o => Object.keys(o).length >= 3 && Object.values(o).every(x => x.length === 1)), 'every timer height constant across its hints at 320/360/375/390 px: ' + JSON.stringify(allH));
       log('R4.cueHeights', hs); log('R4.signalTimerHeights', timerH);
       verdict('R4', Object.values(timerH).every(x => x.length === 1), 'whole signal timer height constant for every hint text, per width: ' + JSON.stringify(timerH));
       verdict('R4', Object.values(hs).every(x => x.length === 1), 'cue height per width (all ' + 'questions + wait): ' + JSON.stringify(hs));
