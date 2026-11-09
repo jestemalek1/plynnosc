@@ -119,6 +119,18 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
       await page.screenshot({ path: OUT + 'r3_R1_sciagawka.png', fullPage: false });
       res.errors = page.__errors; await c.close();
     }
+    // legend range labels („2–3”, „4–5”, „6–7”) stay on one line at 320/360/390 px
+    {
+      const wr = {};
+      for (const width of [320, 360, 390]) {
+        const nc = await browser.newContext({ viewport: { width, height: 844 }, isMobile: true, hasTouch: true }); const np = await nc.newPage(); np.__errors = []; ALL_PAGES.push(np);
+        await np.clock.install({ time: D(2) }); await np.goto(URL); await np.waitForTimeout(100); await tab(np, 'sciagawka');
+        wr[width] = await np.evaluate(() => [...document.querySelectorAll('#s-sciagawka .srkey b')].map(b => { const r = b.getBoundingClientRect(); return b.textContent + ':' + Math.round(r.height); }));
+        await nc.close();
+      }
+      const maxH = Math.max(...Object.values(wr).flat().map(x => +x.split(':')[1]));
+      verdict('R1', maxH <= 20, 'legend labels one line (max height ' + maxH + ' px): ' + JSON.stringify(wr));
+    }
     log('R1.detail', res);
   });
 
@@ -508,6 +520,26 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
         for (const ch of 'rozmowa z kolegą o nartach · start: ktoś · PL · szybko') { await v.page.keyboard.type(ch); tops.push(await v.page.evaluate(() => Math.round(document.querySelector('#s-dzis textarea').getBoundingClientRect().top))); }
         out[sc] = { min: Math.min(...tops), max: Math.max(...tops), errors: v.page.__errors }; await v.c.close();
       }
+      // 320 px: English monolog cue wraps to 2 lines; when the monolog ends while typing, the field must not move
+      for (const sc of ['mon320-auto', 'mon320-none']) {
+        const none = sc === 'mon320-none';
+        const seedM = { v: 2, days: { [KEY(2)]: { done: ['oddech', 'sygnal'], reps: { oddech: 12, sygnal: 10 }, monolog: { lang: 'en', topic: 1 } } } };
+        const nc = await browser.newContext({ viewport: { width: 320, height: 844 }, isMobile: true, hasTouch: true }); const np = await nc.newPage(); np.__errors = []; ALL_PAGES.push(np);
+        np.on('pageerror', e => np.__errors.push('PAGEERROR ' + e.message)); np.on('console', m => { if (m.type() === 'error') np.__errors.push(m.text()); });
+        await np.addInitScript(`localStorage.setItem('plynnosc', ${JSON.stringify(JSON.stringify(seedM))});` + (none ? ` document.addEventListener('DOMContentLoaded', () => { const s = document.createElement('style'); s.textContent = '* { overflow-anchor: none !important; }'; document.head.appendChild(s); });` : ''));
+        await np.clock.install({ time: D(2) }); await np.goto(URL); await np.waitForTimeout(100); await openToday(np);
+        await (await expand(np, 'Luźny monolog')).locator('.timer button.big').click();
+        const dzM = await expand(np, 'Dziennik bloków');
+        await dzM.locator('textarea').click(); await np.clock.runFor(1000); await np.waitForTimeout(800);
+        await np.keyboard.type('spotkanie', { delay: 5 });
+        const cueLines = await np.evaluate(() => { const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Luźny monolog'); return Math.round(c.querySelector('.cue').getBoundingClientRect().height); });
+        const before = await np.evaluate(() => Math.round(document.querySelector('#s-dzis textarea').getBoundingClientRect().top));
+        await np.clock.runFor(121000); await np.waitForTimeout(50);
+        const after = await np.evaluate(() => ({ top: Math.round(document.querySelector('#s-dzis textarea').getBoundingClientRect().top), active: document.activeElement.tagName }));
+        out[sc] = { cueH: cueLines, before, after }; await nc.close();
+      }
+      verdict('R6', ['mon320-auto', 'mon320-none'].every(a => out[a].after.active === 'TEXTAREA' && Math.abs(out[a].after.top - out[a].before) <= 3),
+        '320 px, English monolog (cue ' + out['mon320-none'].cueH + ' px) ends while typing: ' + ['mon320-auto', 'mon320-none'].map(a => a + ' ' + out[a].before + '→' + out[a].after.top).join(', '));
       log('R6.tagAndKeyboard', out);
       verdict('R6', ['long-auto', 'long-none'].every(a => out[a].max - out[a].min <= 3), 'long diary sentence typed char by char: textarea top range ' + ['long-auto', 'long-none'].map(a => a + ' ' + out[a].min + '–' + out[a].max).join(', '));
       verdict('R6', ['tag-auto', 'tag-none'].every(a => out[a].complete && out[a].now.active === 'TEXTAREA' && Math.abs(out[a].now.top - out[a].before) <= 3 && Math.abs(out[a].later - out[a].before) <= 3),

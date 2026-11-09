@@ -105,7 +105,7 @@
   .srkey { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; margin-top: 8px; padding: 8px 10px; background: var(--soft); border-radius: 10px; font-size: 14px; color: var(--muted); }
   .srkey span { display: flex; align-items: center; gap: 6px; line-height: 1.25; }
   .srkey i { flex-shrink: 0; width: 10px; height: 10px; border-radius: 3px; background: var(--c); }
-  .srkey b { color: var(--ink); font-variant-numeric: tabular-nums; min-width: 24px; }
+  .srkey b { color: var(--ink); font-variant-numeric: tabular-nums; min-width: 24px; white-space: nowrap; flex-shrink: 0; } /* „4–5” nie łamie się */
   .srkey span.on { color: var(--ink); font-weight: 600; }
 
   /* Start na sygnał */
@@ -492,7 +492,8 @@
       if (status === 'gap') { status = 'run'; endAt = Date.now() + cur().secs * 1000; draw(); return; }
       idx++;
       if (opts.onRep) opts.onRep(idx);
-      if (idx >= phases.length) { stop(); status = 'done'; beep(true); draw(); if (opts.onDone) opts.onDone(); return; }
+      // Koniec serii zmienia wysokość karty (np. 2-liniowe „Mów po angielsku” → „Zrobione”): pomiar pola przed rysowaniem.
+      if (idx >= phases.length) { keepFieldInPlace(function () { stop(); status = 'done'; beep(true); draw(); if (opts.onDone) opts.onDone(); }); return; }
       beep(false);
       if (gap > 0) { status = 'gap'; endAt = Date.now() + gap * 1000; }
       else { status = 'run'; endAt = Date.now() + cur().secs * 1000; }
