@@ -28,20 +28,17 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - [[Język obcy i refleksja – research]]
 - [[Review kodu v3 – niezależny]]
 
-## Aktualny stan (2026-11-08, sesja decyzji HLD)
-- [[HLD v1]] uzupełniony i wiodący (kopia w vaultcie, `.docx` = historia): utrzymanie (B18), ocena mowy przez AI z nagrania i rozmowy na żywo (B19), minimum bezpieczeństwa (B20), refleksja z nagrań z zabezpieczeniami (B17), §7 prototyp n=1 (B12).
-- Decyzje: B12 (narzędzie Alka → aplikacja przez dogfooding; trening nadrzędny; silnik, ocena AI, wywiad później), B14 (zadanie w terenie przed 14.11), B15 (zamiana słów jako fakt w dzienniku; SR 0–8 jedyną skalą). [[Decision log]].
-- [[Backlog]]: każda pozycja ma moduł HLD; roadmapa M0–M4 + utrzymanie i lista na 2 tygodnie w [[Plan działania]].
-- v4 przygotowana na `feature/dzien2-feedback` (wydana 9.11 – patrz niżej).
-- Planowanie (B21, B22): spec funkcji dla pozycji L w `wiki/specs/` ([[Jak pisać spec]]); pierwszy: [[B14 Zadanie w terenie]] – zaakceptowany, czeka na wydanie v4.
-- B13, B16, B17 zdecydowane. Otwarte: B23 (moduł 09 Trening języka obcego), B24 (moduł 10 Refleksja i wzorce) – [[Język obcy i refleksja – research]].
-- 2026-11-09 (okno B): **v4 wydana i opublikowana** (tag `v4`, artefakt pod linkiem wyżej) po 8 rundach niezależnego testera i recenzenta; harness z bramką (run/round2/round3) zielony. Nowe decyzje z weryfikacji: B21–B28 (w tym B25 – reguła powrotu na mapę, B26 – treść „Start na sygnał”).
+## Aktualny stan (2026-11-09)
+- **v4 wydana i opublikowana** (tag `v4`, artefakt pod linkiem wyżej) po 8 rundach niezależnego testera i recenzenta; harness (run/round2/round3) zielony. Decyzje z weryfikacji v4: B21–B28 (okno B), czekają na Alka.
+- [[HLD v1]] wiodący (kopia w vaultcie, `.docx` = historia): 10 modułów – dodane 09 Trening języka obcego (B31) i 10 Refleksja i wzorce (B32); utrzymanie (B18), ocena mowy przez AI (B19), minimum bezpieczeństwa (B20), §7 prototyp n=1 (B12).
+- Decyzje sesji HLD (B12–B20, B29–B32) podjęte – [[Decision log]]. Planowanie: spec funkcji dla pozycji L w `wiki/specs/` ([[Jak pisać spec]]); [[B14 Zadanie w terenie]] zaakceptowany.
+- [[Backlog]]: każda pozycja ma moduł HLD, rozmiar i spec; roadmapa M0–M4 + utrzymanie, mapa pętla × kamienie i lista na 2 tygodnie w [[Plan działania]].
 
 ## Następna akcja
-1. Okno B: domknąć v4 (tester + recenzent) i przygotować treść kart „Zadanie w terenie” tygodni 2–3 do akceptacji.
-2. Alek: konsultacja 10.11 – [[Kontekst i profil]], pytania z B2, kolejność szczebli hierarchii.
-3. Okno B po wydaniu v4: B14 wg [[B14 Zadanie w terenie]].
-4. Poza vaultem: w `CLAUDE.md` doprecyzować zasadę „jedna skala” (B15) i wskazać `wiki/specs/` (B21).
+1. Okno B: B14 wg [[B14 Zadanie w terenie]] – przed 14.11 (start tygodnia 2).
+2. Alek: konsultacja 10.11 – [[Kontekst i profil]], pytania z B2 (w tym kolejność szczebli i imię w tygodniu 3); decyzje B21–B28 z weryfikacji v4.
+3. Okno B potem: A5 podział, #15 eksport; spec B15 (+ B13 w tej samej karcie).
+4. Poza vaultem: w `CLAUDE.md` doprecyzować zasadę „jedna skala” (B15) i wskazać `wiki/specs/` (B29).
 
 ## Inbox / Review
 - [[Inbox]] · [[Review]]

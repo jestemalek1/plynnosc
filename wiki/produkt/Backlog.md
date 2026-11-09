@@ -8,15 +8,15 @@ tags: [backlog, hld]
 # Płynność – backlog
 
 Właściciel: Alek. Aktualizacja: 2026-11-08 (sesja decyzji HLD). Roadmapa i lista na 2 tygodnie: [[Plan działania]].
-**Zasada (B12):** każda pozycja ma moduł z [[HLD v1]] (01–08). Fundament techniczny (**F→nn**) jest dopuszczony tylko wtedy, gdy służy wskazanemu modułowi. Pomysł spoza HLD najpierw trafia do HLD (decyzja Alka), potem tutaj. Cel nadrzędny: trening Alka.
-**Rozmiary (B21):** S = `fix/*`, bez specyfikacji · M = jedna runda, opis w backlogu · L = spec w `wiki/specs/` + tester + recenzent, budżet w rundach ([[Jak pisać spec]]).
+**Zasada (B12):** każda pozycja ma moduł z [[HLD v1]] (01–10). Fundament techniczny (**F→nn**) jest dopuszczony tylko wtedy, gdy służy wskazanemu modułowi. Pomysł spoza HLD najpierw trafia do HLD (decyzja Alka), potem tutaj. Cel nadrzędny: trening Alka.
+**Rozmiary (B29):** S = `fix/*`, bez specyfikacji · M = jedna runda, opis w backlogu · L = spec w `wiki/specs/` + tester + recenzent, budżet w rundach ([[Jak pisać spec]]).
 **Zasada pomiaru (B15):** jedna skala SR 0–8 tylko dla nasilenia jąkania i poziomu techniki; wszystko inne to fakt tak/nie (jedno dotknięcie) albo licznik liczony przez apkę. Wyjątek: „Oddech po frazach: tak / częściowo / nie” w monologu zostaje.
 Okno **A** = Dogfood (poprawki z codziennego używania), okno **B** = Rozwój (funkcje z planu). Status: ☐ do zrobienia · ◐ w toku · ☑ zrobione · ⏸ czeka na Alka.
 
 ## Teraz – M0 Fundament (do 13.11)
 | Status | ID | Co | HLD | Rozmiar | Spec | Okno | Uwagi |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| ◐ | v4 | Feedback dnia 2: wdech 3 s, legenda SR, SR tygodniowo, „Start na sygnał”, dzień zaliczony zostaje | 04, 06 | L | — (sprzed B21; wymagania w CHANGELOG v4) | B | tester + recenzent (gałąź `feature/testy-v4-wip` przerwana); wydanie po czystej rundzie |
+| ◐ | v4 | Feedback dnia 2: wdech 3 s, legenda SR, SR tygodniowo, „Start na sygnał”, dzień zaliczony zostaje | 04, 06 | L | — (sprzed B29; wymagania w CHANGELOG v4) | B | tester + recenzent (gałąź `feature/testy-v4-wip` przerwana); wydanie po czystej rundzie |
 | ☐ | B14 | Zadanie w terenie: karta od tyg. 2, „Użyłem techniki” / „Dziś nie”, nie blokuje zaliczenia dnia, licznik /7 | 05 (→06, 08) | L | [[B14 Zadanie w terenie]] | B | **przed 14.11**; treść tyg. 2–3 do akceptacji Alka; pełna pętla tester + recenzent |
 | ☐ | A5 | Podział `app/index.html` na `styles.css`, `data.js`, `map.js`, `app.js` | F→02 | L | — (refaktor: [[Architektura aplikacji]]) | B | `data.js` = biblioteka ćwiczeń (02) i profil (01 n=1); do tego czasu okno A nie zmienia kodu; może zejść na 14–15.11, B14 nie |
 | ☐ | #15 | Eksport/import danych (JSON) | F→06, 08 | M | — | B | dane postępów są tylko w jednym telefonie; eksport jest też nośnikiem dla logopedy |
@@ -48,13 +48,13 @@ Okno **A** = Dogfood (poprawki z codziennego używania), okno **B** = Rozwój (f
 | B19 | Ocena mowy przez AI z nagrania i rozmowy na żywo (dźwięk, nie transkrypt) | 06, 05, 01 | L | później | po przeglądzie M3 |
 | 03 | Silnik planu (generator) | 03 | L | później | po przeglądzie M3 |
 | 01 | Wywiad i ocena wstępna w apce | 01 | L | później | produkt |
-| #13 | English card z nagrania EN (pierwsza wersja języka obcego) | 05 → 09 (B23) | L | do napisania | M3 |
-| #12 | Jedno pytanie z monologu (pierwsza wersja refleksji) | 07 → 10 (B24) | L | do napisania | M3 |
-| #14 | Refleksja z nagrań – wersja bezpieczna; po dostarczeniu plików z sesji „AI lab” | 07 → 10 (B24) | L | później | poza MVP |
+| #13 | English card z nagrania EN (pierwsza wersja języka obcego) | 09 | L | do napisania | M3 |
+| #12 | Jedno pytanie z monologu (pierwsza wersja refleksji) | 10 | L | do napisania | M3 |
+| #14 | Refleksja z nagrań – wersja bezpieczna; po dostarczeniu plików z sesji „AI lab” | 10 | L | później | poza MVP |
 
 ## Zgłoszenia (historia – źródło numerów #)
 
-To jest historia zgłoszeń, nie backlog. Co z każdym zrobiono: tabele wyżej, [[Decision log]] i `CHANGELOG.md`. #12 i #13 są w backlogu od B17 (moduły docelowe: B23, B24).
+To jest historia zgłoszeń, nie backlog. Co z każdym zrobiono: tabele wyżej, [[Decision log]] i `CHANGELOG.md`. #12 i #13 są w backlogu od B17, w modułach 09 i 10 (B31, B32).
 
 1. **Jedna skala wszędzie** – SR 0–8 jako kolorowy pasek do kliknięcia; żadnych innych skal (0–10 wypada).
 2. **Ściągawka SR na stronie** – widoczna, intuicyjna, nie tekst.

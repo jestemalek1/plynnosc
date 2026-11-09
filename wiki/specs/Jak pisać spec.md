@@ -4,7 +4,7 @@ updated: 2026-11-08
 tags: [specs, proces]
 ---
 
-# Jak pisać spec funkcji (decyzja B21)
+# Jak pisać spec funkcji (decyzja B29)
 
 Spec piszemy tylko dla pozycji backlogu rozmiaru **L**, czyli dla zmian w logice dnia lub tygodnia, stanie, timerze, mapie albo ocenie. Poprawki S i rundy M obywają się bez specyfikacji. Spec ma 1–2 strony. Jest pisany przed kodem, Alek go akceptuje, a po wdrożeniu zostaje jako opis działania. LLD modułu HLD to suma specyfikacji jego funkcji. Uzasadnienie: [[Planowanie pracy – research]].
 

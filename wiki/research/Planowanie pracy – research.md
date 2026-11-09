@@ -7,7 +7,7 @@ tags: [research, proces, planowanie, agenci]
 
 # Planowanie pracy: HLD → LLD → backlog → agenci (research i propozycja)
 
-Pytanie Alka (8.11): jak się podchodzi do rozwoju takiej aplikacji, jak mają wyglądać backlog, HLD, LLD i specyfikacje dla agentów, i którego modułu LLD robić teraz. Decyzje: B21, B22 w [[Decyzje do podjęcia]].
+Pytanie Alka (8.11): jak się podchodzi do rozwoju takiej aplikacji, jak mają wyglądać backlog, HLD, LLD i specyfikacje dla agentów, i którego modułu LLD robić teraz. Decyzje: B29, B30 w [[Decyzje do podjęcia]].
 
 ## Co mówią źródła (skrót)
 1. **Warstwy dokumentów.** W typowym układzie:

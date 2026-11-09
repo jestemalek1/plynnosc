@@ -7,7 +7,7 @@ tags: [research, hld, jezyk-obcy, refleksja]
 
 # Język obcy i refleksja nad wzorcami – research i propozycja modułów 09 i 10
 
-Prośba Alka (8.11): w HLD brakuje modułów do (1) analizy języka obcego (na razie angielski) i (2) „psychoanalizy”, czyli pomocy w znajdowaniu złych schematów w zachowaniu, rozumieniu własnych wzorców i stawaniu się lepszym. Wcześniejszy research o wzorcach aplikacji (Stoic, Rosebud, Mindsera, Speak, Loora, Langua i badania o feedbacku) jest w [[12-13 Samorozwój i angielski – brief]]. Tu dochodzą: związek języka obcego z jąkaniem, dowody na pracę ze schematami w self-helpie oraz granice prawne i kliniczne. Decyzje: B23, B24 w [[Decyzje do podjęcia]].
+Prośba Alka (8.11): w HLD brakuje modułów do (1) analizy języka obcego (na razie angielski) i (2) „psychoanalizy”, czyli pomocy w znajdowaniu złych schematów w zachowaniu, rozumieniu własnych wzorców i stawaniu się lepszym. Wcześniejszy research o wzorcach aplikacji (Stoic, Rosebud, Mindsera, Speak, Loora, Langua i badania o feedbacku) jest w [[12-13 Samorozwój i angielski – brief]]. Tu dochodzą: związek języka obcego z jąkaniem, dowody na pracę ze schematami w self-helpie oraz granice prawne i kliniczne. Decyzje: B31, B32 w [[Decyzje do podjęcia]].
 
 ## 1. Język obcy a jąkanie
 - U osób dwujęzycznych, które się jąkają, przeważają wyniki pokazujące **więcej niepłynności w słabszym języku**. W badaniu 28 osób było więcej niepłynności typowych i jąkania w L2 niż w L1, i autorzy łączą to z dodatkowym obciążeniem uwagi ([UCLouvain 2021](https://research.dial.uclouvain.be/handle/2078.5/114081)). Badania polsko-angielskie z Łodzi nie wykazały różnicy w częstości samego jąkania, ale pokazały, że niższa biegłość w angielskim wiąże się z większą liczbą niepłynności typowych ([Logopaedica Lodziensia 2023](https://czasopisma.uni.lodz.pl/logopedica/article/download/16438/20813/49527), [DOAJ](https://doaj.org/article/5511a1b7cbe34a87ae81fe8633f0d33f)). Próby są małe, a obraz niejednoznaczny.
@@ -43,7 +43,7 @@ Prośba Alka (8.11): w HLD brakuje modułów do (1) analizy języka obcego (na r
 ## 3. Propozycja: dwa nowe moduły HLD
 Kryterium z HLD §2: osobny moduł, gdy odpowiada za wyraźnie inną potrzebę. Oba je spełniają. 09 rozwija język, a nie płynność (płynność należy do 06). 10 dotyczy rozwoju osobistego ogólnie, a nie barier związanych z jąkaniem (te należą do 07).
 
-### 09. Trening języka obcego (propozycja B23)
+### 09. Trening języka obcego (propozycja B31)
 - **Odpowiedzialność:** rozwijać sposób mówienia w języku obcym (na start angielski) na podstawie własnych nagrań i rozmów użytkownika, tak żeby spadł koszt formułowania wypowiedzi.
 - **Zakres na poziomie HLD:**
   - po wypowiedzi krótka karta: najwyżej 5 poprawek „powiedziałeś → lepiej”, frazy zamiast reguł, jedna uwaga o rejestrze, jedna rzecz, która wyszła dobrze;
@@ -59,7 +59,7 @@ Kryterium z HLD §2: osobny moduł, gdy odpowiada za wyraźnie inną potrzebę. 
   - AI cytuje dokładny fragment i oznacza niską pewność poprawki.
 - **Powiązania:** korzysta z tych samych nagrań i rozmów co 05 i 06 (B19). Frazy zasilają bibliotekę (02), np. pytania EN w „Start na sygnał”. Plan (03) ustala proporcję PL/EN.
 
-### 10. Refleksja i wzorce (propozycja B24)
+### 10. Refleksja i wzorce (propozycja B32)
 - **Odpowiedzialność:** pomagać użytkownikowi zauważać jego powtarzające się wzorce (sytuacje, reakcje, energię, odkładanie, intencje) na podstawie tego, co sam mówi, i zamieniać je w małe działania.
 - **Zakres na poziomie HLD:**
   - po wypowiedzi jedna linia lustra i **jedno** pytanie (#12);
