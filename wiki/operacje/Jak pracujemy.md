@@ -16,16 +16,19 @@ Zasada nadrzędna: **target, nie proces**. Jeden plik do czytania przed pracą (
 
 Małe zmiany (tekst, jedna funkcja): sam budowniczy + harness. Pętlę z testerem i recenzentem uruchamiamy przy zmianach w logice dnia/tygodnia, stanie, timerze, mapie, ocenie.
 
+## Dwa okna i dogfooding
+Dwie równoległe sesje: **A – Dogfood** (poprawki z codziennego używania) i **B – Rozwój** (funkcje z planu). Zasady, gałęzie i kolejność startu: [[Plan działania]] i [[Git i gałęzie]].
+
 ## Co robi Alek, co robi agent
 - Alek: decyzje produktowe i biznesowe ([[Decyzje do podjęcia]]), treść terapii po konsultacji z logopedą, testy na prawdziwym telefonie, dziennik.
 - Agent: kod, testy headless, research z podanymi źródłami, propozycje decyzji z rekomendacją (nigdy „wybierz sam” bez rekomendacji).
 
 ## Sesja agenta — checklista
-1. Przeczytaj `CLAUDE.md` → [[Start]] → [[Decyzje do podjęcia]] (czy coś odhaczone?).
-2. Weź jedną pozycję z [[Backlog]] albo jedną decyzję do wdrożenia.
+1. Przeczytaj `CLAUDE.md` → [[Start]] → [[Decyzje do podjęcia]] (czy coś odhaczone?). Ustal, czy jesteś oknem A czy B.
+2. `git fetch` → gałąź z `develop` wg [[Git i gałęzie]]. Weź jedną pozycję ze swojej kolumny [[Backlog]].
 3. Zmiana → `node --check` → `node test/run.js && node test/round2.js`.
 4. Większa zmiana → tester + recenzent (osobni agenci) → poprawki.
-5. Publikacja wg [[Publikacja (artefakt claude.ai)]].
+5. PR do `develop`; wydanie i publikacja tylko z `main` wg [[Git i gałęzie]] i [[Publikacja (artefakt claude.ai)]].
 6. Wpis w [[Decision log]] (jeśli decyzja) i aktualizacja „Aktualny stan” w [[Start]]. Commit.
 
 ## Czego nie robimy

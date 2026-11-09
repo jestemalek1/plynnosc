@@ -7,7 +7,10 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - [[Kontekst i profil]] — po co to jest, kim jest użytkownik, co już ustalone
 - [[Decyzje do podjęcia]] — co czeka na Alka, z instrukcją krok po kroku (TL;DR z sesji 7.11: `wiki/decyzje/TLDR 2026-11-07.html`)
 - [[Decision log]] — co już postanowione i dlaczego
-- [[Backlog]] — pomysły i plan funkcji (14 pozycji)
+- [[HLD v1]] i [[HLD v1 – porównanie z planem]] — 8 modułów produktu vs nasza apka
+- [[Plan działania]] — kamienie milowe, dwa okna, pętla dogfoodingu
+- [[Backlog]] — co teraz, co następne, kto (okno A / B)
+- [[Git i gałęzie]] — gitflow lekki, wydania, hotfix
 - [[Program płynności]] — źródło prawdy dla treści ćwiczeń i progresji
 - [[Architektura aplikacji]] — jak zbudowana jest apka i plan podziału na pliki
 - [[Publikacja (artefakt claude.ai)]] — ograniczenia środowiska i jak publikować
@@ -23,17 +26,18 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - [[Transkrypcja PL – research]]
 - [[Review kodu v3 – niezależny]]
 
-## Aktualny stan (2026-11-07)
-- v3 opublikowana jako artefakt (slug `6d11a925-4902-461b-9300-077502bbab5e`, capability `sample`). Plik `app/index.html` w repo jest bajt w bajt tą wersją.
-- Harness testowy przeniesiony do repo i uniezależniony od ścieżek (patrz [[Testy]]).
-- Tygodnie 1–3 mają treść; tygodnie 4–12 to placeholder (dziennik + SR). Termin: przed 28.11.2026.
-- Konsultacje ze specjalistą: poniedziałek 10.11 (FIKS / Jankiewicz) — patrz [[Decyzje do podjęcia]].
-- Niezależna recenzja kodu: 11 ryzyk, R1–R6 do poprawy przed treścią tygodnia 4 ([[Review kodu v3 – niezależny]]). Research transkrypcji PL gotowy ([[Transkrypcja PL – research]]).
-- Repo lokalne z pierwszym commitem; nie wypchnięte na GitHub (decyzja B1).
+## Aktualny stan (2026-11-08, sesja decyzji HLD)
+- [[HLD v1]] uzupełniony i wiodący (kopia w vaultcie, `.docx` = historia): utrzymanie (B18), ocena mowy przez AI z nagrania i rozmowy na żywo (B19), minimum bezpieczeństwa (B20), refleksja z nagrań z zabezpieczeniami (B17), §7 prototyp n=1 (B12).
+- Decyzje: B12 (narzędzie Alka → aplikacja przez dogfooding; trening nadrzędny; silnik, ocena AI, wywiad później), B14 (zadanie w terenie przed 14.11), B15 (zamiana słów jako fakt w dzienniku; SR 0–8 jedyną skalą). [[Decision log]].
+- [[Backlog]]: każda pozycja ma moduł HLD; roadmapa M0–M4 + utrzymanie i lista na 2 tygodnie w [[Plan działania]].
+- v4 przygotowana na `feature/dzien2-feedback` (wydana 9.11 – patrz niżej).
+- Otwarte decyzje: B13, B16, B17 (#12, #13).
+- 2026-11-09 (okno B): **v4 wydana i opublikowana** (tag `v4`, artefakt pod linkiem wyżej) po 8 rundach niezależnego testera i recenzenta; harness z bramką (run/round2/round3) zielony. Nowe decyzje z weryfikacji: B21–B28 (w tym B25 – reguła powrotu na mapę, B26 – treść „Start na sygnał”).
 
 ## Następna akcja
-1. Alek: przejrzeć [[Decyzje do podjęcia]] i odhaczyć.
-2. Agent: po decyzjach — podział `app/index.html` na pliki (Opcja A) i treść tygodni 4–6.
+1. Okno B: domknąć v4 (tester + recenzent) i przygotować treść kart „Zadanie w terenie” tygodni 2–3 do akceptacji.
+2. Alek: konsultacja 10.11 – [[Kontekst i profil]], pytania z B2, kolejność szczebli hierarchii.
+3. Poza vaultem: doprecyzować w `CLAUDE.md` zasadę „jedna skala” wg B15.
 
 ## Inbox / Review
 - [[Inbox]] · [[Review]]

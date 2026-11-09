@@ -125,6 +125,8 @@ Dziewięć ćwiczeń w kolejności wprowadzania. Dawki w nawiasach to propozycja
 2. Ujawnienie masz zaliczone (żartujesz z tego w pracy). Zamiast tego codzienna \*\*symulacja warunków bloku\*\*: 2 min luźnego, szybkiego monologu o czymś, co Cię kręci, naprzemiennie po polsku i po angielsku, nagranie. Jedyne kryterium: frazy 3–5 słów i oddech po każdej – bloki się nie liczą. Co tydzień podnosisz obciążenie: 3 min → temat techniczny po angielsku → rozmowa z kolegą → wypowiedź na spotkaniu po angielsku → prezentacja po angielsku.
 3. Na szczeblu zostajesz dni lub tygodnie, aż użycie techniki jest tam rutynowe; dopiero wtedy szczebel wyżej.
 
+**Dopisek 2026-11-08 (decyzja B14):** „szczebel N” w kolumnie „Zadanie w terenie” oznacza szczebel z **Twojej hierarchii z dnia 1** (lista w apce, Postępy), a nie przykładowej listy w sekcji „Pomiar postępów”. Twoja lista: 1 czytanie na głos samemu · 2 daily po polsku (własny moment) · 3 rozmowa z bliską osobą – luźno, szybko · 4 wtrącenie się do cudzej rozmowy · 5 szybka odpowiedź, gdy ktoś czeka · 6 telefon służbowy · 7 przedstawienie się obcej osobie (imię) · 8 wypowiedź na spotkaniu po angielsku · 9 spotkanie z klientem · 10 prezentacja / szkolenie po angielsku. Kolejność od najłatwiejszej – do potwierdzenia (SR z dnia 1 nie rośnie monotonicznie: wtrącenie 5, imię 2).
+
 ## Progresja tydzień po tygodniu (12 tygodni)
 
 Przechodzisz dalej, gdy spełnisz kryterium – nie dlatego, że minął tydzień. Jeśli kryterium nie wchodzi przez 2 tygodnie, to sygnał dla logopedki, nie powód do rezygnacji. Litery = ćwiczenia z sekcji wyżej.
@@ -170,10 +172,10 @@ Bez pomiaru nie zobaczysz postępu – jest wolny, nieliniowy i zależny od dnia
 
 **Skale:**
 
-- **SR 0–8** (Camperdown): 0 – brak; 1 – jest, ale słuchacz nie zauważa; 2–3 – lekkie; 4–5 – umiarkowane; 6–7 – ciężkie; 8 – przekaz nie dochodzi. Zapisujesz **typowe** i **najgorsze** SR dnia. Cel końcowy: SR 0–1 przy technice 1–2.
+- **SR 0–8** (Camperdown): 0 – brak; 1 – jest, ale słuchacz nie zauważa; 2–3 – lekkie; 4–5 – umiarkowane; 6–7 – ciężkie; 8 – przekaz nie dochodzi. Zapisujesz **typowe** i **najgorsze** SR z ostatnich 7 dni, raz w tygodniu (zmiana 2026-11-08: wcześniej codziennie; codzienną mowę opisuje dziennik bloków). Cel końcowy: SR 0–1 przy technice 1–2.
 - **Technika 0–8**: 0 – naturalnie, 8 – maksymalnie przesadnie.
 - **%SS** (procent zająkniętych sylab): 3–5-minutowe nagranie monologu lub telefonu; zająknięte sylaby ÷ wszystkie × 100. Jedna osoba oceniająca jest mało rzetelna – policz dwa razy (Ty + partnerka/logopedka) i uśrednij ([Karimi i in.](https://research.bond.edu.au/en/publications/absolute-and-relative-reliability-of-percentage-of-syllables-stut/)).
-- **SUDS 0–10** – subiektywny stres w danej sytuacji; **unikanie**: rzadko / czasem / zwykle.
+- **SUDS 0–10** – subiektywny stres w danej sytuacji; **unikanie**: rzadko / czasem / zwykle. *Zmiana 2026-11-08 (B15): w apce SUDS pomijamy (bloki bez odczuwanego stresu, zasada jednej skali); zamianę słów i odpuszczone sytuacje zapisujesz w dzienniku jednym dotknięciem, apka liczy dni w tygodniu.*
 - Raz na 3 miesiące z logopedką: OASES lub S24 (kwestionariusze wpływu jąkania i postaw).
 
 **Tracker tygodniowy** (dopisuj wiersze):

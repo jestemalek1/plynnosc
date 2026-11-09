@@ -1,8 +1,11 @@
 # {{date}}
 
-## Trening (SR typ / max, co zablokowało)
+## Trening
+- Zrobione: tak / nie · czas: … min
+- Co zablokowało (dziennik w apce):
 
-## Apka – co zrobione
+## Apka – co uwierało (dogfood)
+- 
 
 ## Decyzje
 
