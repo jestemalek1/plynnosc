@@ -4,6 +4,21 @@ Format: data — decyzja. Krótko: co, dlaczego, kiedy wracamy. Otwarte sprawy s
 
 ## Aktywne decyzje
 
+### 2026-11-08 — B31, B32: nowe moduły HLD 09 „Trening języka obcego” i 10 „Refleksja i wzorce” (Alek)
+- **09:** po wypowiedzi karta z najwyżej 5 poprawkami i frazami, użytkownik sam wypowiada poprawki, bank fraz z własnych potknięć. Granice: poprawki tylko po wypowiedzi, niepłynność nie jest błędem językowym, tempo nie jest celem. Pierwsza wersja dla Alka: #13 (M3).
+- **10:** wzorce widziane w słowach użytkownika, z datami i cytatami, potwierdzane przez niego i zamieniane w plany „jeśli X, to Y”. Bez etykiet schematów, diagnoz i interpretacji źródeł; pomoc kryzysowa; przeznaczenie wellbeing, bez „terapii” i „psychoanalizy” w nazwie. #12 to pierwsza wersja (M3), #14 przechodzi z 07 do 10.
+Uzasadnienie i źródła: [[Język obcy i refleksja – research]]. Numeracja: okno B użyło B21–B28 w weryfikacji v4, więc decyzje tej sesji mają numery B29–B32 (wcześniej robocze B21–B24).
+
+### 2026-11-08 — B13, B16, B17 (Alek)
+- **B13 (HLD 03), wersja bez silnika:** w karcie „SR tygodnia” (dzień 7, 14, …) jedno pytanie tak/nie: „Kryterium tygodnia spełnione?”, pod nim treść kryterium z [[Program płynności]]. Tydzień dalej przesuwa się z kalendarzem. Dwa razy „nie” z rzędu = sygnał dla logopedki w raporcie B16. Świadomie akceptujemy, że do czasu silnika (po M3) apka może przepuścić dalej bez kryterium. Rozmiar M, M2; ta sama karta co B15, więc może iść w tej samej rundzie.
+- **B16 (HLD 08):** TAK, M1, rozmiar M, po B14 i B15. Jedna strona tekstu do skopiowania: baza, SR tygodni, kryteria (B13), zadania w terenie (B14), zamiana słów i odpuszczone sytuacje (B15).
+- **B17:** #13 angielski wchodzi do HLD jako komunikacja w języku obcym, #12 „jedno pytanie” jako część refleksji z nagrań z zabezpieczeniami #14. Poza MVP; dla Alka M3. Docelowe miejsce w HLD (nowe moduły 09 i 10) – propozycja B31 i B32 ([[Język obcy i refleksja – research]]).
+
+### 2026-11-08 — B29, B30: lekki spec funkcji zamiast LLD modułów; pierwszy spec B14 (Alek)
+Decyzja B29: HLD zostaje katalogiem modułów. LLD modułu rośnie od dołu jako suma specyfikacji jego funkcji. Dla pozycji rozmiaru L (logika dnia/tygodnia, stan, timer, mapa, ocena) piszemy przed kodem jeden plik `wiki/specs/<ID>.md` wg [[Jak pisać spec]], a Alek go akceptuje. Tester dostaje scenariusze, recenzent dane i ryzyka. Backlog ma kolumny Rozmiar (S/M/L) i Spec. W [[Plan działania]] jest mapa „pętla HLD × kamienie”. Ślad bez macierzy: to samo ID w backlogu, specyfikacji, gałęzi i CHANGELOG. Bez Spec Kitu i Kiro (zgodnie z CLAUDE.md). Research: [[Planowanie pracy – research]]. Wracamy, gdy pojawi się drugi deweloper, produkt albo klasyfikacja jako wyrób medyczny.
+Decyzja B30: pierwszy spec to [[B14 Zadanie w terenie]], zaakceptowany 8.11 z treścią tygodni 2–3. Przy imieniu w tygodniu 3 miękki start zgodnie z tabelą progresji; pytanie o preparatory set na konsultację. Daily jako szczebel 2. Potem B15, potem T4–6.
+Do zrobienia poza vaultem: w `CLAUDE.md` wskazać `wiki/specs/` w kroku 2 workflow.
+
 ### 2026-11-08 — B15: zamiana słów i odpuszczone sytuacje jako fakty w dzienniku; zasada jednej skali doprecyzowana (Alek)
 Decyzja (HLD 06): w dzienniku bloków dwa przełączniki jednym dotknięciem: „zamieniłem słowo” i „odpuściłem sytuację”. Karta „SR tygodnia” pokazuje sumę z 7 dni. Bez pytań z pamięci o cały tydzień, bez SUDS i skali komfortu. OASES – z logopedką.
 **Zasada pomiaru:** jedna skala SR 0–8 tylko dla nasilenia jąkania i poziomu techniki; wszystko inne to fakt tak/nie albo licznik liczony przez apkę. Wyjątek: „Oddech po frazach: tak / częściowo / nie” zostaje.
