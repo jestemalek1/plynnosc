@@ -24,4 +24,4 @@ Slug: `6d11a925-4902-461b-9300-077502bbab5e`. Zadeklarowana capability: `sample`
 3. Po publikacji: sprawdzić w telefonie ekran Dziś i jedno „Oceń z Claude”.
 4. Zapisać w [[Decision log]] albo w notatce dnia, co weszło.
 
-Po podziale na kilka plików (Opcja A): `publish` z `files` (`app.js`, `map.js`, `styles.css`) obok `index.html`; ścieżki w HTML względne, bez wiodącego `/`.
+Po podziale na kilka plików (Opcja A): `publish` z `files` (`styles.css`, `data.js`, `app.js`, później `store.js`, `domain.js`) obok `index.html`; ścieżki w HTML względne, bez wiodącego `/`.

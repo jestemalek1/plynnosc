@@ -9,7 +9,7 @@ tags: [architektura, hld, kworum, recenzja]
 
 Pytanie Alka: czy kod aplikacji jest pisany zgodnie z najlepszymi praktykami dla takich rozwiązań i jaki HLD proponujemy dla PoC, wiedząc, że ma on urosnąć do produktu z [[HLD v1]].
 
-Stan: **architektura przyjęta przez Alka 11.11 (C1)**; prompt „Oceń” zostaje bez zmian jako wyjątek prywatny (C3). Kolejność prac i pozostałe pozycje (C2, C4–C8) czekają w [[Decyzje do podjęcia]]. Kod aplikacji nie był zmieniany.
+Stan: **architektura przyjęta przez Alka 11.11 (C1)**; prompt „Oceń” zostaje bez zmian jako wyjątek prywatny (C3). Kolejność prac przyjęta 11.11 (C2), strażnik architektury też (C9, C10); otwarte C4–C8 w [[Decyzje do podjęcia]]. Kod aplikacji nie był zmieniany.
 
 ## Jak to powstało
 1. **Runda 1 – cztery niezależne raporty.** Agenci nie znali nawzajem swoich wniosków i pracowali tylko do odczytu:

@@ -23,7 +23,7 @@ Dwa okna same otwierają i scalają PR, a Alek nie czyta kodu. Bez stałej kontr
   - Lintery, formatowanie, pokrycie testami, blokada scalania (branch protection).
   - Klucz API i sekrety w repo. Codex działa przez integrację konta, skrypt nie potrzebuje tokenu.
   - Automatyczne poprawianie kodu przez recenzenta.
-- Budżet: 1 runda, razem z PR podziału pliku (etap E1 w [[Architektura aplikacji]]). Jeśli się nie mieści – tniemy liczbę reguł w skrypcie, nie termin.
+- Budżet: 1 runda, razem z PR podziału pliku (etap E1 w [[Architektura aplikacji]]). Skrypt działa od E1; Codex może przeglądać wcześniejsze PR, ale przed E1 ocenia tylko Z0 i Z9–Z13. Jeśli się nie mieści – tniemy liczbę reguł w skrypcie, nie termin.
 
 ## 3. Zachowanie (kryteria akceptacji)
 | # | Gdy … | Wtedy … |
@@ -37,7 +37,7 @@ Dwa okna same otwierają i scalają PR, a Alek nie czyta kodu. Bez stałej kontr
 | 7 | PR do `develop` zmienia `app/` | Codex dodaje przegląd po polsku: naruszenia z numerem zasady, plikiem, linią i najmniejszą poprawką, albo jedno zdanie „Zgodne z zasadami architektury” |
 | 8 | PR dodaje abstrakcję bez użytkownika w tym samym PR | Codex zgłasza Z0 |
 | 9 | Przegląd Codex jest niedostępny (plan, awaria) | okno, które otworzyło PR, uruchamia recenzenta w sesji z tym samym plikiem zasad i zapisuje to w opisie PR |
-| 10 | Wyjątek z datą ważności wygasa (etap E2, E4) | PR danego etapu usuwa go jednocześnie ze skryptu i z [[Zasady architektury]] |
+| 10 | Wyjątek z datą ważności wygasa (etap E2) | PR danego etapu usuwa go jednocześnie ze skryptu i z [[Zasady architektury]] |
 
 ## 4. Dane i stan
 Nie dotyczy stanu aplikacji. Skrypt czyta tylko pliki w `app/`.
@@ -45,6 +45,7 @@ Nie dotyczy stanu aplikacji. Skrypt czyta tylko pliki w `app/`.
 Budowa skryptu (cel: około 60 linii):
 - tablica reguł `{id, wzorzec, pliki dozwolone}` i tablica wyjątków `{id, plik, wygasa}`, obie na górze pliku;
 - pomija linie będące komentarzem;
+- wzorce mają być wąskie: Z7 to `^\s*(import|export)\s` (nie trafia w `importDay1` ani `module.exports`); adresy z Z6 sprawdzamy tylko w `index.html` i `styles.css` (w JS zostaje przestrzeń nazw SVG);
 - wypisuje `plik:linia Zn krótki opis` dla każdego trafienia i na końcu liczbę linii na plik;
 - kod wyjścia 1 przy jakimkolwiek naruszeniu.
 

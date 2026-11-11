@@ -14,7 +14,7 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - [[Program płynności]] — źródło prawdy dla treści ćwiczeń i progresji
 - [[Architektura aplikacji]] — jak zbudowana jest apka, architektura docelowa i plan wdrożenia etapami
 - [[Zasady architektury]] — podstawa „małe jest piękne” i zasady Z0–Z13 pilnowane przy każdym PR
-- [[HLD PoC – kworum 2026-11-11]] — ocena kodu wg dobrych praktyk i propozycja HLD dla PoC (4 agentów, głosowanie, runda „grill”); C1 przyjęte; otwarte C2, C4–C8
+- [[HLD PoC – kworum 2026-11-11]] — ocena kodu wg dobrych praktyk i propozycja HLD dla PoC (4 agentów, głosowanie, runda „grill”); C1, C2, C9, C10 przyjęte; otwarte C4–C8
 - [[Publikacja (artefakt claude.ai)]] — ograniczenia środowiska i jak publikować
 - [[Jak pracujemy]] — pętla build → tester → review → publikacja
 - [[Testy]] — jak odpalić harness i co znaczy „zielone”
@@ -39,13 +39,14 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - [[Backlog]]: każda pozycja ma moduł HLD, rozmiar i spec; roadmapa M0–M4 + utrzymanie, mapa pętla × kamienie i lista na 2 tygodnie w [[Plan działania]].
 
 - 2026-11-11: przegląd kodu i architektury przez kworum agentów – [[HLD PoC – kworum 2026-11-11]]. Kod bez zmian. Decyzje Alka 11.11: **C1 TAK** (architektura przyjęta), **C3 NIE** (prompt „Oceń” zostaje jako wyjątek prywatny, z zakazem przeniesienia do produktu – [[HLD v1]] §7). Otwarte: C2, C4–C8 w [[Decyzje do podjęcia]].
-- 2026-11-11: **C9 TAK** – podstawa „małe jest piękne” i strażnik architektury (przegląd PR przez Codex + `test/arch.js` w Actions). Nowe: [[Zasady architektury]], `AGENTS.md`, przepisana [[Architektura aplikacji]] (stan dziś, architektura docelowa, plan etapami E0–E5), spec [[A7 Strażnik architektury]] zaakceptowany (C10), plan etapów E0–E5 zaakceptowany (C2). Otwarte: C5–C8.
+- 2026-11-11: **C9 TAK** – podstawa „małe jest piękne” i strażnik architektury (przegląd PR przez Codex + `test/arch.js` w Actions). Nowe: [[Zasady architektury]], `AGENTS.md`, przepisana [[Architektura aplikacji]] (stan dziś, architektura docelowa, plan etapami E0–E5), spec [[A7 Strażnik architektury]] zaakceptowany (C10), plan etapów E0–E5 zaakceptowany (C2). Otwarte: C4–C8.
 
 ## Następna akcja
 1. Okno B: B14 wg [[B14 Zadanie w terenie]] – przed 14.11 (start tygodnia 2).
 2. Alek: konsultacja 10.11 – [[Kontekst i profil]], pytania z B2 (w tym kolejność szczebli i imię w tygodniu 3); decyzje B21–B28 z weryfikacji v4.
-3. Okno B potem: A5 podział, #15 eksport; spec B15 (+ B13 w tej samej karcie).
-4. Alek (opcjonalnie): na GitHubie włączyć „Automatically delete head branches” (Settings → General).
+3. Okno B potem: A5 podział razem z A7 (etap E1), spec A8 (pakiet bezpieczeństwa, obejmuje #15), spec B15 (+ B13 w tej samej karcie). Plan etapów: [[Architektura aplikacji]].
+4. Alek: podłączyć przegląd PR przez Codex (kroki w [[A7 Strażnik architektury]]); przy Oddechu A sprawdzić, czy ekran nie gaśnie (C4).
+5. Alek (opcjonalnie): na GitHubie włączyć „Automatically delete head branches” (Settings → General).
 
 ## Inbox / Review
 - [[Inbox]] · [[Review]]

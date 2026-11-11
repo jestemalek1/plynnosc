@@ -14,7 +14,7 @@ Format: data — decyzja. Krótko: co, dlaczego, kiedy wracamy. Otwarte sprawy s
 - **Przegląd PR pod kątem architektury** (testy i działanie funkcji osobno): recenzent z innego modelu – Codex przez integrację z GitHubem, sterowany `AGENTS.md`, bez tokenu w repo – oraz skrypt `test/arch.js` w GitHub Actions dla reguł mechanicznych. To świadomy wyjątek od A3 „bez CI”: tylko architektura, bez Playwright, linterów i blokady scalania.
 - Alek akceptuje, że Codex dostaje dostęp do całego prywatnego repo.
 - Konsekwencja dla C1: osobny `ai.js` nie powstaje, dopóki model woła jedno miejsce; `store.js` powstaje w pakiecie bezpieczeństwa (M1). Plan etapami E0–E5: [[Architektura aplikacji]].
-- Spec: [[A7 Strażnik architektury]] (szkic, czeka na akceptację – C10). Wracamy, jeśli przegląd generuje szum albo propozycje rozbudowy.
+- Spec: [[A7 Strażnik architektury]] (zaakceptowany tego samego dnia – C10). Wracamy, jeśli przegląd generuje szum albo propozycje rozbudowy.
 
 ### 2026-11-11 — C1, C3: HLD PoC przyjęty; prompt „Oceń” zostaje jako wyjątek prywatny (Alek)
 - **C1: TAK.** Architektura PoC wg [[HLD PoC – kworum 2026-11-11]]: `data.js` / `domain.js` / `store.js` / `ai.js` / `app.js`, bez `map.js`; stan v3 tylko przez dopisywanie pól. Zastępuje „Plan podziału” w [[Architektura aplikacji]]. Kolejność i terminy czekają na C2.

@@ -23,6 +23,8 @@ W praktyce:
 - Jeśli zasada z tej strony wymusza więcej kodu, niż jest wart jej zysk, zmieniamy zasadę (decyzja Alka), a nie obchodzimy jej po cichu.
 
 ## Zasady
+**Przed etapem E1** (dopóki w `app/` jest tylko `index.html`) zasady plikowe Z1–Z8 nie obowiązują; ocenie podlegają Z0 i Z9–Z13.
+
 Kolumna „Kto pilnuje”: **S** = skrypt `test/arch.js` (mechanicznie, przy każdym PR), **R** = recenzent (Codex i recenzent w sesji).
 
 | # | Zasada | Kto pilnuje |
@@ -33,10 +35,10 @@ Kolumna „Kto pilnuje”: **S** = skrypt `test/arch.js` (mechanicznie, przy ka�
 | Z3 | `data.js` to wyłącznie dane: bez funkcji, bez `document`, bez `localStorage`. Dane Alka (hierarchia, imię, słowa) są w jednym oznaczonym bloku `PROFILE` | S (funkcje), R (blok `PROFILE`) |
 | Z4 | `domain.js` to logika bez ekranu: bez `document`, `window`, `localStorage`. Dzisiejszą datę dostaje jako parametr | S, R (data jako parametr) |
 | Z5 | `claude.use` jest wołane z jednego pliku i tylko po kliknięciu użytkownika | S (jeden plik), R (kliknięcie) |
-| Z6 | Żadnej sieci: bez `fetch`, `XMLHttpRequest`, `sendBeacon`, `WebSocket`; w `index.html` tylko ścieżki względne. Bez telemetrii | S |
-| Z7 | Bez frameworka, bundlera i modułów: klasyczne `<script src>`, bez `type="module"`, `import`, `export`; po podziale `index.html` nie ma kodu w `<script>` | S |
-| Z8 | Każdy plik JS wystawia najwyżej jeden obiekt globalny: `PLYN_DATA`, `PLYN_DOMAIN`, `PLYN_STORE`, `PLYN` | S |
-| Z9 | Stan zmieniamy tylko przez dopisywanie pól. Zmiana wersji `v` wymaga: wpisu na liście migracji, kopii przed migracją, specyfikacji. Starsza wersja apki musi umieć wczytać nowszy stan | R |
+| Z6 | Żadnej sieci: bez `fetch`, `XMLHttpRequest`, `sendBeacon`, `WebSocket`; w `index.html` i `styles.css` tylko ścieżki względne. Bez telemetrii | S |
+| Z7 | Bez frameworka, bundlera i modułów ES: klasyczne `<script src>`, bez `type="module"` oraz instrukcji `import` i `export` na początku linii; po podziale `index.html` nie ma kodu w `<script>` | S |
+| Z8 | Obiekty globalne tylko: `PLYN_DATA`, `PLYN_STORE`, `PLYN_DOMAIN`, po jednym na plik. `app.js` nie wystawia nic | S |
+| Z9 | Stan zmieniamy tylko przez dopisywanie pól (jedyne zaplanowane usunięcie: `excerpt` w ocenach, którego żadna wersja nie czyta). Zmiana wersji `v` wymaga: wpisu na liście migracji, kopii przed migracją, specyfikacji. Starsza wersja apki musi umieć wczytać nowszy stan | R |
 | Z10 | Eksport = stan bez szkicu transkryptu i ostatniej odpowiedzi modelu. W repo nigdy nie ma transkryptów, także w testach | R |
 | Z11 | Ekran nie liczy logiki dnia: plan dnia, zaliczenie, streak i metryki są w `domain.js` (do czasu jego powstania: w jednym miejscu `app.js`). Nie dodajemy kolejnej ścieżki zaliczenia ćwiczenia | R |
 | Z12 | `SRPicker` jest jedynym komponentem skali; wszystko inne to fakt tak/nie albo licznik. Wyjątki tylko te z `CLAUDE.md` (B15, B35) | R |
@@ -48,7 +50,8 @@ Wyjątek ma zawsze termin i znika razem z etapem z [[Architektura aplikacji]]. L
 | Zasada | Wyjątek | Wygasa |
 | --- | --- | --- |
 | Z2 | `localStorage` wolno w `app.js` | z etapem E2 (powstaje `store.js`) |
-| Z1, Z4 | `domain.js` jeszcze nie istnieje; logika dnia jest w `app.js` | z etapem E4 |
+| Z5 | sonda `probeSample` woła `claude.use` przy starcie strony (R4) | z etapem E2 |
+| Z10 | „Kopiuj dane” kopiuje cały stan razem ze szkicem | z etapem E2 |
 
 ## Jak zmienić zasadę
 Zasady nie są święte. Zmiana = jedna linia w [[Decyzje do podjęcia]] z rekomendacją, decyzja Alka, wpis w [[Decision log]], potem poprawka tej strony i skryptu w jednym PR. Recenzent, który uważa zasadę za szkodliwą w danym PR, pisze to w przeglądzie zamiast ją przepuszczać.

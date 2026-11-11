@@ -61,6 +61,8 @@ Kolejność w M0 ma znaczenie: dopóki apka jest jednym plikiem, dwa okna będą
 | 11 | #18 „Uwaga do apki” | F→04 | A | 21.11 |
 | 12 | B16 raport dla logopedy – jeśli decyzja TAK | 08 | B | 21.11 |
 
+Po decyzjach C1, C2, C9 (11.11): A5 idzie razem z A7 (strażnik architektury), #15 wchodzi w A8 „pakiet bezpieczeństwa” (M1), `map.js` nie powstaje. Aktualny plan etapów E0–E5: [[Architektura aplikacji]].
+
 Czeka na Alka (bez blokowania listy): B13, B16, B17 (#12, #13) w [[Decyzje do podjęcia]].
 
 ## Pytania otwarte na później (po przeglądzie M3, nie teraz)
@@ -90,7 +92,7 @@ Czeka na Alka (bez blokowania listy): B13, B16, B17 (#12, #13) w [[Decyzje do po
 | Okno | Po co | Typ pracy | Gałęzie | Pliki (po podziale) |
 | --- | --- | --- | --- | --- |
 | **A – Dogfood** | Jak mi się pracuje z apką na co dzień | Drobne poprawki UI i tekstów z uwag z treningu, wydania często (nawet codziennie) | `fix/*`, `hotfix/*` | głównie `styles.css`, `data.js` |
-| **B – Rozwój** | Dalszy rozwój rozwiązania wg planu | Funkcje z kamieni milowych, treść tygodni, nowe ćwiczenia | `feature/*` | głównie `app.js`, `map.js`, nowe pliki |
+| **B – Rozwój** | Dalszy rozwój rozwiązania wg planu | Funkcje z kamieni milowych, treść tygodni, nowe ćwiczenia | `feature/*` | głównie `app.js`, `store.js`, `domain.js`, nowe pliki |
 
 Warunki, żeby to działało:
 1. **Repo na GitHubie jest konieczne.** Sesje w chmurze nie współdzielą dysku; drugie okno zobaczy pracę pierwszego tylko przez `git fetch`.
@@ -124,9 +126,9 @@ Mapowanie i różnice: [[HLD v1 – porównanie z planem]].
 Żeby porównanie z HLD było szybkie, tu są założenia, które dziś obowiązują:
 1. **Runtime:** statyczna strona jako artefakt claude.ai; ocena przez Claude przez capability `sample`; brak własnego backendu i kluczy API.
 2. **Dane:** localStorage jednego urządzenia; eksport/import JSON jako kopia; transkrypty nie są trzymane poza ostatnimi ocenami.
-3. **Kod:** vanilla JS bez frameworka i bundlera; podział na `index.html`, `styles.css`, `data.js`, `map.js`, `app.js`.
+3. **Kod:** vanilla JS bez frameworka i bundlera; podział na `index.html`, `styles.css`, `data.js`, `store.js`, `domain.js`, `app.js` etapami E0–E5 ([[Architektura aplikacji]], decyzje C1, C2).
 4. **Treść:** program 12 tygodni z [[Program płynności]] jako źródło prawdy; jedna skala SR 0–8; instrukcje „Co robisz / Jak to ma brzmieć / Czego nie robić / Dlaczego”.
 5. **AI:** jedno wywołanie „Oceń” na transkrypcie zwraca płynność (informacja zwrotna, nie pomiar – B19); bez pamięci między dniami poza tagami/licznikami. „Jedno pytanie” (#12) i English card (#13) czekają na B17.
 6. **Transkrypcja:** poza apką (Whisper na iPhonie), wklejana do „Oceń”.
-7. **Jakość:** harness Playwright + niezależny tester i recenzent; bez CI.
+7. **Jakość:** harness Playwright + niezależny tester i recenzent; bez CI, z jednym wyjątkiem: strażnik architektury (C9, [[A7 Strażnik architektury]]).
 8. **Proces:** gitflow lekki, dwa okna, dogfooding, tygodniowy Review.
