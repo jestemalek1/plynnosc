@@ -1,5 +1,5 @@
 ---
-status: szkic
+status: zaakceptowany
 id: A7
 hld: F→wszystkie
 decyzja: C9
@@ -8,6 +8,8 @@ updated: 2026-11-11
 ---
 
 # A7 Strażnik architektury
+
+Zaakceptowane przez Alka 11.11 (C10). Wdrożenie razem z etapem E1.
 
 ## 1. Cel i moduł HLD
 Dwa okna same otwierają i scalają PR, a Alek nie czyta kodu. Bez stałej kontroli kod rozrasta się i gubi granice przyjęte w C1. Strażnik sprawdza przy każdym PR, czy kod trzyma się [[Zasady architektury]]; testów i działania funkcji nie dotyka. Fundament dla wszystkich modułów [[HLD v1]]; decyzja C9 w [[Decision log]] (wyjątek od A3 „bez CI”).

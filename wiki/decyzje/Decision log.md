@@ -4,6 +4,11 @@ Format: data — decyzja. Krótko: co, dlaczego, kiedy wracamy. Otwarte sprawy s
 
 ## Aktywne decyzje
 
+### 2026-11-11 — C2, C10: plan wdrożenia architektury i spec strażnika zaakceptowane (Alek)
+- **C2: TAK.** Kolejność etapów E0–E5 z [[Architektura aplikacji]]: do 13.11 tylko B14; do 15.11 podział pliku (E1) ze skryptem i workflow; w M1 pakiet bezpieczeństwa (E2, powstaje `store.js`) i migracja v3 z B15 (E3); `domain.js` (E4), gdy M1 ma zapas, inaczej po treści tygodni 4–6. Trening ma pierwszeństwo: przesuwa się etap, nie B14 ani treść.
+- **C10: TAK.** [[A7 Strażnik architektury]] zaakceptowany; przy wdrożeniu dwie zmiany w `CLAUDE.md` (wyjątek od „bez CI” dla strażnika, `node test/arch.js` w bramce).
+- Test Wake Lock na osobnym artefakcie (C4) niepotrzebny po v5: Alek sprawdza w zwykłym Oddechu A, czy ekran nie gaśnie.
+
 ### 2026-11-11 — C9: strażnik architektury i podstawa „małe jest piękne” (Alek)
 - **Podstawa architektury:** najmniejsza ilość pracy i kodu, która daje daną funkcję; treść przed formą. Nic „na zapas”: plik, warstwa, abstrakcja, pole stanu albo zależność muszą mieć użytkownika w tym samym PR. Pilnujemy od pierwszego PR, żeby nie budować długu technologicznego. Zapis: [[Zasady architektury]] (Z0) i [[Architektura aplikacji]].
 - **Przegląd PR pod kątem architektury** (testy i działanie funkcji osobno): recenzent z innego modelu – Codex przez integrację z GitHubem, sterowany `AGENTS.md`, bez tokenu w repo – oraz skrypt `test/arch.js` w GitHub Actions dla reguł mechanicznych. To świadomy wyjątek od A3 „bez CI”: tylko architektura, bez Playwright, linterów i blokady scalania.
