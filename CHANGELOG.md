@@ -9,7 +9,8 @@ Format: wersja · data · co się zmieniło dla Ciebie (nie dla kodu). Wydanie =
 - Start na sygnał: więcej pytań, polskie i angielskie są o różnych rzeczach (koniec z „Przedstaw się” i „Can you introduce yourself?” jednego dnia) i nie powtarzają się przez tydzień.
 - Dziennik bloków bez pisania: „Dziś był wyraźny blok?” – „nie” i gotowe, a przy „tak” trzy dotknięcia (start ja / ktoś · PL / EN · wolno / szybko). Notatka opcjonalna. Pod kartą i w Postępach liczniki z 14 dni.
 - Nowa karta dla chętnych: „★ Monolog w drugim języku” (tygodnie 1–3). Nie wlicza się do dnia; po zrobieniu wyspa na mapie dostaje gwiazdkę. Gdy gwiazdka czeka, po sesji zamiast automatycznego powrotu są dwa przyciski: „Na mapę” i „★ Jeszcze monolog”.
-- Dni zaliczone wcześniej zostają zaliczone, streak bez zmian.
+- Gdy dziennik kończysz przez „tak” bez notatki, mapa nie wraca sama – baner ma „Na mapę”, żebyś zdążył dopisać notatkę. Gdy ★ już wystartowała, Luźny monolog jest w drugim języku niż ★ (bez przełącznika PL/EN).
+- Dni zaliczone wcześniej zostają zaliczone, streak bez zmian; edycja dziennika nie cofa zaliczenia dnia.
 
 ## v4 · 2026-11-09
 - Oddech A: 3 s na wdech z odliczaniem przed każdym wydechem (także pierwszym i po pauzie), słowo widać już w trakcie wdechu; bez zatrzymania na górze wdechu.

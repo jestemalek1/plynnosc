@@ -96,6 +96,7 @@
   .timer .words { font-size: 15px; color: var(--ink); margin: 0 0 10px; line-height: 1.35; }
   .timer .words b { color: var(--muted); font-weight: 600; }
   .bgroup { margin-top: 2px; }
+  .topic .langnote { flex: 1; margin: 0; }
   .bgroup .srlabel { margin-top: 10px; }
 
   /* SR picker: 9 chips in a 5+4 grid, each >= 44x44 */
@@ -120,6 +121,7 @@
   .chips3 { display: flex; gap: 8px; margin-top: 6px; }
   .chips3 button { flex: 1; background: #fff; color: var(--ink); border: 1.5px solid var(--line); font-weight: 600; }
   .chips3 button.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+  @media (max-width: 389px) { .chips3 { gap: 6px; } .chips3 button { min-width: 0; padding: 12px 4px; font-size: 15px; } } /* węższe niż 390 px (320–375): „częściowo” mieści się obok „tak” i „nie” */
   .tags { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0; }
   .tags button { min-height: 44px; padding: 8px 12px; background: #fff; color: var(--ink); border: 1.5px solid var(--line); font-weight: 500; font-size: 15px; }
 
@@ -400,7 +402,7 @@
   window.addEventListener('beforeunload', saveNow);
   document.addEventListener('visibilitychange', function () {
     if (document.visibilityState === 'hidden') { saveNow(); wakeRelease(); } // seria trwa dalej (wake.want), blokada wraca po powrocie
-    else { onVisible(); wakeRequest(); }
+    else { onVisible(); if (wake.want) { resumeAudio(); wakeRequest(); } }
   });
   function day(k) {
     if (!state.days[k]) state.days[k] = sanitizeDay({});
@@ -412,14 +414,20 @@
   /* ---------- audio / haptics ---------- */
   var audioCtx = null;
   function primeAudio() {
-    try {
-      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      if (audioCtx.state === 'suspended') audioCtx.resume();
-    } catch (e) { audioCtx = null; }
+    try { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { audioCtx = null; }
+    resumeAudio();
+  }
+  function resumeAudio() {
+    // iOS: kontekst bywa „suspended” albo „interrupted” (np. po zablokowaniu ekranu) – wznawiamy przy każdym dźwięku i po powrocie strony.
+    try { if (audioCtx && audioCtx.state !== 'running') { var pr = audioCtx.resume(); if (pr && pr.catch) pr.catch(function () { /* ignore */ }); } } catch (e) { /* ignore */ }
+  }
+  function playbackSession() {
+    // Safari 17+: sesja audio „playback” gra mimo przełącznika trybu cichego. Brak API = bez zmian.
+    try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) { /* ignore */ }
   }
   function beep(final) {
     try {
-      if (!audioCtx) primeAudio();
+      primeAudio();
       if (audioCtx) {
         var o = audioCtx.createOscillator(), g = audioCtx.createGain();
         o.type = 'sine'; o.frequency.value = final ? 660 : 880;
@@ -436,7 +444,7 @@
   function tone(kind) {
     var up = kind === 'wdech';
     try {
-      if (!audioCtx) primeAudio();
+      primeAudio();
       if (audioCtx) {
         var t0 = audioCtx.currentTime, o = audioCtx.createOscillator(), g = audioCtx.createGain();
         o.type = 'sine';
@@ -565,6 +573,7 @@
     function run() { stop(); iv = setInterval(tick, 200); }
     function stop() { if (iv) clearInterval(iv); iv = null; }
     function toggle() {
+      if (opts.breathTones) playbackSession();
       primeAudio();
       if (status === 'run' || status === 'gap') {
         // v4: z przerwą na wdech po pauzie zawsze pełny odliczany wdech, a przerwane powtórzenie liczy się od nowa.
@@ -702,6 +711,7 @@
   ];
   var TAG_LABEL = { sport: 'Sport', praca: 'Praca', 'książki': 'Książki', kuchnia: 'Kuchnia azjatycka', 'samorozwój': 'Samorozwój', opinie: 'Opinia', 'wyjaśnij': 'Wyjaśnij komuś' };
 
+  function monoLangNote(lang, xlang) { return 'Język: ' + lang.toUpperCase() + ' – ★ była ' + (xlang === 'en' ? 'po angielsku' : 'po polsku'); }
   function randomTopic(avoid) { var next; do { next = Math.floor(Math.random() * TOPICS.length); } while (avoid.indexOf(next) >= 0 && TOPICS.length > avoid.length); return next; }
   function TopicCard(container, m, onChange, opts) {
     // m = day.monolog albo day.extra (mutated): {topic, lang}. opts.fixedLang: bez przełącznika PL/EN (★); opts.avoid(): tematy do pominięcia przy „Inny temat”.
@@ -709,6 +719,8 @@
     var tagEl = h('div', { class: 'tag' }), qEl = h('div', { class: 'q' });
     var segBtns = {};
     var seg = opts.fixedLang ? null : h('div', { class: 'seg', role: 'group', 'aria-label': 'Język monologu' });
+    var langNote = h('div', { class: 'note langnote' + (opts.langNote ? '' : ' hidden'), text: opts.langNote || '' });
+    if (opts.langNote && seg) seg.classList.add('hidden');
     if (seg) ['pl', 'en'].forEach(function (L) {
       segBtns[L] = h('button', { type: 'button', text: L.toUpperCase(), onclick: function () { if (m.lang === L) return; m.lang = L; onChange(); draw(); } });
       seg.appendChild(segBtns[L]);
@@ -723,15 +735,15 @@
       if (seg) ['pl', 'en'].forEach(function (L) { segBtns[L].classList.toggle('on', m.lang === L); segBtns[L].setAttribute('aria-pressed', m.lang === L ? 'true' : 'false'); });
     }
     draw();
-    container.appendChild(h('div', { class: 'topic' }, tagEl, qEl, h('div', { class: 'ctl' }, otherBtn, seg)));
-    return { redraw: draw };
+    container.appendChild(h('div', { class: 'topic' }, tagEl, qEl, h('div', { class: 'ctl' }, otherBtn, seg, langNote)));
+    return { redraw: draw, lock: function (text) { if (seg) seg.classList.add('hidden'); langNote.textContent = text; langNote.classList.remove('hidden'); } };
   }
 
   /* ---------- exercises ---------- */
   var ENC = {
     oddech: ['12/12. Oddech bez stopu to fundament — wszystko inne stoi na tym.', 'Zrobione. Ten ułamek sekundy między wdechem a głosem to cały trening.', 'Dwanaście razy powietrze poszło przed słowem. Jutro to samo, ciało zapamięta.', 'Nudne? Dobrze. Nawyki buduje się z nudnych powtórzeń.', 'Brzuch miękki, słowo na wydechu. Tak ma to wyglądać w rozmowie.'],
     monolog: ['Dwie minuty mówienia bez liczenia bloków. To jest transfer od pierwszego dnia.', 'Temat skończony. Liczyło się frazowanie, nie to, czy było gładko.', 'Mówiłeś, oddychałeś, szło dalej. Reszta to szczegóły.', 'Następnym razem frazy jeszcze krótsze — trzy słowa i oddech.', 'Monolog zaliczony. Jeśli brzuch był spięty, to też jest informacja.'],
-    dziennik: ['Zapisane. Jedno zdanie dziennie wystarczy, żeby po dwóch tygodniach zobaczyć wzór.', 'Wpis jest. Wzór zwykle pokazuje się tam, gdzie start wyznacza ktoś inny.', 'Dziennik rośnie. Nie interpretuj — po 14 dniach spojrzysz na całość.'],
+    dziennik: ['Zapisane. Po dwóch tygodniach te liczby pokażą wzór.', 'Wpis jest. Wzór zwykle pokazuje się tam, gdzie start wyznacza ktoś inny.', 'Dziennik rośnie. Nie interpretuj — po 14 dniach spojrzysz na całość.'],
     sr: ['Ocena tygodnia zapisana. Wykres w Postępach buduje się sam.', 'SR zanotowany. Zmiana reakcji na blok jest ważniejsza niż ta liczba.', 'Zapisane. Jeden punkt na tydzień wystarczy, żeby zobaczyć trend.'],
     sygnal: ['Dziesięć startów w cudzym momencie. Dokładnie ta sytuacja blokuje w rozmowie.', 'Sygnał, wdech, głos. Ten odruch ma być szybszy niż myśl o bloku.', 'Zaliczone. Jutro inne pytania, ten sam odruch.', 'Start wyznaczył ktoś inny, a powietrze i tak poszło pierwsze. O to chodzi.'],
     napiecie: ['Zostałeś w bloku zamiast się wyrywać. To jest najtrudniejsza część.', 'Wiesz już, gdzie trzyma. Następny krok: puścić to miejsce, zanim ruszysz dalej.', 'Dwie minuty z blokiem pod kontrolą. Mapa napięcia robi się coraz dokładniejsza.'],
@@ -1019,6 +1031,8 @@
   function hasExtra(k) { var d = peekDay(k), n = dayIndex(k); return n >= 2 && weekOf(n) <= 3 && !(d && d.baseline) && exercisesFor(k).indexOf('monolog') >= 0; }
   function extraDone(k) { var d = peekDay(k); return !!d && !!d.extra && d.extra.done === true; }
   function extraPending(k) { return hasExtra(k) && !extraDone(k); }
+  function extraStarted(d) { return !!d && !!d.extra && (d.extra.ran || d.extra.done) && !!d.extra.lang; }
+  function extraBtnLang(k) { var d = day(k); return extraStarted(d) ? d.extra.lang : extraLang(k); }
   function extraLang(k) { var d = day(k), m = d.monolog, ml = m.lang || (dayIndex(k) % 2 === 1 ? 'pl' : 'en'); return ml === 'pl' ? 'en' : 'pl'; }
   function exTitle(k, ex) { var d = peekDay(k); return ex === 'sr' && d && d.baseline ? 'SR dnia' : EX_META[ex].title; }
   function isDone(k, ex) { if (ex === 'extra') return extraDone(k); var d = peekDay(k); return !!d && d.done.indexOf(ex) >= 0; }
@@ -1043,6 +1057,8 @@
     keepFieldInPlace(function () {
       card.classList.add('done'); card.querySelector('.mark').textContent = '✓';
       card.querySelector('small').textContent = 'Zrobione' + doneSummary(k, ex);
+      var head = card.querySelector('.chead');
+      if (head && !head.querySelector('.act') && !d.baseline && REPEAT[ex]) head.appendChild(repeatBtn(REPEAT[ex].label, function () { REPEAT[ex].fn(k, d); })); // po odznacz → zaznacz
       var body = card.querySelector('.cbody'); body.insertBefore(encCard(k, ex), body.firstChild);
       updateHeader();
     }, anchor);
@@ -1071,14 +1087,23 @@
     keepFieldInPlace(function () { var c = exerciseCard(k, ex, old.classList.contains('current')); old.parentNode.replaceChild(c, old); cards[ex] = c; updateHeader(); });
   }
   function renderOrRebuild(k, ex) { var ae = document.activeElement; if (cards[ex] && isField(ae) && !cards[ex].contains(ae)) rebuildCard(k, ex); else renderDzis(); }
-  function unmark(k, ex) { var d = day(k); d.done = d.done.filter(function (x) { return x !== ex; }); delete recent[ex]; save(); }
+  function unmark(k, ex) { refreshComplete(k); var d = day(k); d.done = d.done.filter(function (x) { return x !== ex; }); delete recent[ex]; save(); } // dzień raz zaliczony zostaje zaliczony (także bez flagi complete)
   function allListedDone(k) { var d = peekDay(k); return !!d && exercisesFor(k).every(function (e) { return d.done.indexOf(e) >= 0; }); }
   function isDayDone(k) { var d = peekDay(k); if (!d) return false; if (d.complete) return true; return exercisesFor(k).every(function (e) { return d.done.indexOf(e) >= 0; }); }
-  function encCard(k, ex) { return h('div', { class: 'enc' }, h('strong', { text: ex === 'extra' ? '★ ' : 'Zaliczone. ' }), pick(ENC[ex] || ['Zrobione.'], dayIndex(k) + ex.length)); }
+  function encPool(k, ex) {
+    var a = ENC[ex] || ['Zrobione.'], d = peekDay(k);
+    // v5: zachęta nie może przeczyć faktom – „brzuch miękki” tylko po „tak”, „dzień i tak zaliczony” tylko w zaliczonym dniu.
+    if (ex === 'oddech' && d && d.oddechBrzuch && d.oddechBrzuch !== 'tak') a = a.filter(function (t) { return !/Brzuch miękki/.test(t); });
+    if (ex === 'extra' && !isDayDone(k)) a = a.filter(function (t) { return !/Dzień i tak był zaliczony/.test(t); });
+    return a;
+  }
+  function encCard(k, ex) { return h('div', { class: 'enc' }, h('strong', { text: ex === 'extra' ? '★ ' : 'Zaliczone. ' }), pick(encPool(k, ex), dayIndex(k) + ex.length)); }
   var recent = {};
   var expanded = {};
   var cards = {};
-  var extraHook = null; // v5 (#21): zmiana języka Luźnego monologu odświeża język ★, dopóki ★ nie wystartowała
+  var extraHook = null;
+  var monoHook = null; // v5: ★ wystartowała → język Luźnego monologu przeciwny do ★, bez przełącznika
+  var holdReturn = null; // v5: dzień zakończony wpisem „tak” bez notatki → baner z „Na mapę” zamiast powrotu (czas na notatkę) // v5 (#21): zmiana języka Luźnego monologu odświeża język ★, dopóki ★ nie wystartowała
 
   /* ---------- screen: Dziś ---------- */
   var lastToday = todayKey();
@@ -1093,8 +1118,8 @@
   var hdr = {};
   var dzisView = 'map'; // 'map' | 'session'
   function renderDzis() { if (dzisView === 'map') renderMap(); else renderSession(); }
-  function openDay(k) { viewKey = k; dzisView = 'session'; recent = {}; expanded = {}; renderDzis(); try { window.scrollTo(0, 0); } catch (e) { /* ignore */ } }
-  function backToMap() { dzisView = 'map'; renderDzis(); flushAfterShow(); }
+  function openDay(k) { holdReturn = null; viewKey = k; dzisView = 'session'; recent = {}; expanded = {}; renderDzis(); try { window.scrollTo(0, 0); } catch (e) { /* ignore */ } }
+  function backToMap() { holdReturn = null; dzisView = 'map'; renderDzis(); flushAfterShow(); }
   var justDone = null, mapMsg = '';
   // Odłożony powrót na mapę jest anulowany, gdy po zaliczeniu dnia zrobisz w sesji coś świadomie (przycisk, chip, nagłówek karty),
   // np. „Zmień” SR. Neutralne wyjście z pola (klawiatura „Gotowe”, tap w puste miejsce) nadal wraca na mapę. Tagi dziennika to część pisania.
@@ -1105,7 +1130,7 @@
   }, true);
   function scheduleReturn(k, gen) {
     // v5 (#21, G7): gdy jest niezrobiona ★, zamiast powrotu baner „Sesja zrobiona” ma przyciski „Na mapę” i „★ Jeszcze monolog”.
-    if (extraPending(k)) return;
+    if (extraPending(k) || holdReturn === k) return;
     if (gen == null) gen = returnGen;
     setTimeout(function () {
       if (gen !== returnGen || currentTab !== 'dzis' || dzisView !== 'session' || viewKey !== k || !allListedDone(k)) return;
@@ -1116,6 +1141,7 @@
     }, 1800);
   }
   function returnToMap(k) {
+    holdReturn = null;
     var w = weekOf(dayIndex(k));
     justDone = k; mapMsg = 'Archipelag ' + w + ': ' + weekDoneCount(w) + '/7';
     dzisView = 'map'; renderDzis(); afterShow = null; scrollToArch(w);
@@ -1141,7 +1167,7 @@
     hdr = { bar: h('div', { class: 'progress', role: 'progressbar', 'aria-label': 'Postęp sesji' }), next: h('div', { class: 'next' }), banner: h('div'), k: k, list: list, n: n, w: w };
     root.appendChild(hdr.bar); root.appendChild(hdr.next); root.appendChild(hdr.banner);
     if (w >= 4 && !d.baseline) root.appendChild(planCard(w));
-    extraHook = null;
+    extraHook = null; monoHook = null;
     list.forEach(function (ex) { var c = exerciseCard(k, ex, ex === nextEx); cards[ex] = c; root.appendChild(c); });
     if (hasExtra(k)) { cards.extra = exerciseCard(k, 'extra', false); root.appendChild(cards.extra); } // v5 (#21): pod obowiązkowymi, domyślnie zwinięta
     updateHeader();
@@ -1289,10 +1315,11 @@
       var st = streak();
       var bannerCard = h('div', { class: 'card done' }, h('h2', { text: 'Sesja zrobiona' }),
         h('p', { text: 'Dzień ' + n + ' zaliczony. Streak: ' + st + (st === 1 ? ' dzień' : ' dni') + '. Jutro ' + (weekOf(n + 1) > w ? 'zaczyna się tydzień ' + weekOf(n + 1) + ' – dochodzi nowe ćwiczenie.' : 'to samo, ciało zapamięta.') }));
-      if (extraPending(k) && cards.extra) { // v5 (#21, G7)
+      var xp = extraPending(k) && cards.extra;
+      if (xp || holdReturn === k) { // v5 (#21, G7; #20: czas na notatkę)
         bannerCard.appendChild(h('div', { class: 'row' },
           h('button', { type: 'button', text: 'Na mapę', onclick: function () { returnToMap(k); } }),
-          h('button', { class: 'ghost', type: 'button', text: '★ Jeszcze monolog ' + extraLang(k).toUpperCase(), onclick: openExtra })));
+          xp ? h('button', { class: 'ghost', type: 'button', text: '★ Jeszcze monolog ' + extraBtnLang(k).toUpperCase(), onclick: openExtra }) : null));
       }
       hdr.banner.appendChild(bannerCard);
     }
@@ -1311,7 +1338,7 @@
   function repeatBtn(label, fn) { return h('button', { class: 'ghost act', type: 'button', text: label, onclick: function (e) { e.stopPropagation(); fn(); } }); }
   function exerciseCard(k, ex, isCurrent) {
     var d = day(k), done = isDone(k, ex), meta = EX_META[ex];
-    var open = expanded[ex] != null ? expanded[ex] : (isCurrent || (done && recent[ex]));
+    var open = expanded[ex] != null ? expanded[ex] : (isCurrent || (done && recent[ex]) || (ex === 'extra' && d.extra.ran && !done)); // ★ w trakcie: rozwinięta
     var card = h('div', { class: 'card' + (done ? ' done' : '') + (isCurrent ? ' current' : '') + (open ? '' : ' collapsed') });
     function toggleBody() { expanded[ex] = card.classList.contains('collapsed'); card.classList.toggle('collapsed'); head.setAttribute('aria-expanded', card.classList.contains('collapsed') ? 'false' : 'true'); }
     var head = h('div', { class: 'chead', role: 'button', tabindex: '0', 'aria-expanded': open ? 'true' : 'false', onclick: toggleBody,
@@ -1412,6 +1439,8 @@
       var m = d.monolog, changed = false;
       if (m.topic == null || !TOPICS[m.topic]) { m.topic = Math.floor(Math.random() * TOPICS.length); changed = true; }
       if (!m.lang) { m.lang = dayIndex(k) % 2 === 1 ? 'pl' : 'en'; changed = true; }
+      var lockLang = !d.baseline && !done && !m.ran && hasExtra(k) && extraStarted(d); // v5: ★ wystartowała, monolog jeszcze nie → język przeciwny do ★
+      if (lockLang) { var wantL = d.extra.lang === 'pl' ? 'en' : 'pl'; if (m.lang !== wantL) { m.lang = wantL; changed = true; } }
       if (changed) save();
       if (d.baseline) { body.appendChild(briefBlock('monolog')); body.appendChild(h('p', { class: 'note', text: 'Dzień 1: monolog PL i EN nagrane jako baza (oddech po frazach: ' + (m.breath || '–') + ', bloki ' + m.blocks + ').' })); fullInstructions(body, 'monolog'); return; }
       if (done) { body.appendChild(h('p', { class: 'note', text: 'Oddech po frazach: ' + (m.breath || '–') + ' · SR ' + (m.sr != null ? m.sr : '–') + '.' })); return; }
@@ -1420,7 +1449,12 @@
       if (!m.ran) {
         var phase = { secs: 120, cue: cueFor(), sub: 'frazy 3–5 słów, oddech po każdej' };
         var timer, ins;
-        TopicCard(body, m, function () { save(); phase.cue = cueFor(); if (timer) timer.redraw(); if (extraHook) extraHook(); }, { avoid: function () { return [d.extra.topic]; } });
+        var tcm = TopicCard(body, m, function () { save(); phase.cue = cueFor(); if (timer) timer.redraw(); if (extraHook) extraHook(); }, { avoid: function () { return [d.extra.topic]; }, langNote: lockLang ? monoLangNote(m.lang, d.extra.lang) : null });
+        monoHook = function () {
+          if (m.ran || !extraStarted(d)) return;
+          m.lang = d.extra.lang === 'pl' ? 'en' : 'pl'; save(); phase.cue = cueFor();
+          tcm.lock(monoLangNote(m.lang, d.extra.lang)); tcm.redraw(); if (timer) timer.redraw();
+        };
         timer = Timer(body, { phases: [phase], gap: 0, startLabel: 'Start 2:00',
           onStart: function () { markSeen('monolog'); if (ins) ins.collapse(); },
           onDone: function () { m.ran = true; save(); renderOrRebuild(k, 'monolog'); } });
@@ -1514,10 +1548,15 @@
         counts.textContent = diaryStatsLine();
       }
       function set(field, v, btn) {
-        var was = isDone(k, 'dziennik');
+        var was = isDone(k, 'dziennik'), wasTaps = complete(); // wpis v3/v4 (sam tekst) nie traci zaliczenia przy niepełnych wyborach
         keepFieldInPlace(function () { b[field] = v; save(); saved.textContent = 'Zapisano'; paint(); }, btn);
-        if (complete() && !was) { markSeen('dziennik'); markDoneInPlace(k, 'dziennik', btn); }
-        else if (!complete() && was) unmarkInPlace(k, 'dziennik', btn);
+        if (complete() && !was) {
+          markSeen('dziennik');
+          var last = exercisesFor(k).every(function (e) { return e === 'dziennik' || isDone(k, e); });
+          if (last && b.jest === true && !(d.diary || '').trim()) holdReturn = k; // czas na opcjonalną notatkę: baner z „Na mapę”
+          markDoneInPlace(k, 'dziennik', btn);
+        }
+        else if (!complete() && was && wasTaps) unmarkInPlace(k, 'dziennik', btn);
         else if (was && cards.dziennik) keepFieldInPlace(function () { cards.dziennik.querySelector('small').textContent = 'Zrobione' + doneSummary(k, 'dziennik'); }, btn);
         paint();
       }
@@ -1558,13 +1597,13 @@
         timer = Timer(body, { phases: [phase], gap: 0, startLabel: 'Start 2:00',
           onStart: function () { started = true; markSeen('extra'); if (ins) ins.collapse(); },
           onReset: function () { started = false; },
-          onDone: function () { x.ran = true; save(); rebuildCard(k, 'extra'); } });
+          onDone: function () { x.ran = true; save(); rebuildCard(k, 'extra'); if (monoHook) monoHook(); } });
         extraHook = function () { // G2: język ★ = przeciwny do dzisiejszego monologu, dopóki ★ nie wystartowała
           if (started || x.ran) return; var L = extraLang(k); if (x.lang === L) return;
           x.lang = L; save(); phase.cue = cueFor(); tc.redraw(); timer.redraw();
           if (cards.extra) cards.extra.querySelector('small').textContent = EX_META.extra.sub + ' · ' + EX_META.extra.mins;
         };
-        body.appendChild(h('div', { class: 'row' }, h('button', { class: 'plain', type: 'button', text: 'Już mówiłem – przejdź do pytań', onclick: function () { timer.stop(); x.ran = true; markSeen('extra'); save(); rebuildCard(k, 'extra'); } })));
+        body.appendChild(h('div', { class: 'row' }, h('button', { class: 'plain', type: 'button', text: 'Już mówiłem – przejdź do pytań', onclick: function () { timer.stop(); x.ran = true; markSeen('extra'); save(); rebuildCard(k, 'extra'); if (monoHook) monoHook(); } })));
         ins = fullInstructions(body, 'extra');
         return;
       }
