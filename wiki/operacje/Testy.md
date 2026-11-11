@@ -26,6 +26,7 @@ Wymagania: Node 22+, pakiet `playwright` dostępny przez `require('playwright')`
 `run.js` i `round2.js` poza bramką błędów logują, nie asertują — oceny PASS/FAIL dokonuje tester (agent albo człowiek) na podstawie logów i listy wymagań. To celowe: przy zmianie wymagań nie przepisujemy asercji, tylko czytamy wynik.
 
 ## Historia
+- 2026-11-11 (runda poprawek v5): `round3.js` R8–R13 – baner G7 bez auto-powrotu i „Na mapę”, dziennik „tak” bez notatki (baner zamiast powrotu), ★ bez wpływu na zaliczenie i streak (G5/G6), okno 7 dni i reguła tematu w dniach 2–84 z funkcji strony (A2/D3), stary wpis tekstowy w licznikach i bez utraty zaliczenia (J8), „Edytuj” po odznacz → zaznacz, kolejność tonów Oddechu A na atrapie AudioContext, język ★ vs monolog. Testy R6 wpisują notatkę przed ostatnim dotknięciem (przy pustej notatce baner czeka).
 - 2026-11-11: v5 (#19–#21): harness dostosowany do nowego zachowania – Oddech A zalicza się po odpowiedzi „Brzuch był miękki?”, dziennik zalicza się dotknięciami („tak” + start / język / tempo albo „nie”; notatka po „tak”), pule pytań w `SIGNAL_PL` / `SIGNAL_EN`; seedy testów auto-powrotu (B25) mają zrobioną ★ (`extra.done`), bo przy niezrobionej ★ baner ma przyciski zamiast powrotu (G7).
 - 2026-11-08: `round3.js` (v4) z werdyktami i exit 1 przy FAIL; czasy Oddechu A z wdechem 3 s także przed pierwszym powtórzeniem.
 - 2026-11-07: ścieżki w harnessie uniezależnione od maszyny (`__dirname`, `require('playwright')`, domyślne Chromium). Oryginał z czatu: `90 Archiwum/run.orig.js`.
