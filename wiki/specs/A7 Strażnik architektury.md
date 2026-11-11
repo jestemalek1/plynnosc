@@ -61,7 +61,7 @@ jobs:
 ```
 
 ## 5. Treść
-Brak treści ćwiczeń. Teksty dla recenzenta są w `AGENTS.md` (sekcja „Review guidelines”).
+Brak treści ćwiczeń. Teksty dla recenzenta są w `AGENTS.md` (sekcja „Code Review Rules” – tak nazywa ją aktualna dokumentacja Codex).
 
 ## 6. Zasady i ryzyka
 - **Fałszywe alarmy skryptu.** Proste wzorce mogą trafić w napis albo nazwę zmiennej. Poprawiamy wzorzec; nie dodajemy parsera.
@@ -73,8 +73,10 @@ Brak treści ćwiczeń. Teksty dla recenzenta są w `AGENTS.md` (sekcja „Revie
 
 Kroki po stronie Alka (jednorazowo):
 1. W ustawieniach Codex podłączyć GitHuba i repo `jestemalek1/plynnosc`.
-2. Włączyć przegląd kodu dla tego repo, najlepiej automatyczny.
+2. W ustawieniach Codex wybrać to repo i włączyć „Automatic review” w części „Review code”; to samo w „Personal preferences” (tam też „Review trigger”).
 3. Przy pierwszym PR sprawdzić, czy przegląd się pojawił; jeśli nie, napisać w PR komentarz `@codex review`.
+
+Na GitHubie Codex publikuje tylko zgłoszenia P0 i P1, dlatego `AGENTS.md` każe zgłaszać każde naruszenie zasady jako P1.
 
 Zmiany w dokumentach przy wdrożeniu:
 - `CLAUDE.md`, zasada „Target, nie proces”: dopisać wyjątek „strażnik architektury (A7)”.

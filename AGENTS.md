@@ -2,7 +2,7 @@
 
 Ten plik służy wyłącznie do automatycznego przeglądu PR. Zasady pracy w repo są w `CLAUDE.md`.
 
-## Review guidelines
+## Code Review Rules
 
 Przeglądasz **tylko zgodność kodu z architekturą**. Testy i poprawność funkcji sprawdza osobny proces; nie oceniaj ich i nie proponuj nowych testów.
 
