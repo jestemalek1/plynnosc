@@ -4,6 +4,13 @@ Format: data — decyzja. Krótko: co, dlaczego, kiedy wracamy. Otwarte sprawy s
 
 ## Aktywne decyzje
 
+### 2026-11-11 — C9: strażnik architektury i podstawa „małe jest piękne” (Alek)
+- **Podstawa architektury:** najmniejsza ilość pracy i kodu, która daje daną funkcję; treść przed formą. Nic „na zapas”: plik, warstwa, abstrakcja, pole stanu albo zależność muszą mieć użytkownika w tym samym PR. Pilnujemy od pierwszego PR, żeby nie budować długu technologicznego. Zapis: [[Zasady architektury]] (Z0) i [[Architektura aplikacji]].
+- **Przegląd PR pod kątem architektury** (testy i działanie funkcji osobno): recenzent z innego modelu – Codex przez integrację z GitHubem, sterowany `AGENTS.md`, bez tokenu w repo – oraz skrypt `test/arch.js` w GitHub Actions dla reguł mechanicznych. To świadomy wyjątek od A3 „bez CI”: tylko architektura, bez Playwright, linterów i blokady scalania.
+- Alek akceptuje, że Codex dostaje dostęp do całego prywatnego repo.
+- Konsekwencja dla C1: osobny `ai.js` nie powstaje, dopóki model woła jedno miejsce; `store.js` powstaje w pakiecie bezpieczeństwa (M1). Plan etapami E0–E5: [[Architektura aplikacji]].
+- Spec: [[A7 Strażnik architektury]] (szkic, czeka na akceptację – C10). Wracamy, jeśli przegląd generuje szum albo propozycje rozbudowy.
+
 ### 2026-11-11 — C1, C3: HLD PoC przyjęty; prompt „Oceń” zostaje jako wyjątek prywatny (Alek)
 - **C1: TAK.** Architektura PoC wg [[HLD PoC – kworum 2026-11-11]]: `data.js` / `domain.js` / `store.js` / `ai.js` / `app.js`, bez `map.js`; stan v3 tylko przez dopisywanie pól. Zastępuje „Plan podziału” w [[Architektura aplikacji]]. Kolejność i terminy czekają na C2.
 - **C3: NIE zmieniamy promptu ani ekranu „Oceń”.** Apka jest na razie narzędziem prywatnym Alka, więc sekcja „Treść i samorozwój” (co mówca ujawnia o sobie, słaby punkt, pytanie do przemyślenia) zostaje, a ekran nie dostaje etykiety „informacja zwrotna, nie ocena kliniczna”. To świadomy wyjątek od B20/B32 i od zasady „nie etykietujemy” – wyłącznie dla Alka.

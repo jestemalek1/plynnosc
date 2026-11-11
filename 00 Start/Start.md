@@ -12,7 +12,8 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - [[Backlog]] — co teraz, co następne, kto (okno A / B)
 - [[Git i gałęzie]] — gitflow lekki, wydania, hotfix
 - [[Program płynności]] — źródło prawdy dla treści ćwiczeń i progresji
-- [[Architektura aplikacji]] — jak zbudowana jest apka i plan podziału na pliki
+- [[Architektura aplikacji]] — jak zbudowana jest apka, architektura docelowa i plan wdrożenia etapami
+- [[Zasady architektury]] — podstawa „małe jest piękne” i zasady Z0–Z13 pilnowane przy każdym PR
 - [[HLD PoC – kworum 2026-11-11]] — ocena kodu wg dobrych praktyk i propozycja HLD dla PoC (4 agentów, głosowanie, runda „grill”); C1 przyjęte; otwarte C2, C4–C8
 - [[Publikacja (artefakt claude.ai)]] — ograniczenia środowiska i jak publikować
 - [[Jak pracujemy]] — pętla build → tester → review → publikacja
@@ -36,6 +37,7 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - [[Backlog]]: każda pozycja ma moduł HLD, rozmiar i spec; roadmapa M0–M4 + utrzymanie, mapa pętla × kamienie i lista na 2 tygodnie w [[Plan działania]].
 
 - 2026-11-11: przegląd kodu i architektury przez kworum agentów – [[HLD PoC – kworum 2026-11-11]]. Kod bez zmian. Decyzje Alka 11.11: **C1 TAK** (architektura przyjęta), **C3 NIE** (prompt „Oceń” zostaje jako wyjątek prywatny, z zakazem przeniesienia do produktu – [[HLD v1]] §7). Otwarte: C2, C4–C8 w [[Decyzje do podjęcia]].
+- 2026-11-11: **C9 TAK** – podstawa „małe jest piękne” i strażnik architektury (przegląd PR przez Codex + `test/arch.js` w Actions). Nowe: [[Zasady architektury]], `AGENTS.md`, przepisana [[Architektura aplikacji]] (stan dziś, architektura docelowa, plan etapami E0–E5), spec [[A7 Strażnik architektury]] do akceptacji (C10).
 
 ## Następna akcja
 1. Okno B: B14 wg [[B14 Zadanie w terenie]] – przed 14.11 (start tygodnia 2).

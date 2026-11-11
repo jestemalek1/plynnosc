@@ -18,7 +18,8 @@ Okno **A** = Dogfood (poprawki z codziennego używania), okno **B** = Rozwój (f
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | ◐ | v4 | Feedback dnia 2: wdech 3 s, legenda SR, SR tygodniowo, „Start na sygnał”, dzień zaliczony zostaje | 04, 06 | L | — (sprzed B29; wymagania w CHANGELOG v4) | B | tester + recenzent (gałąź `feature/testy-v4-wip` przerwana); wydanie po czystej rundzie |
 | ☐ | B14 | Zadanie w terenie: karta od tyg. 2, „Użyłem techniki” / „Dziś nie”, nie blokuje zaliczenia dnia, licznik /7 | 05 (→06, 08) | L | [[B14 Zadanie w terenie]] | B | **przed 14.11**; treść tyg. 2–3 do akceptacji Alka; pełna pętla tester + recenzent |
-| ☐ | A5 | Podział `app/index.html` na `styles.css`, `data.js`, `map.js`, `app.js` | F→02 | L | — (refaktor: [[Architektura aplikacji]]) | B | `data.js` = biblioteka ćwiczeń (02) i profil (01 n=1); do tego czasu okno A nie zmienia kodu; może zejść na 14–15.11, B14 nie |
+| ☐ | A5 | Podział `app/index.html` na `styles.css`, `data.js`, `app.js` (etap E1; `map.js` skreślony – C1) | F→02 | L | — (refaktor: [[Architektura aplikacji]]) | B | `data.js` = biblioteka ćwiczeń (02) i profil (01 n=1); do tego czasu okno A nie zmienia kodu; może zejść na 14–15.11, B14 nie |
+| ⏸ | A7 | Strażnik architektury: `test/arch.js` + workflow w Actions, przegląd PR przez Codex wg `AGENTS.md` | F→wszystkie | M | [[A7 Strażnik architektury]] (szkic, C10) | B | razem z A5; decyzja C9; zasady: [[Zasady architektury]] |
 | ☐ | #15 | Eksport/import danych (JSON) | F→06, 08 | M | — | B | dane postępów są tylko w jednym telefonie; eksport jest też nośnikiem dla logopedy |
 | ☑ | B1 | Repo `jestemalek1/plynnosc` na GitHubie | F→wszystkie | — | — | Alek | zrobione |
 

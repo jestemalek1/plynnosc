@@ -51,6 +51,8 @@ Testów nie uruchamiał żaden agent (praca tylko do odczytu). Oceny opierają s
 6. **Dane osobiste w publikowanym kodzie.** Fragment o rodzinie w „Zdaniu do powiedzenia” w Ściągawce (`:1554`; dane o zdrowiu osób trzecich), domyślny wpis dziennika i ciała (`:364–365`), hierarchia sytuacji (`:299–304`), imię (`:683`, `:759–760`), miasto, bazowe SR (`:357–360`), dane kontaktowe specjalisty (`:1553`).
 
 ## Proponowany HLD dla PoC
+> Aktualny opis architektury i plan wdrożenia etapami są w [[Architektura aplikacji]], a zasady pilnowane w przeglądzie PR w [[Zasady architektury]]. Po przyjęciu podstawy „małe jest piękne” (C9) osobny plik `ai.js` nie powstaje, dopóki model woła jedno miejsce, a `store.js` powstaje już w pakiecie bezpieczeństwa (M1), bo ten kod i tak jest wtedy przepisywany. Poniższy tekst to zapis kworum.
+
 Zasada: zostajemy przy Opcji A (klasyczne `<script src>`, bez frameworka i bundlera). Zmienia się tylko to, **gdzie przebiegają granice**: oddzielamy to, co przejdzie do produktu (treść, logika dnia, kształt danych), od tego, co zostanie wyrzucone (DOM, mapa SVG, wiązanie z artefaktem).
 
 ```
@@ -84,7 +86,7 @@ index.html ── styles.css
 | pola B15 (przełączniki w dzienniku) | płasko w dniu, tak jak `field` z zaakceptowanej specyfikacji B14 |
 | kopia `plynnosc.bak` | jedna, robiona przed migracją i przy błędzie parsowania; kasowana po 14 dniach i przez „Usuń dane” |
 
-Eksport = stan bez `ocenaDraft` i bez `lastAnswer`. Ten format jest kontraktem, który przetrwa przepisanie na produkt, więc jest ważniejszy niż sam podział plików.
+Eksport = stan bez `ocenaDraft` (szkic transkryptu i ostatnia odpowiedź modelu). Ten format jest kontraktem, który przetrwa przepisanie na produkt, więc jest ważniejszy niż sam podział plików.
 
 **Czego w tym HLD świadomie nie ma:**
 - **silnika planu** (`enrollment`, `stageHistory`, kryteria jako dane) – brak kworum, a B13 jest już rozstrzygnięte w wersji bez silnika (pytanie tak/nie w karcie SR tygodnia, tydzień idzie z kalendarzem); silnik po przeglądzie M3;
@@ -168,7 +170,7 @@ Kolejność po rundzie 3: B14 ma termin 13.11 i dotyka tego samego pliku, więc 
 | `startDate` przenumerowałby przeszłość | Wycofane |
 | „Zero danych osobistych w `data.js`” jest niewykonalne: etykiety hierarchii rysują się ze stałej (`:1505`), a spec B14 sam używa imienia | Blok `PROFILE` w `data.js`; teraz usuwamy tylko domyślny dziennik i zdanie o rodzinie |
 | Kopia `.bak` zachowałaby wycinki transkryptów, które v3 usuwa; „Usuń dane” bez R8 odtworzy dzień 1 | Termin życia kopii; R8 razem z P13 |
-| „Format eksportu = format stanu” kontra „szkic poza eksportem” | Eksport = stan bez `ocenaDraft` i `lastAnswer` |
+| „Format eksportu = format stanu” kontra „szkic poza eksportem” | Eksport = stan bez `ocenaDraft` |
 | Liczniki B14 „w docelowym miejscu `facts`” sprzeczne z zaakceptowaną specyfikacją (`field` płasko) | `facts` wycofane; spec B14 zostaje bez zmian |
 | Brak odpowiedzi na: pamięć podręczna po publikacji, ładowanie `domain.js` w Node, zmiana definicji „zielone”, zderzenie adaptera z #13 | Dopisane w „Szczegóły wykonawcze” i C6 |
 
