@@ -10,7 +10,7 @@ tags: [produkt, hld]
 
 Kopia tekstowa dokumentu Alka; oryginał: `assets/HLD_aplikacja_wsparcie_jakania_v1.docx`. Porównanie z naszym planem: [[HLD v1 – porównanie z planem]].
 
-> **Zmiany po 8.11 (sesja decyzji B12–B20, [[Decision log]]).** Ta kopia jest teraz wersją wiodącą, a `.docx` to historia. Dopisane: utrzymanie i zapobieganie nawrotom w 03 i 06 (B18); ocena mowy przez AI z nagrania i rozmowy na żywo w 01, 05 i 06 (B19); minimum bezpieczeństwa w §6 z przypisaniem do modułów (B20); refleksja z nagrań z zabezpieczeniami w 07 (B17); §7 „Prototyp n=1 i kolejność budowy” (B12). Fragmenty dopisane oznaczone *[B1x]*.
+> **Zmiany po 8.11 (sesja decyzji B12–B20, B29–B32, [[Decision log]]).** Ta kopia jest teraz wersją wiodącą, a `.docx` to historia. Dopisane: utrzymanie i zapobieganie nawrotom w 03 i 06 (B18); ocena mowy przez AI z nagrania i rozmowy na żywo w 01, 05 i 06 (B19); minimum bezpieczeństwa w §6 z przypisaniem do modułów (B20); refleksja z nagrań z zabezpieczeniami (B17, od B32 w module 10); §7 „Prototyp n=1 i kolejność budowy” (B12); nowe moduły 09 „Trening języka obcego” (B31) i 10 „Refleksja i wzorce” (B32). Fragmenty dopisane oznaczone *[Bxx]*.
 
 Stan ustaleń: 8 listopada 2026
 
@@ -31,8 +31,11 @@ algorytmów czy protokół kliniczny.
 | 06     | Monitorowanie postępów  | Ocena zmian i zwrot informacji do planu.                          |
 | 07     | Wsparcie psychologiczne | Praca nad lękiem, napięciem i unikaniem rozmów.                   |
 | 08     | Panel logopedy          | Nadzór specjalisty i modyfikacja planu.                           |
+| 09     | Trening języka obcego *[B31]* | Rozwój wypowiedzi w języku obcym (na start angielski) z własnych nagrań i rozmów. |
+| 10     | Refleksja i wzorce *[B32]* | Zauważanie własnych wzorców w swoich słowach i zamiana ich w małe działania. |
 
-Decyzja: powyższe osiem elementów stanowi zaakceptowany zakres bazowego
+Decyzja: powyższe elementy (osiem z 8.11, moduły 09 i 10 dodane 8.11
+decyzjami B31 i B32) stanowią zaakceptowany zakres bazowego
 katalogu HLD. Nie oznacza to jeszcze, że wszystkie muszą wejść do
 pierwszej wersji rynkowej.
 
@@ -178,18 +181,10 @@ wstydem i unikaniem rozmów związanych z jąkaniem.
 barierami emocjonalnymi i podejmowaniem sytuacji komunikacyjnych. Nie
 zastępuje psychoterapeuty ani diagnozy psychologicznej.
 
-*[B17]* **Refleksja na podstawie nagrań** („jedno pytanie”, analiza
-wzorców). Dla bezpieczeństwa jest zaprojektowana tak:
-- opiera się wyłącznie na słowach użytkownika: oddaje to, co powiedział,
-  i zadaje jedno pytanie;
-- nie wnioskuje o przyczynach ani o „podłożu” zachowań, nie stawia
-  diagnoz i nie nazywa emocji, których użytkownik sam nie nazwał;
-- wnioski formułuje użytkownik, nie AI; funkcja jest dobrowolna i
-  wyłączalna;
-- przy treściach kryzysowych pokazuje informację o pomocy kryzysowej
-  (§6) zamiast analizy.
-Interpretacja źródeł zachowań należy do psychoterapeuty. Nie wchodzi do
-MVP.
+*[B32]* Refleksja nad wzorcami zachowań w ogóle (dawniej #14 „psychoanaliza”,
+zapisana tu decyzją B17) przeszła do modułu 10. Moduł 07 zajmuje się
+barierami związanymi z jąkaniem; gdy wzorzec z 10 dotyczy lęku przed
+mówieniem albo unikania rozmów, trafia tutaj.
 
 **Powiązania:** Wykorzystuje informacje z wywiadu; współdziała z
 treningiem komunikacji, monitorowaniem i generatorem planu.
@@ -206,6 +201,64 @@ uprawnień później.
 **Powiązania:** Łączy się z generatorem planu, realizacją ćwiczeń i
 monitorowaniem postępów.
 
+## 09. Trening języka obcego *[B31]*
+
+**Odpowiedzialność:** Rozwijać sposób mówienia w języku obcym (na start
+angielski) na podstawie własnych nagrań i rozmów użytkownika, tak żeby
+spadł koszt formułowania wypowiedzi.
+
+**Zakres na poziomie HLD:** Po wypowiedzi krótka karta: najwyżej 5
+poprawek „powiedziałeś → lepiej”, frazy zamiast reguł, jedna uwaga o
+rejestrze, jedna rzecz, która wyszła dobrze. Użytkownik sam wypowiada
+poprawioną wersję. Bank fraz z własnych potknięć powtarzany przez
+mówienie, shadowing własnych poprawionych zdań, porównanie co 2 tygodnie.
+
+**Granice:** poprawki tylko po wypowiedzi, nigdy w jej trakcie
+(przerwanie wymusza ponowny start); niepłynność nie jest błędem
+językowym i nie wpływa na ocenę języka; tempo nie jest celem; ocena
+płynności zostaje w 06; AI cytuje dokładny fragment i oznacza niską
+pewność poprawki.
+
+**Uzasadnienie:** u dwujęzycznych osób jąkających się przeważają wyniki
+pokazujące więcej niepłynności w słabszym języku (obraz niejednoznaczny,
+małe próby; [[Język obcy i refleksja – research]]). Lepszy język obcy
+obniża obciążenie formułowania, które może nasilać bloki.
+
+**Powiązania:** Te same nagrania i rozmowy co 05 i 06 (B19); frazy
+zasilają bibliotekę (02); plan (03) ustala proporcję języków.
+
+## 10. Refleksja i wzorce *[B32]*
+
+**Odpowiedzialność:** Pomagać użytkownikowi zauważać jego powtarzające
+się wzorce (sytuacje, reakcje, energię, odkładanie, intencje) na
+podstawie tego, co sam mówi, i zamieniać je w małe działania.
+
+**Zakres na poziomie HLD:** Po wypowiedzi jedna linia lustra i jedno
+pytanie. Temat, który wraca, pokazany z datami i cytatami użytkownika.
+Wzorzec zapisany jako „sytuacja → co zrobiłem → skutek” słowami
+użytkownika; plan „jeśli X, to Y” do potwierdzenia; karta tygodniowa i
+przegląd miesięczny. Psychoedukacja o typowych wzorcach jako materiał,
+z którego użytkownik sam wybiera nazwę.
+
+**Granice (twarde):** AI nie nadaje etykiet schematów, nie interpretuje
+źródeł ani dzieciństwa, nie diagnozuje i nie nazywa emocji, których
+użytkownik nie nazwał. Wzorzec istnieje dopiero po potwierdzeniu przez
+użytkownika („to nie to” go usuwa). Jedno pytanie dziennie, bez porad
+nieproszonych. Pamięć jako tagi i liczniki, usuwalne. Przy treściach
+kryzysowych informacja o pomocy zamiast analizy. Bez słów „terapia” i
+„psychoanaliza” w nazwie i opisie; przeznaczenie: wellbeing. Funkcja
+dobrowolna.
+
+**Uzasadnienie:** wersja „AI znajduje złe schematy i ich źródła” to w
+praktyce psychoterapia: dowody na zmianę schematów przez self-help są
+słabe, a APA (XI 2025), prawo Illinois (VIII 2025) i MDR (deklarowane
+przeznaczenie) stawiają tu granicę. Wartość dają pamięć i zestawienie
+wpisów w czasie oraz plany „jeśli–to” ([[Język obcy i refleksja – research]]).
+
+**Powiązania:** cele z 01; wzorce z rozmów w 05; lęk przed mówieniem i
+unikanie rozmów → 07; plan (03) korzysta z wzorców tylko za zgodą
+użytkownika.
+
 ## 4. Przepływ na poziomie HLD
 
 Ścieżka użytkownika: wywiad i ocena → indywidualny plan → realizacja
@@ -214,7 +267,9 @@ planu. *[B18]* Po osiągnięciu celu → utrzymanie (rzadsze przeglądy) →
 przy sygnale nawrotu powrót do wcześniejszego etapu planu.
 
 Biblioteka ćwiczeń jest zapleczem zasobowym planu i realizacji, a
-wsparcie psychologiczne działa równolegle. Panel logopedy może obejmować
+wsparcie psychologiczne działa równolegle. *[B31, B32]* Trening języka
+obcego (09) i refleksja (10) też działają równolegle i korzystają z
+tych samych wypowiedzi użytkownika. Panel logopedy może obejmować
 nadzór nad całym cyklem.
 
 Zależności architektoniczne: biblioteka ćwiczeń → generator planu;
@@ -268,6 +323,8 @@ wzajemnego wsparcia; na ten moment poza zaakceptowaną ósemką.
 | Zgoda na nagrania, krótka retencja, usuwanie danych; dane o zdrowiu traktowane jako szczególna kategoria (RODO art. 9) | 01, 05, 06, 08 |
 | Specjalista widzi tylko uzgodniony zakres danych, za zgodą użytkownika | 08 |
 | Funkcja o deklarowanym celu terapeutycznym przechodzi weryfikację kliniczną i regulacyjną przed udostępnieniem innym | 02, 03, 05, 06 |
+| *[B31]* Niepłynność nie jest błędem językowym; poprawki tylko po wypowiedzi | 09 |
+| *[B32]* Bez etykiet, diagnoz i interpretacji źródeł; wzorzec tylko po potwierdzeniu użytkownika; pomoc kryzysowa; przeznaczenie wellbeing, bez „terapii” w nazwie | 10 |
 
 ## 7. Prototyp n=1 i kolejność budowy *[B12]*
 
@@ -282,7 +339,9 @@ wzajemnego wsparcia; na ten moment poza zaakceptowaną ósemką.
   terenie), 06 Monitorowanie (samoocena), 08 w wersji minimum (raport) i
   02 jako dane. Później, po dopracowaniu funkcjonalności, dochodzą: 01
   Wywiad w aplikacji, 03 Generator planu (silnik), ocena mowy przez AI z
-  nagrania i rozmowy na żywo (B19) oraz 07.
+  nagrania i rozmowy na żywo (B19), 07 oraz *[B31, B32]* 09 i 10.
+  Dla Alka pierwsze wersje 09 (#13 English card) i 10 (#12 jedno
+  pytanie) w M3, na dzisiejszej ocenie z transkryptu.
 - **Czego prototyp nie dowodzi:** sprawdza, czy z aplikacji da się
   codziennie korzystać i czy pętla „plan → ćwiczenia → pomiar → zmiana
   planu” działa. Nie dowodzi skuteczności klinicznej ani popytu

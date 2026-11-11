@@ -26,8 +26,8 @@ Kierunek jest zgodny: ten sam cykl „ocena → plan → ćwiczenia → transfer
 | 08 Panel logopedy | Brak. Jest „Kopiuj dane” (JSON). | Brak wglądu specjalisty. | **Raport dla logopedy**: jedna strona tekstu (baza, SR tygodniowe, kryteria, dziennik) do skopiowania przed konsultacją (B16). **Poprawka 8.11:** konsultacja jest 10.11, czyli przed M1, więc na nią idzie ręcznie [[Kontekst i profil]]; raport w apce służy kolejnym konsultacjom. Prawdziwy panel wymaga backendu i kont – produkt. |
 
 ## Co jest u nas, a nie ma w HLD
-- **#13 angielski** (English card z nagrań) – poza zakresem HLD. Pasuje do modułu 05 tylko jako „komunikacja w języku obcym”. Dla Ciebie ważne, bo bloki po angielsku są najcięższe.
-- **#12 jedno pytanie / #14 „psychoanaliza”** – #14 od B17 w HLD 07 jako „refleksja z nagrań” z zabezpieczeniami, poza MVP. #12 – do rozstrzygnięcia w B17.
+- ~~**#13 angielski**~~ – od B31 w HLD jako moduł 09 „Trening języka obcego”.
+- ~~**#12 jedno pytanie / #14 „psychoanaliza”**~~ – od B32 w HLD jako moduł 10 „Refleksja i wzorce” (wersja bez etykiet i diagnoz), poza MVP.
 - ~~**Ocena nagrań przez Claude**~~ – od B19 w HLD (moduł 06, docelowo z dźwięku i rozmowy na żywo). Dzisiejsze „Oceń” działa na transkrypcie, więc nie widzi cichych bloków.
 - **Grywalizacja** (mapa wysp, streak, zachęty) – HLD jej nie opisuje; to warstwa UX modułu 04.
 
@@ -44,6 +44,7 @@ HLD celowo nie wybiera technologii. Nasz runtime (artefakt claude.ai, localStora
 - **Utrzymanie i nawroty (B18)** – dopisane do HLD 03, 06 i §4.
 - **Ocena mowy przez AI (B19)** – dopisana do HLD 01, 05, 06; korektor w §5 zawężony do czasu rzeczywistego.
 - **Minimum bezpieczeństwa (B20)** – tabela w HLD §6.
+- **Język obcy (B31) i refleksja nad wzorcami (B32)** – nowe moduły 09 i 10.
 
 ## Decyzje dla Alka
 [[Decyzje do podjęcia]], B12–B20; rozstrzygnięte w [[Decision log]].
