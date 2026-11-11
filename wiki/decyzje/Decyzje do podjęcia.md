@@ -1,7 +1,7 @@
 ---
 status: active
 owner: Alek
-updated: 2026-11-08
+updated: 2026-11-11
 tags: [decyzje, otwarte]
 ---
 
@@ -61,6 +61,18 @@ Każda pozycja ma rekomendację i kroki. Odhaczasz `[x]`, dopisujesz jedną lini
 - [ ] **B26. Treść „Start na sygnał” – dwie rzeczy bez pokrycia w [[Program płynności]] (z recenzji v4).** (a) „Jak to ma brzmieć” mówi „krótki wdech nosem (ok. 1 s)”; liczby 1 s nie ma w programie, a Oddech A uczy 3 s. (b) 4 z 32 pytań to imię / przedstawienie się, a program (sekcja „Imię i przedstawianie się”) każe przy imieniu zawsze robić preparatory set z pauzą – „od razu” z karty temu przeczy. Rekomendacja: (a) usunąć „(ok. 1 s)”, zostaje „spokojny wdech nosem”; (b) zostawić pytania o imię, ale dopisać w „Czego nie robić”: „przy imieniu wolno zrobić krótką pauzę i wdech – to nie odkładanie startu”. Zmieniam dopiero po Twojej akceptacji (treść ćwiczenia).
 - [ ] **B27. Nowe instrukcje v4 schowane po aktualizacji (z testów v4).** Pełne instrukcje Oddechu A (wdech 3 s, bez zatrzymania) i SR tygodnia są zwinięte za „Pokaż instrukcję”, bo w v3 były już oznaczone jako przeczytane. Skrót nad timerem jest zaktualizowany. Rekomendacja: przy pierwszym uruchomieniu v4 jednorazowo rozwinąć te dwie instrukcje (wyczyścić „przeczytane” dla oddech i sr w migracji) – drobny `fix/` zaraz po wydaniu albo przeczytasz je sam po aktualizacji („Pokaż instrukcję”).
 - [ ] **B28. Oceń przy 320 px (z v3, nie regresja).** Kafel metryk „restarty” wystaje poza ekran (350 px na 320), telefon pomniejsza stronę. Rekomendacja: `fix/` po wydaniu, jeśli używasz telefonu węższego niż 360 px; na iPhonie 390 px nie występuje.
+
+## C. Architektura PoC – z kworum agentów 11.11 (czekają na Ciebie)
+Źródło i uzasadnienia: [[HLD PoC – kworum 2026-11-11]]. Kolejność = kolejność zależności. Do czasu odhaczenia nic z tego nie wchodzi do kodu ani do backlogu.
+
+- [ ] **C1. Przyjąć HLD PoC:** granice `data.js` / `domain.js` / `store.js` / `ai.js` / `app.js`, bez `map.js`; stan v3 tylko przez dopisywanie pól. Zastępuje „Plan podziału” w [[Architektura aplikacji]]. Rekomendacja: TAK. To jedyne części, które przejdą do produktu i dadzą się testować poza przeglądarką.
+- [ ] **C2. Kolejność:** do 13.11 wyłącznie B14; do 15.11 podział na 3 pliki + test spójności danych; w M1 „pakiet bezpieczeństwa” (import danych, kopia przed migracją, widoczny błąd zapisu, siatka na wyjątki, Wake Lock, R4, R5) jako jedna pozycja L ze specem, w miejsce osobnych #15 i Wake Lock. Rekomendacja: TAK. Do tego czasu raz w tygodniu (niedzielny Review) i przed każdym wydaniem „Kopiuj dane” do zablokowanej notatki w telefonie – nie do repo, bo oceny zawierają cytaty z transkryptów.
+- [ ] **C3. Prompt „Oceń” (zmiana treści):** z sekcji „Treść i samorozwój” wypada „co mówca ujawnia o sobie” i „jeden słaby punkt”, zostaje „jedno pytanie do przemyślenia”; dochodzi zakaz diagnoz i nazywania emocji oraz informacja o pomocy przy treściach kryzysowych; w UI etykieta „informacja zwrotna z transkryptu, nie ocena kliniczna; nie widzi bloków; liczniki zaniżone”. Rekomendacja: TAK. Dzisiejszy prompt łamie zasadę z `CLAUDE.md` i B20/B32.
+- [ ] **C4. Test na Twoim iPhonie na osobnym, pustym artefakcie:** czy Wake Lock działa w artefakcie i czy dane przeżywają tydzień bez otwierania. Rekomendacja: TAK, opublikuję osobny artefakt testowy; nie testujemy na artefakcie z Twoimi danymi. Od wyniku zależy kształt P1 i P3.
+- [ ] **C5. Dane osobiste w kodzie:** teraz usuwamy tylko domyślny wpis dziennika z dnia 1 i fragment o rodzinie w „Zdaniu do powiedzenia” (Ściągawka → Kontakty; to dane o zdrowiu osób trzecich); imię, miasto i hierarchia zostają w jednym oznaczonym bloku `PROFILE` do czasu produktu. Rekomendacja: TAK, pod warunkiem, że nie udostępniasz linku do artefaktu i otwierasz apkę zawsze tą samą drogą (Safari albo aplikacja Claude).
+- [ ] **C6. Druga bramka testów:** `node:test` dla `domain.js` i `store.js` obok Playwright (zmienia definicję „zielone” w `CLAUDE.md`). Rekomendacja: TAK, ale dopiero razem z `domain.js`; do tego czasu bez zmian. Głos odrębny: adwokat prostoty jest przeciw drugiemu harnessowi.
+- [ ] **C7. Ustawienia prywatności claude.ai:** sprawdź, czy zgoda na trenowanie modeli jest wyłączona. Rekomendacja: wyłącz – transkrypty z „Oceń” to dane o zdrowiu.
+- [ ] **C8. Porządek w repo:** na origin nie ma tagu `v4` (ani żadnego innego), a jest sześć gałęzi `feature/*`, których stanu zmergowania nie da się stwierdzić automatycznie. Rekomendacja: otagować `main` (bcea4ae) jako `v4`; gałęzie przejrzeć z oknem B i usunąć zmergowane. Sam niczego nie usuwałem.
 
 ## Zostało otwarte po sesji HLD (8.11)
 Wszystkie decyzje z sesji HLD (B12–B20, B29–B32) są podjęte. Pytania na później (MVP, RODO, wyroby medyczne, stack): [[Plan działania]].
