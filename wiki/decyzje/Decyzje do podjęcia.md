@@ -1,7 +1,7 @@
 ---
 status: active
 owner: Alek
-updated: 2026-11-08
+updated: 2026-11-11
 tags: [decyzje, otwarte]
 ---
 
@@ -15,7 +15,7 @@ Każda pozycja ma rekomendację i kroki. Odhaczasz `[x]`, dopisujesz jedną lini
   Dlaczego: każdą zmianę robi agent w jednym przebiegu; Opcja B to 5–8 rund i build przy każdej zmianie. Szczegóły: [[Szablony UI – research i werdykt]], [[Architektura aplikacji]].
   Veto ma sens tylko, jeśli w 6 miesięcy planujesz wyraźnie więcej niż 8 ekranów.
 - [ ] **A2. Jedno repo = vault Obsidiana + kod.** Domyślnie: TAK. (W Intradero było osobno, bo dwie osoby i wiele repo. Tu jedna osoba, jedna apka.)
-- [ ] **A3. Jakość = harness Playwright, bez CI/linterów/Spec Kitu.** Domyślnie: TAK. Wracamy, gdy coś zacznie się psuć między sesjami.
+- [ ] **A3. Jakość = harness Playwright, bez CI/linterów/Spec Kitu.** Domyślnie: TAK. Wracamy, gdy coś zacznie się psuć między sesjami. Wyjątek od 11.11: strażnik architektury (C9).
 - [ ] **A4. Runtime v1 = artefakt claude.ai** (bo tylko tam działa ocena przez Claude bez własnego backendu). Domyślnie: TAK. GitHub Pages dopiero, gdyby „Oceń z Claude” przestało być potrzebne w stronie.
 - [ ] **A5. Pierwszy krok w kodzie: wydzielić treść do `data.js`** (zachęty, instrukcje, tematy, tygodnie), potem Wake Lock i własne modale. Domyślnie: TAK. Powód: tygodnie 4–12 to zmiany w treści, nie w logice — agent ma dotykać jednego pliku bez ryzyka.
 
@@ -64,6 +64,20 @@ Każda pozycja ma rekomendację i kroki. Odhaczasz `[x]`, dopisujesz jedną lini
   Stan 11.11: (a) i (b) wchodzą w spec #19 (treść zaakceptowana razem ze specem).
 - [ ] **B27. Nowe instrukcje v4 schowane po aktualizacji (z testów v4).** Pełne instrukcje Oddechu A (wdech 3 s, bez zatrzymania) i SR tygodnia są zwinięte za „Pokaż instrukcję”, bo w v3 były już oznaczone jako przeczytane. Skrót nad timerem jest zaktualizowany. Rekomendacja: przy pierwszym uruchomieniu v4 jednorazowo rozwinąć te dwie instrukcje (wyczyścić „przeczytane” dla oddech i sr w migracji) – drobny `fix/` zaraz po wydaniu albo przeczytasz je sam po aktualizacji („Pokaż instrukcję”).
 - [ ] **B28. Oceń przy 320 px (z v3, nie regresja).** Kafel metryk „restarty” wystaje poza ekran (350 px na 320), telefon pomniejsza stronę. Rekomendacja: `fix/` po wydaniu, jeśli używasz telefonu węższego niż 360 px; na iPhonie 390 px nie występuje.
+
+## C. Architektura PoC – z kworum agentów 11.11 (czekają na Ciebie)
+Źródło i uzasadnienia: [[HLD PoC – kworum 2026-11-11]]. Kolejność = kolejność zależności. Do czasu odhaczenia nic z tego nie wchodzi do kodu ani do backlogu.
+
+- [x] **C1. Przyjąć HLD PoC:** granice `data.js` / `domain.js` / `store.js` / `ai.js` / `app.js`, bez `map.js`; stan v3 tylko przez dopisywanie pól. Zastępuje „Plan podziału” w [[Architektura aplikacji]]. Rekomendacja: TAK. To jedyne części, które przejdą do produktu i dadzą się testować poza przeglądarką. **Decyzja (11.11): TAK.**
+- [x] **C2. Kolejność:** do 13.11 wyłącznie B14; do 15.11 podział na 3 pliki + test spójności danych; w M1 „pakiet bezpieczeństwa” (import danych, kopia przed migracją, widoczny błąd zapisu, siatka na wyjątki, Wake Lock, R4, R5) jako jedna pozycja L ze specem, w miejsce osobnych #15 i Wake Lock; `store.js` powstaje w tym samym kroku. Pełny plan etapami E0–E5: [[Architektura aplikacji]]. **Decyzja (11.11): TAK.** Korekta po przeglądzie: Wake Lock w pozostałych timerach zostaje osobną małą pozycją WL, a E3 idzie po B15 i B16 ([[Decision log]]). Rekomendacja: TAK. Do tego czasu raz w tygodniu (niedzielny Review) i przed każdym wydaniem „Kopiuj dane” do zablokowanej notatki w telefonie – nie do repo, bo oceny zawierają cytaty z transkryptów.
+- [x] **C3. Prompt „Oceń” (zmiana treści):** z sekcji „Treść i samorozwój” wypada „co mówca ujawnia o sobie” i „jeden słaby punkt”, zostaje „jedno pytanie do przemyślenia”; dochodzi zakaz diagnoz i nazywania emocji oraz informacja o pomocy przy treściach kryzysowych; w UI etykieta „informacja zwrotna z transkryptu, nie ocena kliniczna; nie widzi bloków; liczniki zaniżone”. Rekomendacja: TAK. Dzisiejszy prompt łamie zasadę z `CLAUDE.md` i B20/B32. **Decyzja (11.11): NIE zmieniamy.** Apka jest na razie na cele prywatne, prompt i ekran zostają, jak są. Warunek: w tej postaci kategorycznie nigdy nie trafia do wersji dla innych użytkowników – zapisane w [[HLD v1]] §7 i [[Decision log]].
+- [ ] **C4. Test na Twoim iPhonie na osobnym, pustym artefakcie:** czy Wake Lock działa w artefakcie i czy dane przeżywają tydzień bez otwierania. Rekomendacja pierwotna: osobny artefakt testowy. **Aktualizacja po v5:** Oddech A ma już Wake Lock, więc osobny artefakt jest zbędny – wystarczy, że przy najbliższym Oddechu A sprawdzisz, czy ekran nie gaśnie w trakcie serii, i napiszesz „działa” albo „gaśnie”. Trwałości danych nie testujemy osobno; chroni przed nią cotygodniowe „Kopiuj dane”.
+- [ ] **C5. Dane osobiste w kodzie:** teraz usuwamy tylko domyślny wpis dziennika z dnia 1 i fragment o rodzinie w „Zdaniu do powiedzenia” (Ściągawka → Kontakty; to dane o zdrowiu osób trzecich); imię, miasto i hierarchia zostają w jednym oznaczonym bloku `PROFILE` do czasu produktu. Rekomendacja: TAK, pod warunkiem, że nie udostępniasz linku do artefaktu i otwierasz apkę zawsze tą samą drogą (Safari albo aplikacja Claude).
+- [ ] **C6. Druga bramka testów:** `node:test` dla `domain.js` i `store.js` obok Playwright (zmienia definicję „zielone” w `CLAUDE.md`). Rekomendacja: TAK, ale dopiero razem z `domain.js`; do tego czasu bez zmian. Głos odrębny: adwokat prostoty jest przeciw drugiemu harnessowi.
+- [ ] **C7. Ustawienia prywatności claude.ai:** sprawdź, czy zgoda na trenowanie modeli jest wyłączona. Rekomendacja: wyłącz – transkrypty z „Oceń” to dane o zdrowiu.
+- [x] **C9. Strażnik architektury i podstawa „małe jest piękne”.** Przegląd PR tylko pod kątem architektury (testy i funkcje osobno): inny model przez integrację Codex z GitHubem (bez tokenu w repo) oraz mały skrypt `test/arch.js` w GitHub Actions. To wyjątek od A3 „bez CI”. Podstawa architektury: najmniejsza ilość pracy i kodu, która daje funkcję; treść przed formą. **Decyzja (11.11): TAK.** Zasady: [[Zasady architektury]]; spec: [[A7 Strażnik architektury]].
+- [x] **C10. Akceptacja specyfikacji [[A7 Strażnik architektury]]** (skrypt, workflow, kroki po Twojej stronie, zmiany w `CLAUDE.md`). Rekomendacja: TAK. Wdrożenie razem z PR podziału pliku (etap E1), żeby ten PR był pierwszym sprawdzonym. **Decyzja (11.11): TAK.**
+- [ ] **C8. Porządek w repo:** na origin nie ma tagu `v4` (ani żadnego innego), a jest sześć gałęzi `feature/*`, których stanu zmergowania nie da się stwierdzić automatycznie. Rekomendacja: otagować `main` (bcea4ae) jako `v4`; gałęzie przejrzeć z oknem B i usunąć zmergowane. Sam niczego nie usuwałem.
 
 ## Zostało otwarte po sesji HLD (8.11)
 Wszystkie decyzje z sesji HLD (B12–B20, B29–B32) są podjęte. Pytania na później (MVP, RODO, wyroby medyczne, stack): [[Plan działania]].
