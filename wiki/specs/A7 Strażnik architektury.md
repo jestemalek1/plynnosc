@@ -23,7 +23,7 @@ Dwa okna same otwierają i scalają PR, a Alek nie czyta kodu. Bez stałej kontr
   - Lintery, formatowanie, pokrycie testami, blokada scalania (branch protection).
   - Klucz API i sekrety w repo. Codex działa przez integrację konta, skrypt nie potrzebuje tokenu.
   - Automatyczne poprawianie kodu przez recenzenta.
-- Budżet: 1 runda, razem z PR podziału pliku (etap E1 w [[Architektura aplikacji]]). Skrypt działa od E1; Codex może przeglądać wcześniejsze PR, ale przed E1 ocenia tylko Z0 i Z9–Z13. Jeśli się nie mieści – tniemy liczbę reguł w skrypcie, nie termin.
+- Budżet: 1 runda, razem z PR podziału pliku (etap E1 w [[Architektura aplikacji]]). Skrypt działa od E1; Codex może przeglądać wcześniejsze PR, ale przed E1 ocenia tylko Z0, Z6 i Z9–Z13. Jeśli się nie mieści – tniemy liczbę reguł w skrypcie, nie termin.
 
 ## 3. Zachowanie (kryteria akceptacji)
 | # | Gdy … | Wtedy … |

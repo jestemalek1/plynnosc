@@ -74,7 +74,7 @@ Zasada kolejności: plik powstaje w tym kroku, w którym jego kod i tak jest prz
 
 | Etap | Co powstaje | Kiedy | Backlog | Gotowe, gdy |
 | --- | --- | --- | --- | --- |
-| **E0** | [[Zasady architektury]], `AGENTS.md`; Alek podłącza przegląd PR przez Codex | dokumenty teraz; Codex w dowolnym momencie przed PR E1 | A7 | Codex skomentował pierwszy PR zmieniający `app/` (przed E1 ocenia tylko Z0 i Z9–Z13) |
+| **E0** | [[Zasady architektury]], `AGENTS.md`; Alek podłącza przegląd PR przez Codex | dokumenty teraz; Codex w dowolnym momencie przed PR E1 | A7 | Codex skomentował pierwszy PR zmieniający `app/` (przed E1 ocenia tylko Z0, Z6 i Z9–Z13) |
 | **E1** | Podział mechaniczny: `styles.css`, `data.js` (z blokiem `PROFILE`), `app.js`; `?v=N`; test spójności danych; `test/arch.js` i workflow w Actions; harness czyta wszystkie pliki `app/` | do 15.11, po B14 | A5, A7 | harness zielony, zrzuty ekranów bez zmian, `test/arch.js` zielony, w `index.html` nie ma kodu w `<script>`, artefakt opublikowany z `files` działa na telefonie |
 | **E2** | „Pakiet bezpieczeństwa”: powstaje `store.js` (zapis, kopia przy błędzie parsowania, import „wklej”, eksport bez `ocenaDraft`, widoczny błąd zapisu) oraz w `app.js` siatka na wyjątki, R4, R5 | M1, do 21.11 | A8 (obejmuje #15); spec do napisania | dane da się przywrócić z kopii; błąd zapisu i wyjątek są widoczne; wygasają wyjątki Z2, Z5, Z10 |
 | **E3** | Zmiany stanu z tabeli wyżej, „Usuń dane”, R7, R8 | M1, po B15 i B16 | w specyfikacji A8 albo osobnej | stan Alka wczytuje się bez utraty; wycofanie wydania nie psuje danych |

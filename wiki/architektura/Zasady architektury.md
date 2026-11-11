@@ -23,7 +23,7 @@ W praktyce:
 - Jeśli zasada z tej strony wymusza więcej kodu, niż jest wart jej zysk, zmieniamy zasadę (decyzja Alka), a nie obchodzimy jej po cichu.
 
 ## Zasady
-**Przed etapem E1** (dopóki w `app/` jest tylko `index.html`) zasady plikowe Z1–Z8 nie obowiązują; ocenie podlegają Z0 i Z9–Z13.
+**Przed etapem E1** (dopóki w `app/` jest tylko `index.html`) zasady plikowe Z1–Z5, Z7 i Z8 nie obowiązują; ocenie podlegają Z0, Z6 i Z9–Z13.
 
 Kolumna „Kto pilnuje”: **S** = skrypt `test/arch.js` (mechanicznie, przy każdym PR), **R** = recenzent (Codex i recenzent w sesji).
 

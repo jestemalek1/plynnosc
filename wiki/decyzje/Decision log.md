@@ -7,6 +7,7 @@ Format: data — decyzja. Krótko: co, dlaczego, kiedy wracamy. Otwarte sprawy s
 ### 2026-11-11 — C2, C10: plan wdrożenia architektury i spec strażnika zaakceptowane (Alek)
 - **C2: TAK.** Kolejność etapów E0–E5 z [[Architektura aplikacji]]: do 13.11 tylko B14; do 15.11 podział pliku (E1) ze skryptem i workflow; w M1 pakiet bezpieczeństwa (E2, powstaje `store.js`) i migracja v3 z B15 (E3); `domain.js` (E4), gdy M1 ma zapas, inaczej po treści tygodni 4–6. Trening ma pierwszeństwo: przesuwa się etap, nie B14 ani treść.
 - **C10: TAK.** [[A7 Strażnik architektury]] zaakceptowany; przy wdrożeniu dwie zmiany w `CLAUDE.md` (wyjątek od „bez CI” dla strażnika, `node test/arch.js` w bramce).
+- **Korekta po przeglądzie dokumentów (11.11, do wiadomości Alka):** Wake Lock w pozostałych timerach nie wchodzi do pakietu bezpieczeństwa, zostaje małą pozycją WL (mechanizm jest już w v5); E3 idzie po B15 i B16, bo B15 nie potrzebuje zmiany stanu; gdy w M1 brakuje czasu, kolejność to E2 → B15 → B16 → E3 i tniemy od końca. Z tabeli zmian stanu wypadły `updatedAt` i `promptVersion` (nikt ich nie czyta).
 - Test Wake Lock na osobnym artefakcie (C4) niepotrzebny po v5: Alek sprawdza w zwykłym Oddechu A, czy ekran nie gaśnie.
 
 ### 2026-11-11 — C9: strażnik architektury i podstawa „małe jest piękne” (Alek)
