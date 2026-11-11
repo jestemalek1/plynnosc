@@ -27,7 +27,7 @@ Okno **A** = Dogfood (poprawki z codziennego używania), okno **B** = Rozwój (f
 | Status | ID | Co | HLD | Rozmiar | Spec | Okno | Uwagi |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | ☐ | R3–R7 | Poprawki z recenzji: błąd od dnia 85, sonda Claude bez kliknięcia, stary wynik oceny, pasek kart po klawiaturze, sanityzacja stanu | 04, 06 | L | [[Review kodu v3 – niezależny]] | B | [[Review kodu v3 – niezależny]] |
-| ☐ | #20 | Dziennik bloków z sensem: wpis z dotknięć (start ja/ktoś, PL/EN, wolno/szybko) + „Dziś bez wyraźnego bloku”, notatka opcjonalna; od razu po wpisie liczniki z ostatnich dni („wpisy 3 · start: ktoś 3/3 · szybko 2/3”), bez interpretacji; w „Dlaczego” zdanie, że po 14 dniach tabela idzie do logopedki (B16) | 06 | M | — (razem ze specem B15) | B | uwaga z dnia 3 (irytuje); ta sama karta co B15 – jedna runda |
+| ☐ | #20 | Dziennik bloków z sensem: wpis z dotknięć (start ja/ktoś, PL/EN, wolno/szybko) + „Dziś bez wyraźnego bloku”, notatka opcjonalna; od razu po wpisie liczniki z ostatnich dni („wpisy 3 · start: ktoś 3/3 · szybko 2/3”), bez interpretacji; w „Dlaczego” zdanie, że po 14 dniach tabela idzie do logopedki (B16) | 06 | M | [[20 Dziennik bloków z sensem]] | A | uwaga z dnia 3 (irytuje); w wydaniu v5 razem z #19, #21 (decyzja Alka 11.11); B15 dokłada przełączniki później |
 | ☐ | B15 | Dziennik: przełączniki „zamieniłem słowo” i „odpuściłem sytuację” (1 dotknięcie); suma z 7 dni w karcie SR tygodnia | 06 | L | do napisania (następny) | B | w tej samej rundzie co R3–R7; do wdrożenia zamiany zapisuj w notatce dnia |
 | ◐ | WL | Wake Lock w timerach (ekran nie gaśnie) | 04 | S | — | A | Oddech A w #19; reszta timerów (monolog, napięcie, miękki start) po #19 |
 | ☐ | #18 | „Uwaga do apki”: jedno zdanie z dowolnego ekranu, lista uwag + kopiuj | F→04 | M | — | A | przesunięte z M0 (B14); do tego czasu uwagi jednym zdaniem w [[Inbox]]; usuwamy po okresie dogfoodingu |
@@ -39,7 +39,7 @@ Okno **A** = Dogfood (poprawki z codziennego używania), okno **B** = Rozwój (f
 | Status | ID | Co | HLD | Rozmiar | Spec | Okno |
 | --- | --- | --- | --- | --- | --- | --- |
 | ☐ | T4–6 | Treść tygodni 4–6: wydłużona mowa (D), cykle Camperdown, dobrowolne jąkanie (G), anulowanie (H) | 02, 04 | L | do napisania (po B15) | B |
-| ☐ | #21 | ★ Ćwiczenie z gwiazdką (dla chętnych): monolog w drugim języku niż dzisiejszy, 2 min, inny temat, te same pytania po monologu; nie wlicza się do zaliczenia dnia ani streaka; zrobione = gwiazdka na wyspie | 04 | L | do napisania | B | pomysł z 10.11, decyzja B34; źródło: program tydz. 1 (monolog naprzemiennie PL/EN) |
+| ☐ | #21 | ★ Ćwiczenie z gwiazdką (dla chętnych): monolog w drugim języku niż dzisiejszy, 2 min, inny temat, te same pytania po monologu; nie wlicza się do zaliczenia dnia ani streaka; zrobione = gwiazdka na wyspie | 04 | L | [[21 Ćwiczenie z gwiazdką]] | A | w wydaniu v5 razem z #19, #20 (decyzja Alka 11.11); pomysł z 10.11, decyzja B34; źródło: program tydz. 1 (monolog naprzemiennie PL/EN) |
 | ☐ | B13 | Karta SR tygodnia: „Kryterium tygodnia spełnione? tak/nie” + treść kryterium; 2× „nie” → sygnał w B16 | 03 | M | — (karta jak w B15; można w tej samej rundzie) | B |
 
 ## Później – po dopracowaniu funkcjonalności (B12)
