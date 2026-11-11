@@ -22,6 +22,8 @@ Stan: **architektura przyjęta przez Alka 11.11 (C1)**; prompt „Oceń” zosta
 
 **Zastrzeżenie o bazie.** Rundy 1–2 czytały `main` (bcea4ae). `develop` jest dwa PR-y dalej, ale tylko w dokumentach; `app/` i `test/` są identyczne. Ocena kodu jest więc aktualna, a harmonogram i odniesienia do decyzji zostały po rundzie 3 uzgodnione z `develop` (B13, B16, B17, B29–B32, spec [[B14 Zadanie w terenie]]).
 
+**Po wydaniu v5 (11.11, w trakcie tej sesji).** Numery linii w tym dokumencie odnoszą się do v4. Na v5 sprawdzone ponownie i nadal aktualne: brak importu danych, cichy błąd zapisu, brak siatki na wyjątki, sonda `sample` przy starcie strony, sekcja „Treść i samorozwój” w prompcie. Zmieniło się jedno: v5 ma Wake Lock w Oddechu A (pozostałe timery nadal bez). v5 dopisała pola stanu bez zmiany wersji, czyli zgodnie z przyjętą zasadą.
+
 Testów nie uruchamiał żaden agent (praca tylko do odczytu). Oceny opierają się na czytaniu kodu; K potwierdził `node --check` na wyciętym skrypcie.
 
 ## Odpowiedź w skrócie

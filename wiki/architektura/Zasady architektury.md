@@ -19,6 +19,7 @@ W praktyce:
 - Zanim coś dodasz, sprawdź, czy da się to osiągnąć usunięciem albo zmianą istniejącego kodu.
 - Funkcję wydzielamy do osobnego pliku wtedy, gdy i tak ją przepisujemy albo gdy pojawia się drugi użytkownik. Nie przenosimy kodu tylko po to, żeby „było porządniej”.
 - Przy dwóch rozwiązaniach o tym samym efekcie wygrywa krótsze i łatwiejsze do usunięcia.
+- „Małe” dotyczy kodu, nie wygody: funkcja ma być miła w użyciu (B33, user friendly first), a zrobiona najmniejszym kodem, który to daje.
 - Jeśli zasada z tej strony wymusza więcej kodu, niż jest wart jej zysk, zmieniamy zasadę (decyzja Alka), a nie obchodzimy jej po cichu.
 
 ## Zasady
@@ -38,7 +39,7 @@ Kolumna „Kto pilnuje”: **S** = skrypt `test/arch.js` (mechanicznie, przy ka�
 | Z9 | Stan zmieniamy tylko przez dopisywanie pól. Zmiana wersji `v` wymaga: wpisu na liście migracji, kopii przed migracją, specyfikacji. Starsza wersja apki musi umieć wczytać nowszy stan | R |
 | Z10 | Eksport = stan bez szkicu transkryptu i ostatniej odpowiedzi modelu. W repo nigdy nie ma transkryptów, także w testach | R |
 | Z11 | Ekran nie liczy logiki dnia: plan dnia, zaliczenie, streak i metryki są w `domain.js` (do czasu jego powstania: w jednym miejscu `app.js`). Nie dodajemy kolejnej ścieżki zaliczenia ćwiczenia | R |
-| Z12 | `SRPicker` jest jedynym komponentem skali; wszystko inne to fakt tak/nie albo licznik (B15) | R |
+| Z12 | `SRPicker` jest jedynym komponentem skali; wszystko inne to fakt tak/nie albo licznik. Wyjątki tylko te z `CLAUDE.md` (B15, B35) | R |
 | Z13 | Wyjątek prywatny C3 (sekcja „Treść i samorozwój” w prompcie „Oceń”) nie rozszerza się: żaden nowy kod nie dodaje wnioskowania o osobie, etykiet emocji ani diagnoz | R |
 
 ## Wyjątki z datą ważności
