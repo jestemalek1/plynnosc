@@ -4,6 +4,9 @@ Format: data — decyzja. Krótko: co, dlaczego, kiedy wracamy. Otwarte sprawy s
 
 ## Aktywne decyzje
 
+### 2026-11-11 — Wydanie v5: #19, #20, #21 (Alek: „wdróż wszystko, co zleciłem, od jutra poprawiona wersja”)
+Zakres: specy [[19 Oddech A i Start na sygnał – zmienność i dźwięki]], [[20 Dziennik bloków z sensem]], [[21 Ćwiczenie z gwiazdką]]. Pętla: budowniczy → niezależny tester (wszystkie kryteria PASS, 4 drobne defekty) + recenzent (0 krytycznych, 1 istotne: wznawianie dźwięku na iOS) → runda poprawek 11 punktów → harness zielony (run, round2, round3 z nowymi R8–R13). Odstępstwa przyjęte: dziennik dnia 1 tylko do odczytu, karta „Start na sygnał” wyższa o ok. 31 px (pytania do 3 linii), węższe przyciski tak/częściowo/nie poniżej 390 px; po dzienniku zakończonym „tak” bez notatki baner z „Na mapę” zamiast auto-powrotu; nowa zachęta dziennika „Zapisane. Po dwóch tygodniach te liczby pokażą wzór.” (Alek: tak). Do sprawdzenia na iPhonie: dźwięk w trybie cichym (`audioSession`), Wake Lock w iframe artefaktu.
+
 ### 2026-11-11 — B34, B35, B36 i uwagi z dni 3–5 (Alek)
 - **B34 (HLD 02, 03): technika stała przez tydzień, treść zmienna codziennie.** Słowa, pytania i tematy zmieniają się każdego dnia; technika i zestaw ćwiczeń tygodnia zostają (program: jedna nowa technika na tydzień, też ze względu na ADHD). Szersza zmienność (wybór ćwiczeń) dopiero w generatorze 03 po przeglądzie M3. Powód: nuda bez rozmywania treningu; dla innych użytkowników zmienność treści jest warunkiem powrotu.
 - **B35 (HLD 06): „Brzuch był miękki? tak / częściowo / nie” po serii Oddechu A** – drugi wyjątek od zasady jednej skali (obok „oddech po frazach”), bo przy napięciu „częściowo” jest najczęstszą prawdziwą odpowiedzią. Odpowiedź zalicza ćwiczenie; w Postępach licznik z 7 dni. Wpisane do `CLAUDE.md`.

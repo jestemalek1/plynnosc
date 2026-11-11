@@ -2,7 +2,7 @@
 
 Format: wersja · data · co się zmieniło dla Ciebie (nie dla kodu). Wydanie = tag na `main` + publikacja artefaktu.
 
-## v5 · 2026-11-12 (w przygotowaniu)
+## v5 · 2026-11-11
 - Oddech A: codziennie inne „Słowa dnia” (widać je nad przyciskiem Start), bez powtórek przez tydzień; „Aleksander” co drugi dzień, a od tygodnia 3 dochodzą słowa na k, g, t, d, p, b.
 - Oddech A z zamkniętymi oczami: dźwięk rosnący = wdech, opadający = wydech; ekran nie powinien gasnąć w trakcie serii. Przed Startem widać „Wdech nosem 0:03”.
 - Po serii Oddechu A jedno dotknięcie: „Brzuch był miękki? tak / częściowo / nie”. W Postępach licznik z ostatnich 7 dni.
