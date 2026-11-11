@@ -13,7 +13,7 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - [[Git i gałęzie]] — gitflow lekki, wydania, hotfix
 - [[Program płynności]] — źródło prawdy dla treści ćwiczeń i progresji
 - [[Architektura aplikacji]] — jak zbudowana jest apka i plan podziału na pliki
-- [[HLD PoC – kworum 2026-11-11]] — ocena kodu wg dobrych praktyk i propozycja HLD dla PoC (4 agentów, głosowanie, runda „grill”); czeka na decyzje C1–C8
+- [[HLD PoC – kworum 2026-11-11]] — ocena kodu wg dobrych praktyk i propozycja HLD dla PoC (4 agentów, głosowanie, runda „grill”); C1 przyjęte; otwarte C2, C4–C8
 - [[Publikacja (artefakt claude.ai)]] — ograniczenia środowiska i jak publikować
 - [[Jak pracujemy]] — pętla build → tester → review → publikacja
 - [[Testy]] — jak odpalić harness i co znaczy „zielone”
@@ -35,7 +35,7 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - Decyzje sesji HLD (B12–B20, B29–B32) podjęte – [[Decision log]]. Planowanie: spec funkcji dla pozycji L w `wiki/specs/` ([[Jak pisać spec]]); [[B14 Zadanie w terenie]] zaakceptowany.
 - [[Backlog]]: każda pozycja ma moduł HLD, rozmiar i spec; roadmapa M0–M4 + utrzymanie, mapa pętla × kamienie i lista na 2 tygodnie w [[Plan działania]].
 
-- 2026-11-11: przegląd kodu i architektury przez kworum agentów – [[HLD PoC – kworum 2026-11-11]]. To **propozycja**; kod bez zmian. Do decyzji Alka: C1–C8 w [[Decyzje do podjęcia]].
+- 2026-11-11: przegląd kodu i architektury przez kworum agentów – [[HLD PoC – kworum 2026-11-11]]. Kod bez zmian. Decyzje Alka 11.11: **C1 TAK** (architektura przyjęta), **C3 NIE** (prompt „Oceń” zostaje jako wyjątek prywatny, z zakazem przeniesienia do produktu – [[HLD v1]] §7). Otwarte: C2, C4–C8 w [[Decyzje do podjęcia]].
 
 ## Następna akcja
 1. Okno B: B14 wg [[B14 Zadanie w terenie]] – przed 14.11 (start tygodnia 2).

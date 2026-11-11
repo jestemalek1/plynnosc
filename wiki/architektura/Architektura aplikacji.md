@@ -23,7 +23,7 @@ Jeden plik `app/index.html` (107 KB): `<style>` (~220 linii) + `<script>` (~1170
 | Ściągawka, nawigacja | `renderSciagawka`, `showTab`, `fromHash`, obsługa klawiatury (`body.kb`) | hash routing `#dzis/#ocena/#postepy/#sciagawka` |
 
 ## Plan podziału (Opcja A, bez bundlera) — zweryfikowany recenzją
-> 11.11: jest propozycja zmiany tego planu (bez `map.js`, z `domain.js` i `store.js`) – [[HLD PoC – kworum 2026-11-11]], decyzja C1. Do czasu decyzji obowiązuje plan poniżej.
+> **11.11, decyzja C1:** ten plan zastępuje [[HLD PoC – kworum 2026-11-11]] (bez `map.js`, z `domain.js` i `store.js`; etap 1 to nadal `styles.css` + `data.js` + `app.js`). Poniższy tekst zostaje jako historia; punkt 3 (`map.js` z `ctx`) nie obowiązuje.
 Źródło: [[Review kodu v3 – niezależny]] §3. Cztery pliki, klasyczne `<script src>` w kolejności `data.js` → `map.js` → `app.js`, bez `type=module` (działa z `file://`, `node --check` per plik).
 1. `styles.css` — cały `<style>` bez zmian.
 2. `data.js` → `window.PLYN_DATA` = { DAY1, HIER, BASE_HIER, SR_COLORS, SR_MEANING, TOPICS, TAG_LABEL, ENC, INS, BRIEF_LABEL, A_WORDS, B_WORDS, TENSION, WEEKS, EX_META, FILL_PL, FILL_EN }. Zero logiki. **Najczęściej edytowany plik (tygodnie 4–12) → najmniejsze ryzyko.**

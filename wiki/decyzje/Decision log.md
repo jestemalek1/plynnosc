@@ -4,6 +4,11 @@ Format: data — decyzja. Krótko: co, dlaczego, kiedy wracamy. Otwarte sprawy s
 
 ## Aktywne decyzje
 
+### 2026-11-11 — C1, C3: HLD PoC przyjęty; prompt „Oceń” zostaje jako wyjątek prywatny (Alek)
+- **C1: TAK.** Architektura PoC wg [[HLD PoC – kworum 2026-11-11]]: `data.js` / `domain.js` / `store.js` / `ai.js` / `app.js`, bez `map.js`; stan v3 tylko przez dopisywanie pól. Zastępuje „Plan podziału” w [[Architektura aplikacji]]. Kolejność i terminy czekają na C2.
+- **C3: NIE zmieniamy promptu ani ekranu „Oceń”.** Apka jest na razie narzędziem prywatnym Alka, więc sekcja „Treść i samorozwój” (co mówca ujawnia o sobie, słaby punkt, pytanie do przemyślenia) zostaje, a ekran nie dostaje etykiety „informacja zwrotna, nie ocena kliniczna”. To świadomy wyjątek od B20/B32 i od zasady „nie etykietujemy” – wyłącznie dla Alka.
+- **Warunek bez wyjątków:** prompt i ekran „Oceń” w tej postaci **nigdy nie trafiają do wersji dla innych użytkowników**. Wersja produktowa powstaje od nowa wg minimum bezpieczeństwa z [[HLD v1]] §6. Wracamy przy pierwszym użytkowniku innym niż Alek (wyzwalacz z P16).
+
 ### 2026-11-08 — B31, B32: nowe moduły HLD 09 „Trening języka obcego” i 10 „Refleksja i wzorce” (Alek)
 - **09:** po wypowiedzi karta z najwyżej 5 poprawkami i frazami, użytkownik sam wypowiada poprawki, bank fraz z własnych potknięć. Granice: poprawki tylko po wypowiedzi, niepłynność nie jest błędem językowym, tempo nie jest celem. Pierwsza wersja dla Alka: #13 (M3).
 - **10:** wzorce widziane w słowach użytkownika, z datami i cytatami, potwierdzane przez niego i zamieniane w plany „jeśli X, to Y”. Bez etykiet schematów, diagnoz i interpretacji źródeł; pomoc kryzysowa; przeznaczenie wellbeing, bez „terapii” i „psychoanalizy” w nazwie. #12 to pierwsza wersja (M3), #14 przechodzi z 07 do 10.

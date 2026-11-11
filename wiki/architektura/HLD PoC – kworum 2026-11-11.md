@@ -1,5 +1,5 @@
 ---
-status: propozycja
+status: przyjęte C1; reszta propozycja
 owner: Alek
 updated: 2026-11-11
 tags: [architektura, hld, kworum, recenzja]
@@ -9,7 +9,7 @@ tags: [architektura, hld, kworum, recenzja]
 
 Pytanie Alka: czy kod aplikacji jest pisany zgodnie z najlepszymi praktykami dla takich rozwiązań i jaki HLD proponujemy dla PoC, wiedząc, że ma on urosnąć do produktu z [[HLD v1]].
 
-Stan: **propozycja**. Nic tu nie jest decyzją, dopóki Alek nie odhaczy pozycji C1–C8 w [[Decyzje do podjęcia]]. Kod aplikacji nie był zmieniany.
+Stan: **architektura przyjęta przez Alka 11.11 (C1)**; prompt „Oceń” zostaje bez zmian jako wyjątek prywatny (C3). Kolejność prac i pozostałe pozycje (C2, C4–C8) czekają w [[Decyzje do podjęcia]]. Kod aplikacji nie był zmieniany.
 
 ## Jak to powstało
 1. **Runda 1 – cztery niezależne raporty.** Agenci nie znali nawzajem swoich wniosków i pracowali tylko do odczytu:
@@ -107,7 +107,7 @@ Eksport = stan bez `ocenaDraft` i bez `lastAnswer`. Ten format jest kontraktem, 
 | P9 | Pełny silnik planu przed tygodniami 4–6 | 2/4 | **Nie przechodzi.** Zgodne z B13 i B12: silnik po przeglądzie M3 |
 | P10 | Parametry ćwiczeń w `data.js`; dane osobiste poza publikowanym kodem | 4/4 co do dziennika | **Zawężone (C5):** teraz znikają domyślny wpis dziennika i zdanie o rodzinie; reszta danych Alka w oznaczonym bloku `PROFILE`. Parametry przenosimy przy treści tygodni 4–6 |
 | P11 | R4 i R5; cienki adapter AI z `promptVersion` | 4/4 R4/R5, 3/4 adapter | **Przyjęte.** Pole „O czym” domyślnie poza promptem. Y: adapter zbędny, B19 i tak go przepisze |
-| P12 | Prompt bez wnioskowania o osobie, etykieta „informacja zwrotna, nie ocena kliniczna” | 4/4 | **Przyjęte, czeka na akceptację Alka (C3)** – to zmiana treści |
+| P12 | Prompt bez wnioskowania o osobie, etykieta „informacja zwrotna, nie ocena kliniczna” | 4/4 | **Odrzucone przez Alka (C3, 11.11):** prompt i ekran zostają, apka jest na cele prywatne. Warunek: w tej postaci nigdy nie trafiają do wersji dla innych użytkowników ([[HLD v1]] §7) |
 | P13 | Oceny bez wycinka transkryptu, przycisk „Usuń dane”, termin ważności szkicu | 4/4 wycinek i „Usuń dane”, 3/4 termin | **Przyjęte.** „Usuń dane” dwuetapowo; kasuje też `.bak` i stary klucz `plynnosc-dzien-01`; razem z R8, inaczej `importDay1` odtworzy dzień 1 z zaszytymi wartościami (`:344`, `:357–360`). Y przeciw automatycznemu kasowaniu |
 | P14 | Stan przebudowany na klasy danych | 1/4 w tej formie | **Odrzucone.** Tabela „pole → klasa” w wiki i `updatedAt` w dniu |
 | P15 | Dostępność: kontrast chipów SR i fokusu, `aria-live`, zagnieżdżony przycisk | 4/4 kontrast SR, 3/4 reszta | **Przyjęte.** Kontrast SR przy pierwszej okazji, reszta w M1 |
@@ -126,7 +126,7 @@ Piszemy produkt od nowa przy pierwszym z tych zdarzeń:
 
 Przed pierwszym obcym użytkownikiem: pisemne przeznaczenie, notatka kwalifikacyjna MDR i ocena skutków dla ochrony danych, po konsultacji prawnej. To nie jest porada prawna.
 
-Przepisanie przetrwają: treść (`data.js` i [[Program płynności]]), `domain.js` z testami, kształt danych i format eksportu, scenariusze z harnessu i specyfikacje z `wiki/specs/` jako kryteria akceptacji, maszyna stanów timera jako specyfikacja, [[Decision log]]. Wyrzucamy: DOM, mapę SVG, wiązanie z `claude.use`.
+Przepisanie przetrwają: treść (`data.js` i [[Program płynności]]), `domain.js` z testami, kształt danych i format eksportu, scenariusze z harnessu i specyfikacje z `wiki/specs/` jako kryteria akceptacji, maszyna stanów timera jako specyfikacja, [[Decision log]]. Wyrzucamy: DOM, mapę SVG, wiązanie z `claude.use` oraz prompt i ekran „Oceń” w obecnej postaci (wyjątek prywatny Alka, C3 – zakaz przeniesienia do produktu).
 
 Przed przeglądem M3: jednodniowy test mikrofonu na iPhonie poza artefaktem, bez zapisywania audio. Ocena z dźwięku w artefakcie na iPhonie jest niewykonalna: `sample` nie przyjmuje audio, a `dictation` nie działa w Safari ani w aplikacji mobilnej (potwierdzone przez dwóch agentów).
 
@@ -153,7 +153,7 @@ Kolejność po rundzie 3: B14 ma termin 13.11 i dotyka tego samego pliku, więc 
 | --- | --- | --- |
 | **Do 13.11** | Tylko B14 wg zaakceptowanej specyfikacji. Alek: ręcznie „Kopiuj dane” do zablokowanej notatki; test Wake Lock i trwałości danych na osobnym, pustym artefakcie (C4) | zero kodu z kworum |
 | **M0, do 15.11** | P4 etap 1 (czysty przerzut na `styles.css` + `data.js` + `app.js`) + P5 + `?v=N` | jedna runda; od tej chwili okno A może zmieniać treść i style |
-| **M1, do 21.11** | **Pakiet bezpieczeństwa** jako jedna pozycja L ze specem: P1, P2, P3, R4, R5, kontrast SR, usunięcie domyślnego dziennika i zdania o rodzinie. P12 po akceptacji C3 | zastępuje w planie osobne „#15 eksport” i „Wake Lock” |
+| **M1, do 21.11** | **Pakiet bezpieczeństwa** jako jedna pozycja L ze specem: P1, P2, P3, R4, R5, kontrast SR, usunięcie domyślnego dziennika i zdania o rodzinie. bez zmian w prompcie (C3) | zastępuje w planie osobne „#15 eksport” i „Wake Lock” |
 | **M1, razem z B15** | Migracja v3 (tabela wyżej) + P13 + R8 w specyfikacji B15 | jedna migracja, nie dwie |
 | **Po treści tygodni 4–6 albo wcześniej, jeśli M1 ma zapas** | P4 etap 2 (`domain.js`, `store.js`) + P6 + cienki `ai.js` + reszta P15 + R6 | pierwsze do przesunięcia; nie blokuje 28.11, bo `complete` już chroni zaliczone dni |
 | **Przy treści tygodni 4–6** | Parametry ćwiczeń do `data.js` (P10) | w ramach treści |
