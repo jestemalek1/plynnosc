@@ -1,6 +1,6 @@
 ---
 status: active
-updated: 2026-11-08
+updated: 2026-11-11
 tags: [operacje, testy]
 ---
 
@@ -26,5 +26,6 @@ Wymagania: Node 22+, pakiet `playwright` dostępny przez `require('playwright')`
 `run.js` i `round2.js` poza bramką błędów logują, nie asertują — oceny PASS/FAIL dokonuje tester (agent albo człowiek) na podstawie logów i listy wymagań. To celowe: przy zmianie wymagań nie przepisujemy asercji, tylko czytamy wynik.
 
 ## Historia
+- 2026-11-11: v5 (#19–#21): harness dostosowany do nowego zachowania – Oddech A zalicza się po odpowiedzi „Brzuch był miękki?”, dziennik zalicza się dotknięciami („tak” + start / język / tempo albo „nie”; notatka po „tak”), pule pytań w `SIGNAL_PL` / `SIGNAL_EN`; seedy testów auto-powrotu (B25) mają zrobioną ★ (`extra.done`), bo przy niezrobionej ★ baner ma przyciski zamiast powrotu (G7).
 - 2026-11-08: `round3.js` (v4) z werdyktami i exit 1 przy FAIL; czasy Oddechu A z wdechem 3 s także przed pierwszym powtórzeniem.
 - 2026-11-07: ścieżki w harnessie uniezależnione od maszyny (`__dirname`, `require('playwright')`, domyślne Chromium). Oryginał z czatu: `90 Archiwum/run.orig.js`.

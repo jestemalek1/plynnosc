@@ -38,6 +38,10 @@ const flush = async (page) => { await page.clock.runFor(400); await page.waitFor
 const store = (page) => page.evaluate(() => JSON.parse(localStorage.getItem('plynnosc')));
 function card(page, title) { return page.locator('#s-dzis .card').filter({ has: page.locator('h2', { hasText: title }) }); }
 async function expand(page, title) { const c = card(page, title); if (await c.evaluate(e => e.classList.contains('collapsed'))) await c.locator('.chead').click(); return c; }
+// v5 (#20): diary entry from taps; exact button text inside the card (e.g. tap(dz, 'tak', 'ktoś', 'PL'))
+async function tap(loc, ...labels) { for (const l of labels) await loc.locator('.chips3 button', { hasText: new RegExp('^' + l + '$') }).click(); }
+// v5 (#21): seeds that assert the B25 auto-return mark the optional ★ as done (with ★ pending the banner offers buttons instead, G7)
+const EXTRA_DONE = { lang: 'en', topic: 2, ran: true, breath: 'tak', sr: 2, done: true };
 const cardTitles = (page) => page.evaluate(() => [...document.querySelectorAll('#s-dzis .card h2')].map(h => h.textContent));
 const onMap = (page) => page.evaluate(() => !!document.querySelector('#s-dzis svg.map'));
 async function section(name, fn) { try { await fn(); } catch (e) { log(name + '.EXCEPTION', String(e && e.stack || e)); verdict(name, false, 'exception: ' + String(e && e.message || e).split('\n')[0]); } }
@@ -144,6 +148,7 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
     await page.goto(URL); await page.waitForTimeout(100); await openToday(page);
     const od = card(page, 'Oddech A');
     const snap = () => od.evaluate(c => ({ cue: c.querySelector('.cue').textContent, sub: c.querySelector('.sub').textContent, clock: c.querySelector('.clock').textContent, reps: c.querySelector('.reps').textContent, gap: c.querySelector('.timer').classList.contains('gap'), bar: c.querySelector('.bar i').style.width }));
+    const dayWords = await od.evaluate(c => c.querySelector('.words').textContent.replace(/^Słowa dnia: /, '').split(' · ')); // v5 (#19)
     const insText = await od.evaluate(c => c.querySelector('.brief').innerText + '\n' + c.querySelector('.ins').innerText + '\n' + [...c.querySelectorAll('.note')].map(n => n.textContent).join('\n'));
     await od.locator('.timer button.big').click();
     const t = {};
@@ -161,14 +166,20 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
     await page.clock.runFor(3000); t['80.3'] = await snap();
     await page.clock.runFor(117500 - 80300); await page.waitForTimeout(50);
     await flush(page);
+    // v5 (#19, B1/B2): after 12/12 the card asks „Brzuch był miękki?”, Oddech A is done only after the answer
+    const ask = await od.evaluate(c => ({ done: c.classList.contains('done'), label: (c.querySelector('.srlabel') || {}).textContent || null }));
+    const stAsk = await store(page);
+    await tap(od, 'częściowo'); await flush(page);
     const st = await store(page);
     const done = await page.evaluate(() => { const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Oddech A'); return { done: c.classList.contains('done'), small: c.querySelector('small').textContent }; });
     log('R2.timeline', t); log('R2.done', { done, reps: st.days[KEY(2)].reps, doneList: st.days[KEY(2)].done });
     log('R2.instructions', insText);
     const gapOk = t['7.1'].gap && t['7.1'].cue === 'Wdech nosem' && t['7.1'].clock === '0:03' && /następne: fff/.test(t['7.1'].sub) && t['8.1'].clock === '0:02' && t['9.1'].clock === '0:01' && t['9.8'].gap && !t['10.3'].gap && t['10.3'].cue === 'fff';
     verdict('R2', gapOk, 'gap after rep1: t7.1 ' + JSON.stringify(t['7.1']) + ' t8.1 clock ' + t['8.1'].clock + ', t9.1 ' + t['9.1'].clock + ', t9.8 gap=' + t['9.8'].gap + ', t10.3 cue ' + t['10.3'].cue + ' reps "' + t['10.3'].reps + '"');
-    verdict('R2', t['77.3'].gap && /następne: Aleksander/.test(t['77.3'].sub) && t['80.3'].cue === 'Aleksander', 'word cue visible during inhale: t77.3 sub "' + t['77.3'].sub + '", t80.3 cue ' + t['80.3'].cue);
-    verdict('R2', done.done && st.days[KEY(2)].reps.oddech === 12 && st.days[KEY(2)].done.includes('oddech'), 'completes at 117 s: ' + JSON.stringify(done) + ' reps.oddech=' + st.days[KEY(2)].reps.oddech);
+    // v5 (B21b): during the inhale before a word the big cue is the word, the small line „Wdech nosem”; words of the day change daily
+    verdict('R2', t['77.3'].gap && t['77.3'].cue === dayWords[0] && t['77.3'].sub === 'Wdech nosem' && t['80.3'].cue === dayWords[0] && dayWords.length === 4, 'word cue visible during inhale: words ' + JSON.stringify(dayWords) + ', t77.3 cue "' + t['77.3'].cue + '" sub "' + t['77.3'].sub + '", t80.3 cue ' + t['80.3'].cue);
+    verdict('R2', !ask.done && ask.label === 'Brzuch był miękki?' && !stAsk.days[KEY(2)].done.includes('oddech') && done.done && /brzuch: częściowo/.test(done.small) && st.days[KEY(2)].reps.oddech === 12 && st.days[KEY(2)].done.includes('oddech') && st.days[KEY(2)].oddechBrzuch === 'częściowo',
+      'completes at 117 s after the belly answer: before answer ' + JSON.stringify(ask) + ', after ' + JSON.stringify(done) + ' reps.oddech=' + st.days[KEY(2)].reps.oddech + ' oddechBrzuch=' + st.days[KEY(2)].oddechBrzuch);
     verdict('R2', t['start'].gap && t['start'].cue === 'Wdech nosem' && t['start'].clock === '0:03' && /następne: fff/.test(t['start'].sub) && t['start+1'].clock === '0:02' && !t['0'].gap && t['0'].cue === 'fff', 'Start -> counted inhale before rep 1: ' + JSON.stringify(t['start']) + ', +1 s clock ' + t['start+1'].clock + ', +3 s cue ' + t['0'].cue);
     verdict('R2', /Bez zatrzymania na górze wdechu/.test(insText) && /Nie zatrzymuj powietrza na górze wdechu/.test(insText) && /3 s/.test(insText), 'instructions mention 3 s inhale and no stop at the top of the inhale');
     log('R2.errors', page.__errors); await c.close();
@@ -213,8 +224,8 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
       if (n === 1) lists[1].banner = await page.evaluate(() => { const b = document.querySelector('#s-dzis .card.done h2'); return b && b.textContent === 'Sesja zrobiona' ? document.querySelector('#s-dzis .card.done p').textContent : null; });
       if (n === 22) {
         const dz = card(page, 'Dziennik bloków');
-        await dz.locator('textarea').click(); await page.keyboard.type('daily po polsku · start: ja', { delay: 2 });
-        await page.evaluate(() => document.activeElement.blur()); await page.clock.runFor(2500); await page.waitForTimeout(50);
+        await tap(dz, 'nie'); // v5 (#20): „dziś bez wyraźnego bloku” = one tap
+        await page.clock.runFor(2500); await page.waitForTimeout(50);
         const st = await store(page);
         lists[22].afterDiary = { complete: st.days[KEY(22)].complete, onMap: await onMap(page) };
       }
@@ -315,7 +326,7 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
         const nc = await browser.newContext({ viewport: { width, height: 700 }, isMobile: true, hasTouch: true }); const np = await nc.newPage(); np.__errors = []; ALL_PAGES.push(np);
         np.on('pageerror', e => np.__errors.push('PAGEERROR ' + e.message));
         await np.clock.install({ time: D(2) }); await np.goto(URL); await np.waitForTimeout(100); await openToday(np);
-        hs[width] = await np.evaluate(() => { const src = document.querySelector('script:not([src])').textContent; const qs = eval('[' + src.match(/var SIGNAL_Q = \[([\s\S]*?)\];/)[1] + ']'); const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Start na sygnał'); c.classList.remove('collapsed'); const cue = c.querySelector('.cue'), tm = c.querySelector('.timer'); const set = new Set(); qs.forEach(q => { cue.textContent = q; set.add(Math.round(cue.getBoundingClientRect().height)); }); tm.classList.add('wait'); cue.textContent = 'Czekaj na sygnał…'; set.add(Math.round(cue.getBoundingClientRect().height)); return [...set]; });
+        hs[width] = await np.evaluate(() => { const src = document.querySelector('script:not([src])').textContent; const qs = ['PL', 'EN'].flatMap(L => eval('[' + src.match(new RegExp('var SIGNAL_' + L + ' = \\[([\\s\\S]*?)\\];'))[1] + ']').map(x => x.q)); /* v5: {t, q} in SIGNAL_PL / SIGNAL_EN */ const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Start na sygnał'); c.classList.remove('collapsed'); const cue = c.querySelector('.cue'), tm = c.querySelector('.timer'); const set = new Set(); qs.forEach(q => { cue.textContent = q; set.add(Math.round(cue.getBoundingClientRect().height)); }); tm.classList.add('wait'); cue.textContent = 'Czekaj na sygnał…'; set.add(Math.round(cue.getBoundingClientRect().height)); return [...set]; });
         timerH[width] = await np.evaluate(() => { const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Start na sygnał'); const tm = c.querySelector('.timer'), sub = c.querySelector('.sub'); const set = new Set(); ['dłoń na brzuchu, oddychasz normalnie', 'wdech nosem i od razu odpowiedź na wydechu', 'po wznowieniu znowu czekasz na sygnał', '', '10 pytań, każde w losowym momencie'].forEach(t => { sub.textContent = t; set.add(Math.round(tm.getBoundingClientRect().height)); }); return [...set]; });
         await nc.close();
       }
@@ -378,14 +389,15 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
 
   // ===== R6: diary last, typing keeps the session =====
   await section('R6', async () => {
-    const seed = { v: 2, days: { [KEY(2)]: { done: ['oddech', 'sygnal', 'monolog'], reps: { oddech: 12, sygnal: 10 }, monolog: { ran: true, breath: 'tak', sr: 2, lang: 'en', topic: 1 } } } };
+    const seed = { v: 2, days: { [KEY(2)]: { done: ['oddech', 'sygnal', 'monolog'], reps: { oddech: 12, sygnal: 10 }, monolog: { ran: true, breath: 'tak', sr: 2, lang: 'en', topic: 1 }, extra: EXTRA_DONE } } };
     for (const variant of ['typing', 'chip']) {
       const { c, page } = await ctx(browser, { time: D(2), init: `localStorage.setItem('plynnosc', ${JSON.stringify(JSON.stringify(seed))})` });
       await page.goto(URL); await page.waitForTimeout(100); await openToday(page);
       const dz = await expand(page, 'Dziennik bloków');
       const ta = dz.locator('textarea');
-      if (variant === 'typing') { await ta.click(); await page.keyboard.type('rozmowa z kolegą', { delay: 5 }); }
-      else { await dz.locator('.tags button', { hasText: 'start: ktoś' }).click(); await dz.locator('.tags button', { hasText: 'szybko' }).click(); }
+      // v5 (#20): the last tap completes the diary while the note keeps focus (taps do not take the focus)
+      if (variant === 'typing') { await tap(dz, 'tak', 'ktoś', 'PL'); await ta.click(); await page.keyboard.type('rozmowa z kolegą', { delay: 5 }); await tap(dz, 'szybko'); }
+      else { await tap(dz, 'tak'); await ta.click(); await tap(dz, 'ktoś', 'PL', 'szybko'); }
       await page.clock.runFor(200);
       const doneNow = await dz.evaluate(c => c.classList.contains('done'));
       await page.keyboard.type(' o nartach', { delay: 5 });
@@ -405,12 +417,13 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
 
   // ===== R6b: a timer that ends while typing in the diary keeps focus and the session (v4) =====
   await section('R6', async () => {
-    const seed = { v: 2, days: { [KEY(9)]: { done: ['oddech', 'sygnal', 'monolog'], reps: { oddech: 12, sygnal: 10 }, monolog: { ran: true, breath: 'tak', sr: 2, lang: 'pl', topic: 1 } } } };
+    const seed = { v: 2, days: { [KEY(9)]: { done: ['oddech', 'sygnal', 'monolog'], reps: { oddech: 12, sygnal: 10 }, monolog: { ran: true, breath: 'tak', sr: 2, lang: 'pl', topic: 1 }, extra: EXTRA_DONE } } };
     const { c, page } = await ctx(browser, { time: D(9), init: `localStorage.setItem('plynnosc', ${JSON.stringify(JSON.stringify(seed))})` });
     await page.goto(URL); await page.waitForTimeout(100); await openToday(page);
     const nap = await expand(page, 'Identyfikacja napięcia');
     await nap.locator('.timer button.big').click();
     const dz = await expand(page, 'Dziennik bloków');
+    await tap(dz, 'tak', 'ja', 'PL', 'wolno'); // v5 (#20): diary done by taps, then the note is being typed when the timer ends
     await dz.locator('textarea').click(); await page.keyboard.type('czytanie raportu', { delay: 5 });
     await page.clock.runFor(125000); await page.waitForTimeout(50);
     const whileFocused = await page.evaluate(() => ({ onMap: !!document.querySelector('#s-dzis svg.map'), active: document.activeElement && document.activeElement.tagName, napDone: [...document.querySelectorAll('#s-dzis .card.done h2')].map(h => h.textContent) }));
@@ -430,7 +443,7 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
       await v.page.goto(URL); await v.page.waitForTimeout(100); await openToday(v.page);
       await (await expand(v.page, 'Luźny monolog')).locator('.timer button.big').click();
       const dz2 = await expand(v.page, 'Dziennik bloków');
-      await dz2.locator('textarea').click(); await v.page.keyboard.type('spotkanie', { delay: 5 });
+      await tap(dz2, 'tak'); await dz2.locator('textarea').click(); await v.page.keyboard.type('spotkanie', { delay: 5 });
       await v.page.clock.runFor(121000); await v.page.waitForTimeout(50);
       await v.page.keyboard.type(' XYZ', { delay: 5 });
       const r = await v.page.evaluate(() => ({ active: document.activeElement && document.activeElement.tagName, value: (document.querySelector('#s-dzis textarea') || {}).value, onMap: !!document.querySelector('#s-dzis svg.map'), monoQuestions: [...document.querySelectorAll('#s-dzis .card h3')].some(h => h.textContent === 'Po monologu') }));
@@ -446,10 +459,10 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
         await v.page.goto(URL); await v.page.waitForTimeout(100); await openToday(v.page);
         await card(v.page, 'Oddech A').locator('.timer button.big').click();
         const dz4 = await expand(v.page, 'Dziennik bloków');
-        await dz4.locator('textarea').click(); await v.page.keyboard.type('rozmowa', { delay: 5 });
+        await tap(dz4, 'tak'); await dz4.locator('textarea').click(); await v.page.keyboard.type('rozmowa', { delay: 5 });
         const before = await v.page.evaluate(() => Math.round(document.querySelector('#s-dzis textarea').getBoundingClientRect().top));
         await v.page.clock.runFor(121000); await v.page.waitForTimeout(50);
-        const after = await v.page.evaluate(() => ({ top: Math.round(document.querySelector('#s-dzis textarea').getBoundingClientRect().top), active: document.activeElement.tagName, oddechDone: [...document.querySelectorAll('#s-dzis .card.done h2')].some(h => h.textContent === 'Oddech A') }));
+        const after = await v.page.evaluate(() => ({ top: Math.round(document.querySelector('#s-dzis textarea').getBoundingClientRect().top), active: document.activeElement.tagName, oddechDone: [...document.querySelectorAll('#s-dzis .card')].some(c => c.querySelector('h2').textContent === 'Oddech A' && [...c.querySelectorAll('.srlabel')].some(l => l.textContent === 'Brzuch był miękki?')) })); // v5 (#19): the card switches to the belly question
         res[anchoring] = { before, after, errors: v.page.__errors }; await v.c.close();
       }
       log('R6.fieldStaysInPlace', res);
@@ -459,17 +472,18 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
     // diary completes the day in place: the field stays where it was (both scroll-anchoring modes)
     // then: deliberate actions in the session cancel the pending return; a neutral blur (also with a quick tab switch) returns to the map
     {
-      const seedD = { v: 2, days: { [KEY(7)]: { done: ['oddech', 'sygnal', 'monolog', 'sr'], reps: { oddech: 12, sygnal: 10 }, monolog: { ran: true, breath: 'tak', sr: 2, lang: 'pl', topic: 1 }, sr: { typ: 2, max: 4 } } } };
+      const seedD = { v: 2, days: { [KEY(7)]: { done: ['oddech', 'sygnal', 'monolog', 'sr'], reps: { oddech: 12, sygnal: 10 }, monolog: { ran: true, breath: 'tak', sr: 2, lang: 'pl', topic: 1 }, sr: { typ: 2, max: 4 }, extra: EXTRA_DONE } } };
       const out = {};
       for (const sc of ['anchor-auto', 'anchor-none', 'srChip', 'insToggle', 'neutralBlur', 'tabSwitch']) {
         const none = sc !== 'anchor-auto';
         const v = await ctx(browser, { time: D(7), init: `localStorage.setItem('plynnosc', ${JSON.stringify(JSON.stringify(seedD))});` + (none ? ` document.addEventListener('DOMContentLoaded', () => { const s = document.createElement('style'); s.textContent = '* { overflow-anchor: none !important; }'; document.head.appendChild(s); });` : '') });
         await v.page.goto(URL); await v.page.waitForTimeout(100); await openToday(v.page);
         const dzD = await expand(v.page, 'Dziennik bloków');
+        await tap(dzD, 'tak', 'ktoś', 'PL'); // v5 (#20): the last tap („szybko”) completes the day while the note keeps focus
         await dzD.locator('textarea').click(); await v.page.clock.runFor(1000); await v.page.waitForTimeout(800); // let the focus „center” smooth scroll settle
         await v.page.keyboard.type('rozmowa', { delay: 5 });
         const before = await v.page.evaluate(() => Math.round(document.querySelector('#s-dzis textarea').getBoundingClientRect().top));
-        await v.page.keyboard.type(' z kolegą', { delay: 5 }); await v.page.waitForTimeout(300);
+        await tap(dzD, 'szybko'); await v.page.keyboard.type(' z kolegą', { delay: 5 }); await v.page.waitForTimeout(300);
         const r = { before, after: await v.page.evaluate(() => Math.round(document.querySelector('#s-dzis textarea').getBoundingClientRect().top)) };
         await v.page.clock.runFor(5000);
         if (sc === 'srChip') { await card(v.page, 'SR tygodnia').locator('.chead h2').click(); await v.page.waitForTimeout(30); await card(v.page, 'SR tygodnia').locator('.sr').nth(0).locator('.chip').nth(3).click(); }
@@ -488,25 +502,26 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
     }
     // a diary tag completes the day: the field keeps focus and position; keyboard Enter on a card header cancels the return like a tap
     {
-      const seedT = { v: 2, days: { [KEY(7)]: { done: ['oddech', 'sygnal', 'monolog', 'sr'], reps: { oddech: 12, sygnal: 10 }, monolog: { ran: true, breath: 'tak', sr: 2, lang: 'pl', topic: 1 }, sr: { typ: 2, max: 4 } } } };
+      const seedT = { v: 2, days: { [KEY(7)]: { done: ['oddech', 'sygnal', 'monolog', 'sr'], reps: { oddech: 12, sygnal: 10 }, monolog: { ran: true, breath: 'tak', sr: 2, lang: 'pl', topic: 1 }, sr: { typ: 2, max: 4 }, extra: EXTRA_DONE } } };
       const out = {};
       for (const sc of ['tag-auto', 'tag-none', 'kbHeader']) {
         const none = sc === 'tag-none';
         const v = await ctx(browser, { time: D(7), init: `localStorage.setItem('plynnosc', ${JSON.stringify(JSON.stringify(seedT))});` + (none ? ` document.addEventListener('DOMContentLoaded', () => { const s = document.createElement('style'); s.textContent = '* { overflow-anchor: none !important; }'; document.head.appendChild(s); });` : '') });
         await v.page.goto(URL); await v.page.waitForTimeout(100); await openToday(v.page);
         const dzT = await expand(v.page, 'Dziennik bloków');
+        await tap(dzT, 'tak', 'PL', 'szybko'); // v5 (#20): „ktoś” is the last tap (below) and completes the day
         await dzT.locator('textarea').click(); await v.page.clock.runFor(1000); await v.page.waitForTimeout(800);
         const r = {};
         if (sc !== 'kbHeader') {
           await v.page.keyboard.type('abc', { delay: 5 });
           r.before = await v.page.evaluate(() => Math.round(document.querySelector('#s-dzis textarea').getBoundingClientRect().top));
-          await dzT.locator('.tags button', { hasText: 'start: ktoś' }).click();
+          await tap(dzT, 'ktoś');
           r.now = await v.page.evaluate(() => ({ top: Math.round(document.querySelector('#s-dzis textarea').getBoundingClientRect().top), active: document.activeElement.tagName }));
           await v.page.waitForTimeout(700);
           r.later = await v.page.evaluate(() => Math.round(document.querySelector('#s-dzis textarea').getBoundingClientRect().top));
           r.complete = (await store(v.page)).days[KEY(7)].complete;
         } else {
-          await v.page.keyboard.type('rozmowa z kolegą', { delay: 5 }); await v.page.clock.runFor(3000);
+          await tap(dzT, 'ktoś'); await v.page.keyboard.type('rozmowa z kolegą', { delay: 5 }); await v.page.clock.runFor(3000);
           await card(v.page, 'SR tygodnia').locator('.chead').focus(); await v.page.keyboard.press('Enter');
           await v.page.clock.runFor(3000); await v.page.waitForTimeout(50);
           r.onMap = await onMap(v.page); r.srOpen = await card(v.page, 'SR tygodnia').evaluate(c => !c.classList.contains('collapsed'));
@@ -519,7 +534,7 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
         const v = await ctx(browser, { time: D(2), init: none ? `document.addEventListener('DOMContentLoaded', () => { const s = document.createElement('style'); s.textContent = '* { overflow-anchor: none !important; }'; document.head.appendChild(s); });` : undefined });
         await v.page.goto(URL); await v.page.waitForTimeout(100); await openToday(v.page);
         const dzL = await expand(v.page, 'Dziennik bloków');
-        await dzL.locator('textarea').click(); await v.page.clock.runFor(1000); await v.page.waitForTimeout(800);
+        await tap(dzL, 'tak'); await dzL.locator('textarea').click(); await v.page.clock.runFor(1000); await v.page.waitForTimeout(800);
         const tops = [];
         for (const ch of 'rozmowa z kolegą o nartach · start: ktoś · PL · szybko') { await v.page.keyboard.type(ch); tops.push(await v.page.evaluate(() => Math.round(document.querySelector('#s-dzis textarea').getBoundingClientRect().top))); }
         out[sc] = { min: Math.min(...tops), max: Math.max(...tops), errors: v.page.__errors }; await v.c.close();
@@ -534,7 +549,7 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
         await np.clock.install({ time: D(2) }); await np.goto(URL); await np.waitForTimeout(100); await openToday(np);
         await (await expand(np, 'Luźny monolog')).locator('.timer button.big').click();
         const dzM = await expand(np, 'Dziennik bloków');
-        await dzM.locator('textarea').click(); await np.clock.runFor(1000); await np.waitForTimeout(800);
+        await tap(dzM, 'tak'); await dzM.locator('textarea').click(); await np.clock.runFor(1000); await np.waitForTimeout(800);
         await np.keyboard.type('spotkanie', { delay: 5 });
         const cueLines = await np.evaluate(() => { const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Luźny monolog'); return Math.round(c.querySelector('.cue').getBoundingClientRect().height); });
         const before = await np.evaluate(() => Math.round(document.querySelector('#s-dzis textarea').getBoundingClientRect().top));
@@ -552,12 +567,13 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
     }
     // day completed by the diary, user keeps typing, then taps „Zmień” on SR tygodnia: no deferred jump to the map (v3 behaviour)
     {
-      const seed3 = { v: 2, days: { [KEY(7)]: { done: ['oddech', 'sygnal', 'monolog', 'sr'], reps: { oddech: 12, sygnal: 10 }, monolog: { ran: true, breath: 'tak', sr: 2, lang: 'pl', topic: 1 }, sr: { typ: 2, max: 4 } } } };
+      const seed3 = { v: 2, days: { [KEY(7)]: { done: ['oddech', 'sygnal', 'monolog', 'sr'], reps: { oddech: 12, sygnal: 10 }, monolog: { ran: true, breath: 'tak', sr: 2, lang: 'pl', topic: 1 }, sr: { typ: 2, max: 4 }, extra: EXTRA_DONE } } };
       const res = {};
       for (const mode of ['playwright', 'domclick']) { // domclick = tap that does not move focus (iOS-like)
         const v = await ctx(browser, { time: D(7), init: `localStorage.setItem('plynnosc', ${JSON.stringify(JSON.stringify(seed3))})` });
         await v.page.goto(URL); await v.page.waitForTimeout(100); await openToday(v.page);
         const dz3 = await expand(v.page, 'Dziennik bloków');
+        await tap(dz3, 'tak', 'ktoś', 'PL', 'szybko'); // v5 (#20): day completed by diary taps, note typed afterwards
         await dz3.locator('textarea').click(); await v.page.keyboard.type('telefon do banku', { delay: 5 });
         await v.page.clock.runFor(60000); await v.page.keyboard.type(' · start: ktoś', { delay: 5 });
         const zm = card(v.page, 'SR tygodnia').locator('.chead .act');
