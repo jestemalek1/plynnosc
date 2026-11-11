@@ -4,7 +4,8 @@ Repo = vault Obsidiana + kod. Zacznij od `00 Start/Start.md`, potem `wiki/decyzj
 
 ## Zasady
 - Język UI i dokumentów: polski. Instrukcje ćwiczeń ZAWSZE w aplikacji: „Co robisz / Jak to ma brzmieć / Czego nie robić / Dlaczego”, krótko i dokładnie.
-- Jedna skala: SR 0–8 (komponent `SRPicker`), tylko dla nasilenia jąkania i poziomu techniki. Wszystko inne to fakt tak/nie (jedno dotknięcie) albo licznik liczony przez apkę; żadnych innych skal. Wyjątek: „Oddech po frazach: tak / częściowo / nie” (decyzja B15).
+- Jedna skala: SR 0–8 (komponent `SRPicker`), tylko dla nasilenia jąkania i poziomu techniki. Wszystko inne to fakt tak/nie (jedno dotknięcie) albo licznik liczony przez apkę; żadnych innych skal. Wyjątki: „Oddech po frazach: tak / częściowo / nie” (decyzja B15) i „Brzuch był miękki: tak / częściowo / nie” w Oddechu A (B35).
+- User friendly first: apka ma być miła i przyjemna w użyciu. To, co irytuje, też naprawiamy (nie tylko to, co przeszkadza w treningu); kolejność: najpierw „przeszkadza”, potem „irytuje”. Dotyczy apki i produktu z HLD (B33).
 - Minimum kliknięć; powtórzenia liczone automatycznie przez timer; jedna wyraźna „następna akcja”.
 - Aplikacja = statyczne pliki publikowane jako artefakt claude.ai (ograniczenia: `wiki/architektura/Publikacja (artefakt claude.ai).md`). Bez frameworka i bundlera (Opcja A), chyba że Alek zdecyduje inaczej.
 - Prywatność: nagrania/transkrypty to treści osobiste; w stanie trzymamy tagi/liczniki, nie pełne transkrypty poza ostatnimi ocenami; nic nie wysyłamy poza `claude.use("sample")`. W repo nigdy nie lądują transkrypty.

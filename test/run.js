@@ -131,6 +131,9 @@ const txt = (page, sel) => page.locator(sel).first().innerText();
     await shot(page, '06_oddech_word');
     await page.clock.runFor(10000); log('T3.word2', await snap());
     await page.clock.runFor(10000 * 3); await page.waitForTimeout(100);
+    // v5 (#19): after 12/12 the card asks „Brzuch był miękki?” (tak / częściowo / nie); one tap completes Oddech A
+    log('T3.bellyAsk', await oddech.evaluate(c => ({ done: c.classList.contains('done'), label: (c.querySelector('.srlabel') || {}).textContent || null, opts: [...c.querySelectorAll('.chips3 button')].map(b => b.textContent) })));
+    await oddech.locator('.chips3 button', { hasText: 'tak' }).click(); await page.waitForTimeout(50);
     log('T3.doneCard', await page.evaluate(() => { const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Oddech A'); return { cls: c.className, small: c.querySelector('small').textContent, enc: c.querySelector('.enc') ? c.querySelector('.enc').textContent : null }; }));
     log('T3.clicksNeeded', 1);
     await shot(page, '07_oddech_done');
@@ -163,10 +166,13 @@ const txt = (page, sel) => page.locator(sel).first().innerText();
     await shot(page, '09_monolog_done');
     // Dziennik
     const dz = page.locator('#s-dzis .card').filter({ has: page.locator('h2', { hasText: 'Dziennik' }) });
-    await dz.locator('.tags button', { hasText: 'start: ktoś' }).click();
-    await dz.locator('.tags button', { hasText: 'EN' }).click();
-    await dz.locator('textarea').fill('rozmowa o nartach · start: ktoś · EN · szybko');
-    await page.waitForTimeout(50); // autosave: done at >= 10 chars, no save button
+    // v5 (#20): entry from taps – „tak” + start / język / tempo; the note is optional
+    await dz.locator('.chips3 button', { hasText: 'tak' }).click();
+    await dz.locator('.chips3 button', { hasText: 'ktoś' }).click();
+    await dz.locator('.chips3 button', { hasText: 'EN' }).click();
+    await dz.locator('textarea').fill('rozmowa o nartach');
+    await dz.locator('.chips3 button', { hasText: 'szybko' }).click();
+    await page.waitForTimeout(50); // autosave, no save button
     log('T4.dzEnc', await page.evaluate(() => { const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Dziennik bloków'); return c.querySelector('.enc') && c.querySelector('.enc').textContent; }));
     // round 3: SR is weekly, so day 2 has no SR card and is complete after the diary (SR card: T4b, day 7)
     log('T4.noSrCardDay2', await page.evaluate(() => ![...document.querySelectorAll('#s-dzis .card h2')].some(h => /SR/.test(h.textContent))));

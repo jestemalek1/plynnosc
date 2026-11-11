@@ -20,15 +20,17 @@ Okno **A** = Dogfood (poprawki z codziennego używania), okno **B** = Rozwój (f
 | ☐ | B14 | Zadanie w terenie: karta od tyg. 2, „Użyłem techniki” / „Dziś nie”, nie blokuje zaliczenia dnia, licznik /7 | 05 (→06, 08) | L | [[B14 Zadanie w terenie]] | B | **przed 14.11**; treść tyg. 2–3 do akceptacji Alka; pełna pętla tester + recenzent |
 | ☐ | A5 | Podział `app/index.html` na `styles.css`, `data.js`, `map.js`, `app.js` | F→02 | L | — (refaktor: [[Architektura aplikacji]]) | B | `data.js` = biblioteka ćwiczeń (02) i profil (01 n=1); do tego czasu okno A nie zmienia kodu; może zejść na 14–15.11, B14 nie |
 | ☐ | #15 | Eksport/import danych (JSON) | F→06, 08 | M | — | B | dane postępów są tylko w jednym telefonie; eksport jest też nośnikiem dla logopedy |
+| ☑ | #19 | Oddech A i Start na sygnał: słowa dnia (pule 1–2, bez powtórek 7 dni), pytanie o brzuch, dźwięki wdech/wydech + Wake Lock, pytania PL/EN bez wspólnych tematów | 04, 06, 02 | L | [[19 Oddech A i Start na sygnał – zmienność i dźwięki]] | A | uwagi z dni 3–5 (irytuje, B33); `fix/19-oddech-sygnal`; po B14 albo w uzgodnieniu z oknem B; zawiera WL, B21(b), B24(a)(c), B26 |
 | ☑ | B1 | Repo `jestemalek1/plynnosc` na GitHubie | F→wszystkie | — | — | Alek | zrobione |
 
 ## Następne – M1 Stabilnie (do 21.11)
 | Status | ID | Co | HLD | Rozmiar | Spec | Okno | Uwagi |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | ☐ | R3–R7 | Poprawki z recenzji: błąd od dnia 85, sonda Claude bez kliknięcia, stary wynik oceny, pasek kart po klawiaturze, sanityzacja stanu | 04, 06 | L | [[Review kodu v3 – niezależny]] | B | [[Review kodu v3 – niezależny]] |
+| ☑ | #20 | Dziennik bloków z sensem: wpis z dotknięć (start ja/ktoś, PL/EN, wolno/szybko) + „Dziś bez wyraźnego bloku”, notatka opcjonalna; od razu po wpisie liczniki z ostatnich dni („wpisy 3 · start: ktoś 3/3 · szybko 2/3”), bez interpretacji; w „Dlaczego” zdanie, że po 14 dniach tabela idzie do logopedki (B16) | 06 | M | [[20 Dziennik bloków z sensem]] | A | uwaga z dnia 3 (irytuje); w wydaniu v5 razem z #19, #21 (decyzja Alka 11.11); B15 dokłada przełączniki później |
 | ☐ | B15 | Dziennik: przełączniki „zamieniłem słowo” i „odpuściłem sytuację” (1 dotknięcie); suma z 7 dni w karcie SR tygodnia | 06 | L | do napisania (następny) | B | w tej samej rundzie co R3–R7; do wdrożenia zamiany zapisuj w notatce dnia |
-| ☐ | WL | Wake Lock w timerach (ekran nie gaśnie) | 04 | S | — | A | |
-| ☐ | #18 | „Uwaga do apki”: jedno zdanie z dowolnego ekranu, lista uwag + kopiuj | F→04 | M | — | A | przesunięte z M0 (B14); do tego czasu notatka dnia; usuwamy po okresie dogfoodingu |
+| ◐ | WL | Wake Lock w timerach (ekran nie gaśnie) | 04 | S | — | A | Oddech A w #19; reszta timerów (monolog, napięcie, miękki start) po #19 |
+| ☐ | #18 | „Uwaga do apki”: jedno zdanie z dowolnego ekranu, lista uwag + kopiuj | F→04 | M | — | A | przesunięte z M0 (B14); do tego czasu uwagi jednym zdaniem w [[Inbox]]; usuwamy po okresie dogfoodingu |
 | ☐ | B16 | Raport dla logopedy – 1 strona do skopiowania: baza, SR tygodni, kryteria (B13), zadania w terenie, zamiany słów | 08 | M | — | B | po B14 i B15; na 10.11 ręcznie [[Kontekst i profil]] |
 | ⏸ | B4 | Transkrypcja PL: test Whisper na jednym monologu | 06 | — | — | Alek | pomost do czasu oceny z dźwięku (B19); [[Transkrypcja PL – research]] |
 | ⏸ | B2 | Konsultacja 10.11 → wnioski do programu (w tym kolejność szczebli hierarchii) | 08, 02 | — | — | Alek | lista pytań w [[Decyzje do podjęcia]] |
@@ -37,6 +39,7 @@ Okno **A** = Dogfood (poprawki z codziennego używania), okno **B** = Rozwój (f
 | Status | ID | Co | HLD | Rozmiar | Spec | Okno |
 | --- | --- | --- | --- | --- | --- | --- |
 | ☐ | T4–6 | Treść tygodni 4–6: wydłużona mowa (D), cykle Camperdown, dobrowolne jąkanie (G), anulowanie (H) | 02, 04 | L | do napisania (po B15) | B |
+| ☑ | #21 | ★ Ćwiczenie z gwiazdką (dla chętnych): monolog w drugim języku niż dzisiejszy, 2 min, inny temat, te same pytania po monologu; nie wlicza się do zaliczenia dnia ani streaka; zrobione = gwiazdka na wyspie | 04 | L | [[21 Ćwiczenie z gwiazdką]] | A | w wydaniu v5 razem z #19, #20 (decyzja Alka 11.11); pomysł z 10.11, decyzja B34; źródło: program tydz. 1 (monolog naprzemiennie PL/EN) |
 | ☐ | B13 | Karta SR tygodnia: „Kryterium tygodnia spełnione? tak/nie” + treść kryterium; 2× „nie” → sygnał w B16 | 03 | M | — (karta jak w B15; można w tej samej rundzie) | B |
 
 ## Później – po dopracowaniu funkcjonalności (B12)
@@ -78,6 +81,9 @@ To jest historia zgłoszeń, nie backlog. Co z każdym zrobiono: tabele wyżej, 
 16. **Poprawki z niezależnej recenzji v3 (R1–R11)** – [[Review kodu v3 – niezależny]]; R1–R6 przed treścią tygodnia 4. Zgłoszone 2026-11-07.
 
 18. **„Uwaga do apki” (dogfooding)** – szybkie zapisywanie uwag do apki w trakcie treningu. Zgłoszone 2026-11-08 (wniosek z podejścia dogfoodingowego).
+19. **Oddech A i Start na sygnał – zmienność i dźwięki** – te same słowa codziennie, brak pytania o brzuch, dźwięk na wdech i wydech (oczy zamknięte), pytania EN powtarzają PL. Zgłoszone 2026-11-09…11 (dni 3–5). Spec: [[19 Oddech A i Start na sygnał – zmienność i dźwięki]].
+20. **Dziennik bloków – „nie czuję, co wypełniam i po co”**. Zgłoszone 2026-11-09.
+21. **Ćwiczenie z gwiazdką** – nieobowiązkowe, dla chętnych. Zgłoszone 2026-11-10.
 17. **Feedback dnia 2** – wdech za szybki, brak legendy SR przy ocenie, SR dnia zbędny na starcie, za mało ćwiczeń. Zgłoszone 2026-11-08. Wdrożone w v4 (patrz [[Decision log]] 2026-11-08).
 
 Dane bazowe z dnia 1: [[Kontekst i profil]]. Dawny „Plan wdrożenia v2” i statusy wersji: [[Architektura aplikacji]], [[Decision log]], `CHANGELOG.md`.

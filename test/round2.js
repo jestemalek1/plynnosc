@@ -305,6 +305,8 @@ async function section(name, fn) {
     await od.locator('.timer button.big').click();
     await page.clock.runFor(12 * 10000 + 500); // round 3: 7 s + 3 s gap per rep
     await page.waitForTimeout(50);
+    log('H.bellyAsk', (await layout()).filter(x => x.title === 'Oddech A')); // v5 (#19): question „Brzuch był miękki?” before completion
+    await od.locator('.chips3 button', { hasText: 'tak' }).click(); await page.waitForTimeout(50);
     log('H.doneImmediate', (await layout()).filter(x => x.title === 'Oddech A'));
     await shot(page, 'H_oddech_done_immediate', false);
     await flush(page); await page.reload(); await page.waitForTimeout(150); await openToday(page);
@@ -321,6 +323,7 @@ async function section(name, fn) {
     await page.goto(URL); await page.waitForTimeout(100); await openToday(page);
     const dz = cardByTitle(page, 'Dziennik bloków');
     await dz.locator('.chead').click(); // expand
+    await dz.locator('.chips3 button', { hasText: 'tak' }).click(); // v5 (#20): the note appears after „tak”
     const ta = dz.locator('textarea');
     await ta.click();
     const text = 'rozmowa z kolega o nartach · s'; // 30 chars
@@ -407,7 +410,7 @@ async function section(name, fn) {
     await page.waitForTimeout(50); await openToday(page); // rollover returns to the map; open the new day
     log('M.afterVisibility', await page.evaluate(() => ({ h1: document.querySelector('#s-dzis h1').textContent, p: document.querySelector('#s-dzis header p').textContent, visState: document.visibilityState, nextDisabled: document.querySelector('#s-dzis .arrow[aria-label="Następny dzień"]').disabled })));
     const dz = cardByTitle(page, 'Dziennik bloków');
-    await dz.locator('.chead').click(); await dz.locator('textarea').click(); await page.keyboard.type('wpis po północy test', { delay: 5 });
+    await dz.locator('.chead').click(); await dz.locator('.chips3 button', { hasText: 'tak' }).click(); await dz.locator('textarea').click(); await page.keyboard.type('wpis po północy test', { delay: 5 });
     await flush(page);
     const st = await store(page);
     log('M.entries', { keys: Object.keys(st.days).sort(), diary09: (st.days['2026-11-09'] || {}).diary, diary08: (st.days['2026-11-08'] || {}).diary });
@@ -432,6 +435,7 @@ async function section(name, fn) {
       await page.clock.runFor(3500); // v4: first counted inhale, sample mid-phase
       for (let i = 0; i < 12; i++) { cues.push({ cue: await od.locator('.cue').innerText(), sub: await od.locator('.sub').innerText(), reps: await od.locator('.reps').innerText() }); await page.clock.runFor(10000); }
       await page.waitForTimeout(50);
+      await page.clock.runFor(1000); await od.locator('.chips3 button', { hasText: 'tak' }).click(); await page.waitForTimeout(50); // v5 (#19): belly question completes Oddech A
       const dn = await page.evaluate(() => { const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Oddech A'); return { done: c.classList.contains('done'), small: c.querySelector('small').textContent, next: document.querySelector('#s-dzis .next').textContent, bar: document.querySelectorAll('#s-dzis .progress .on').length }; });
       log('N1.oddech', { fff: cues.filter(x => x.cue === 'fff').length, words: cues.filter(x => x.cue !== 'fff').map(x => x.cue), subs: cues.map(x => x.sub.split(' ·')[0]), done: dn });
       await flush(page); log('N1.storeReps', (await store(page)).days['2026-11-08'].reps);
@@ -464,6 +468,7 @@ async function section(name, fn) {
       await page.goto(URL); await page.waitForTimeout(100); await openToday(page);
       // oddech
       await cardByTitle(page, 'Oddech A').locator('.timer button.big').click(); await page.clock.runFor(12 * 10000 + 200); await page.waitForTimeout(50);
+      await cardByTitle(page, 'Oddech A').locator('.chips3 button', { hasText: 'tak' }).click(); await page.waitForTimeout(50); // v5 (#19)
       // round 3: Start na sygnał (10 x 2-6 s wait + 8 s answer)
       await cardByTitle(page, 'Start na sygnał').locator('.timer button.big').click(); await page.clock.runFor(145000); await page.waitForTimeout(50);
       // monolog
@@ -472,7 +477,10 @@ async function section(name, fn) {
       await mono.locator('.chips3 button', { hasText: 'tak' }).click();
       await mono.locator('.sr .chip').nth(2).click(); await page.waitForTimeout(50);
       // dziennik
-      const dz = cardByTitle(page, 'Dziennik bloków'); await dz.locator('textarea').click(); await page.keyboard.type('daily · start: ktoś · PL · szybko', { delay: 3 });
+      const dz = cardByTitle(page, 'Dziennik bloków'); // v5 (#20): „tak” + three taps, note optional
+      await dz.locator('.chips3 button', { hasText: 'tak' }).click(); await dz.locator('.chips3 button', { hasText: 'ktoś' }).click(); await dz.locator('.chips3 button', { hasText: 'PL' }).click();
+      await dz.locator('textarea').click(); await page.keyboard.type('daily', { delay: 3 });
+      await dz.locator('.chips3 button', { hasText: 'szybko' }).click();
       // round 3: no SR card on day 2 (weekly SR) -> the diary completes the day
       await page.waitForTimeout(50);
       log('N3.day2done', await page.evaluate(() => ({ banner: (document.querySelector('#s-dzis .card.done h2') || {}).textContent, bannerP: (document.querySelector('#s-dzis .card.done p') || {}).textContent, doneCards: document.querySelectorAll('#s-dzis .card.done').length, bars: document.querySelectorAll('#s-dzis .progress .on').length + '/' + document.querySelectorAll('#s-dzis .progress span').length })));

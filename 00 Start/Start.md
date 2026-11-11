@@ -32,6 +32,8 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - **v4 wydana i opublikowana** (tag `v4`, artefakt pod linkiem wyżej) po 8 rundach niezależnego testera i recenzenta; harness (run/round2/round3) zielony. Decyzje z weryfikacji v4: B21–B28 (okno B), czekają na Alka.
 - [[HLD v1]] wiodący (kopia w vaultcie, `.docx` = historia): 10 modułów – dodane 09 Trening języka obcego (B31) i 10 Refleksja i wzorce (B32); utrzymanie (B18), ocena mowy przez AI (B19), minimum bezpieczeństwa (B20), §7 prototyp n=1 (B12).
 - Decyzje sesji HLD (B12–B20, B29–B32) podjęte – [[Decision log]]. Planowanie: spec funkcji dla pozycji L w `wiki/specs/` ([[Jak pisać spec]]); [[B14 Zadanie w terenie]] zaakceptowany.
+- **v5 wydana i opublikowana 11.11** (tag `v5`): słowa dnia i dźwięki w Oddechu A, pytanie o brzuch, nowe pytania „Start na sygnał”, dziennik z dotknięć z licznikami, ★ monolog w drugim języku ([[CHANGELOG]]). Do sprawdzenia na telefonie: dźwięk w trybie cichym, ekran nie gaśnie.
+- Dogfooding dni 3–5 (okno A, 9–11.11): uwagi w [[Inbox]], decyzje B33 (user friendly first), B34–B36; spec [[19 Oddech A i Start na sygnał – zmienność i dźwięki]] zaakceptowany i gotowy dla agenta; #20 dziennik i #21 ★ w backlogu (okno B).
 - [[Backlog]]: każda pozycja ma moduł HLD, rozmiar i spec; roadmapa M0–M4 + utrzymanie, mapa pętla × kamienie i lista na 2 tygodnie w [[Plan działania]].
 
 ## Następna akcja

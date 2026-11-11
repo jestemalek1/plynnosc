@@ -4,6 +4,20 @@ Format: data — decyzja. Krótko: co, dlaczego, kiedy wracamy. Otwarte sprawy s
 
 ## Aktywne decyzje
 
+### 2026-11-11 — Wydanie v5: #19, #20, #21 (Alek: „wdróż wszystko, co zleciłem, od jutra poprawiona wersja”)
+Zakres: specy [[19 Oddech A i Start na sygnał – zmienność i dźwięki]], [[20 Dziennik bloków z sensem]], [[21 Ćwiczenie z gwiazdką]]. Pętla: budowniczy → niezależny tester (wszystkie kryteria PASS, 4 drobne defekty) + recenzent (0 krytycznych, 1 istotne: wznawianie dźwięku na iOS) → runda poprawek 11 punktów → harness zielony (run, round2, round3 z nowymi R8–R13). Odstępstwa przyjęte: dziennik dnia 1 tylko do odczytu, karta „Start na sygnał” wyższa o ok. 31 px (pytania do 3 linii), węższe przyciski tak/częściowo/nie poniżej 390 px; po dzienniku zakończonym „tak” bez notatki baner z „Na mapę” zamiast auto-powrotu; nowa zachęta dziennika „Zapisane. Po dwóch tygodniach te liczby pokażą wzór.” (Alek: tak). Do sprawdzenia na iPhonie: dźwięk w trybie cichym (`audioSession`), Wake Lock w iframe artefaktu.
+
+### 2026-11-11 — B34, B35, B36 i uwagi z dni 3–5 (Alek)
+- **B34 (HLD 02, 03): technika stała przez tydzień, treść zmienna codziennie.** Słowa, pytania i tematy zmieniają się każdego dnia; technika i zestaw ćwiczeń tygodnia zostają (program: jedna nowa technika na tydzień, też ze względu na ADHD). Szersza zmienność (wybór ćwiczeń) dopiero w generatorze 03 po przeglądzie M3. Powód: nuda bez rozmywania treningu; dla innych użytkowników zmienność treści jest warunkiem powrotu.
+- **B35 (HLD 06): „Brzuch był miękki? tak / częściowo / nie” po serii Oddechu A** – drugi wyjątek od zasady jednej skali (obok „oddech po frazach”), bo przy napięciu „częściowo” jest najczęstszą prawdziwą odpowiedzią. Odpowiedź zalicza ćwiczenie; w Postępach licznik z 7 dni. Wpisane do `CLAUDE.md`.
+- **B36 (HLD 04): dźwięk na początku wdechu i wydechu w Oddechu A** (rosnący / opadający), żeby ćwiczyć z zamkniętymi oczami; z Wake Lockiem. Zastępuje rekomendację B24(b) „zostawić”.
+- Słowa: codziennie inne z puli, „Aleksander” co drugi dzień; słowa na k/g/t/d/p/b od tygodnia 3 (lekki kontakt z C), wcześniej tylko jeśli logopedka pozwoli (jedna stała). Pytania „Start na sygnał”: PL i EN o różnych tematach w jednym dniu, bez powtórki przez 7 dni (rozstrzygnięte przez okno A na prośbę Alka: przygotowana odpowiedź osłabia trening startu wymuszonego z zewnątrz).
+- Dziennik bloków (#20) i ćwiczenie z gwiazdką (#21, ★ monolog w drugim języku) – TAK, okno B.
+- Realizacja: spec [[19 Oddech A i Start na sygnał – zmienność i dźwięki]] (zawiera też B21(b), B24(a)(c), B26), [[Backlog]] #19–#21.
+
+### 2026-11-09 — B33: user friendly first (Alek)
+Apka (i produkt z HLD) ma być miła i przyjemna w użyciu. Uwagi z dogfoodingu oznaczone „irytuje” też naprawiamy, nie odkładamy na „kiedyś”; kolejność: najpierw „przeszkadza w treningu”, potem „irytuje”. Zasada wpisana do `CLAUDE.md`. Powód: przy 12 tygodniach codziennego treningu drobne irytacje decydują, czy się wraca; dla przyszłych użytkowników tym bardziej.
+
 ### 2026-11-08 — B31, B32: nowe moduły HLD 09 „Trening języka obcego” i 10 „Refleksja i wzorce” (Alek)
 - **09:** po wypowiedzi karta z najwyżej 5 poprawkami i frazami, użytkownik sam wypowiada poprawki, bank fraz z własnych potknięć. Granice: poprawki tylko po wypowiedzi, niepłynność nie jest błędem językowym, tempo nie jest celem. Pierwsza wersja dla Alka: #13 (M3).
 - **10:** wzorce widziane w słowach użytkownika, z datami i cytatami, potwierdzane przez niego i zamieniane w plany „jeśli X, to Y”. Bez etykiet schematów, diagnoz i interpretacji źródeł; pomoc kryzysowa; przeznaczenie wellbeing, bez „terapii” i „psychoanalizy” w nazwie. #12 to pierwsza wersja (M3), #14 przechodzi z 07 do 10.
