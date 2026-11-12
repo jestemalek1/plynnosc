@@ -2,6 +2,10 @@
 
 Format: wersja · data · co się zmieniło dla Ciebie (nie dla kodu). Wydanie = tag na `main` + publikacja artefaktu.
 
+## W przygotowaniu (następne wydanie)
+- Ściągawka → Kontakty: „Zdanie do powiedzenia” bez fragmentu o rodzinie (C5).
+- Na nowym albo wyczyszczonym urządzeniu dzień 1 odtwarza się bez gotowego tekstu dziennika i ciała; Twoje zapisane wpisy zostają bez zmian (C5).
+
 ## v5 · 2026-11-11
 - Oddech A: codziennie inne „Słowa dnia” (widać je nad przyciskiem Start), bez powtórek przez tydzień; „Aleksander” co drugi dzień, a od tygodnia 3 dochodzą słowa na k, g, t, d, p, b.
 - Oddech A z zamkniętymi oczami: dźwięk rosnący = wdech, opadający = wydech; ekran nie powinien gasnąć w trakcie serii. Przed Startem widać „Wdech nosem 0:03”.

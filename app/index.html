@@ -378,8 +378,8 @@
       },
       reps: { oddech: (Array.isArray(old.reps) ? old.reps : []).filter(Boolean).length },
       monolog: { lang: 'pl', ran: true, breath: old.m1 || 'nie', belly: old.m2 || 'nie', blocks: num(old.m3, 2), sr: null },
-      diary: old.diary || 'za wolno myślę, nie wiem co powiedzieć, brakuje mi treningu w rozmowie',
-      body: old.body || 'brak oddechu po frazach, brzuch spięty',
+      diary: old.diary || '',
+      body: old.body || '',
       sr: { typ: null, max: null },
       tension: {}
     };
@@ -1970,7 +1970,7 @@
     root.appendChild(h('div', { class: 'card' }, h('h2', { text: 'Kontakty' }),
       h('div', { class: 'contact' }, h('div', {}, 'Fundacja FIKS', h('span', { text: 'bezpłatna diagnoza, Camperdown online' })), h('a', { href: 'tel:+48793001160', text: '793 001 160' })),
       h('div', { class: 'contact' }, h('div', {}, 'Karolina Jankiewicz', h('span', { text: 'pierwszy wolny termin online' })), h('a', { href: 'tel:+48509812667', text: '509 812 667' })),
-      h('p', { class: 'note', text: 'Zdanie do powiedzenia: „zacinam się przy długich, szybkich, spontanicznych wypowiedziach i po angielsku, głównie gdy muszę zacząć mówić w cudzym momencie; na daily po polsku jestem płynny; w rodzinie jąka się ciocia i jej dziecko”.' })));
+      h('p', { class: 'note', text: 'Zdanie do powiedzenia: „zacinam się przy długich, szybkich, spontanicznych wypowiedziach i po angielsku, głównie gdy muszę zacząć mówić w cudzym momencie; na daily po polsku jestem płynny”.' })));
   }
 
   /* ---------- tabs / router ---------- */
