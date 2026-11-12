@@ -4,6 +4,11 @@ Format: data — decyzja. Krótko: co, dlaczego, kiedy wracamy. Otwarte sprawy s
 
 ## Aktywne decyzje
 
+### 2026-11-12 — C5, C6, C8 (Alek)
+- **C5: TAK.** Z kodu znikają domyślny wpis dziennika i ciała dnia 1 (używane tylko przy odtwarzaniu dnia 1 na pustym urządzeniu) oraz fragment o rodzinie w „Zdaniu do powiedzenia” w Ściągawce. Zapisane dane Alka się nie zmieniają. Skutek uboczny: po utracie danych dzień 1 odtworzy się bez tekstu dziennika – chroni przed tym „Kopiuj dane”. Imię, miasto i hierarchia zostają do czasu produktu.
+- **C6: TAK.** Testy logiki w Node jako druga bramka, dopiero razem z `domain.js` (A9); wtedy zmiana definicji „zielone” w `CLAUDE.md`.
+- **C8: TAK, wykonuje Alek.** Sesja w chmurze może wypychać tylko własną gałąź: tagów nie utworzy, gałęzi nie usunie. Tagi: `v4` → `bcea4ae`, `v5` → `01653a1`. Gałęzie do usunięcia (PR scalony albo całość w `develop`): `feature/dzien2-feedback`, `feature/hld-decyzje-v2`, `feature/zasady-sprzatania`, `feature/uwagi-dzien3`, `feature/testy-v4-wip`, `fix/v5-dogfood`, `claude/funny-wright-rwli0b` (po scaleniu ostatniego PR). Do sprawdzenia przez Alka: `feature/hld-decyzje` (bez PR, 13 commitów, których nie ma w `-v2`).
+
 ### 2026-11-12 — C11: pętla PR – poprawki po przeglądzie idą same (Alek)
 - Okno, które otwiera PR, zawsze go subskrybuje; komentarz z przeglądu (Codex) albo czerwony wynik w Actions budzi okno, które poprawia, puszcza harness, wypycha i odpowiada.
 - Okno scala samo, gdy naraz: harness zielony, workflow „Architektura” zielony (od E1), brak uwagi P1 bez odpowiedzi, a dla rozmiaru L zaliczeni tester i recenzent. W innym razie czeka na Alka.
