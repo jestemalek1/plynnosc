@@ -4,6 +4,12 @@ Format: data — decyzja. Krótko: co, dlaczego, kiedy wracamy. Otwarte sprawy s
 
 ## Aktywne decyzje
 
+### 2026-11-12 — C11: pętla PR – poprawki po przeglądzie idą same (Alek)
+- Okno, które otwiera PR, zawsze go subskrybuje; komentarz z przeglądu (Codex) albo czerwony wynik w Actions budzi okno, które poprawia, puszcza harness, wypycha i odpowiada.
+- Okno scala samo, gdy naraz: harness zielony, workflow „Architektura” zielony (od E1), brak uwagi P1 bez odpowiedzi, a dla rozmiaru L zaliczeni tester i recenzent. W innym razie czeka na Alka.
+- Bezpiecznik: najwyżej 3 rundy poprawek na PR, potem okno staje i pisze do Alka. Okno może odmówić uwagi sprzecznej z zasadami („nie, bo …”) i nigdy nie omija sprawdzenia.
+- Zapis: [[Git i gałęzie]] (sekcja „Pętla PR”) i `CLAUDE.md` krok 4. Niesprawdzone: czy przeglądy Codex docierają do sesji jako zdarzenia – wyjdzie przy pierwszym PR z kodem; plan zastępczy jest w tej samej sekcji.
+
 ### 2026-11-11 — C2, C10: plan wdrożenia architektury i spec strażnika zaakceptowane (Alek)
 - **C2: TAK.** Kolejność etapów E0–E5 z [[Architektura aplikacji]]: do 13.11 tylko B14; do 15.11 podział pliku (E1) ze skryptem i workflow; w M1 pakiet bezpieczeństwa (E2, powstaje `store.js`) i migracja v3 z B15 (E3); `domain.js` (E4), gdy M1 ma zapas, inaczej po treści tygodni 4–6. Trening ma pierwszeństwo: przesuwa się etap, nie B14 ani treść.
 - **C10: TAK.** [[A7 Strażnik architektury]] zaakceptowany; przy wdrożeniu dwie zmiany w `CLAUDE.md` (wyjątek od „bez CI” dla strażnika, `node test/arch.js` w bramce).

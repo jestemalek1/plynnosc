@@ -71,7 +71,7 @@ Brak treści ćwiczeń. Teksty dla recenzenta są w `AGENTS.md` (sekcja „Code 
 - **Recenzent proponuje rozbudowę.** `AGENTS.md` zakazuje propozycji „na przyszłość”; jeśli mimo to się pojawiają, zaostrzamy tekst.
 - **Dwa pliki instrukcji.** `AGENTS.md` nie powtarza `CLAUDE.md`; zawiera tylko zasady przeglądu i odsyłacz.
 - **Prywatność.** Podłączenie Codex daje OpenAI dostęp do całego prywatnego repo, także do vaulta. Decyzja Alka (C9); transkryptów w repo nie ma. `AGENTS.md` zabrania cytowania notatek osobistych w przeglądzie.
-- **Przegląd jest doradczy.** Nie blokuje scalania. Okno, które otworzyło PR, odpowiada na każde zgłoszenie: poprawką albo jednym zdaniem, dlaczego nie.
+- **Przegląd nie blokuje scalania technicznie.** Okno, które otworzyło PR, odpowiada na każde zgłoszenie: poprawką albo jednym zdaniem, dlaczego nie, i scala dopiero po spełnieniu warunków z „Pętli PR” w [[Git i gałęzie]] (C11).
 - **Niesprawdzone:** czy plan ChatGPT Alka obejmuje przegląd PR w GitHubie i czy domyślnie pokazuje wszystkie zgłoszenia. Wyjdzie przy pierwszym PR; plan awaryjny to wiersz 9.
 
 Kroki po stronie Alka (jednorazowo):

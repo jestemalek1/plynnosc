@@ -22,7 +22,7 @@ Repo = vault Obsidiana + kod. Zacznij od `00 Start/Start.md`, potem `wiki/decyzj
 1. Zmiana → `node --check` na wyekstrahowanym skrypcie → `node test/run.js && node test/round2.js && node test/round3.js` (Playwright, headless Chromium, 390×844, `file://`; szczegóły `wiki/operacje/Testy.md`). Zielone = exit 0, puste `*.errors`, brak `*.EXCEPTION` w `test/*results.json`.
 2. Większe funkcje (logika dnia/tygodnia, stan, timer, mapa, ocena) = rozmiar L: najpierw spec w `wiki/specs/` zaakceptowany przez Alka (`wiki/specs/Jak pisać spec.md`), potem budowniczy → niezależny tester (dostaje scenariusze ze specyfikacji) + recenzent kodu (osobni agenci, bez twierdzeń budowniczego) → poprawki → publikacja.
 3. Publikacja: narzędzie Artifact `read` + `publish` na https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P (slug `6d11a925-4902-461b-9300-077502bbab5e`), bez podawania `capabilities` (zostaje `sample`).
-4. Po pracy: wpis w `wiki/decyzje/Decision log.md` (jeśli decyzja), „Aktualny stan” w `00 Start/Start.md`, commit, PR, merge, **sprzątanie gałęzi**.
+4. Po pracy: wpis w `wiki/decyzje/Decision log.md` (jeśli decyzja), „Aktualny stan” w `00 Start/Start.md`, commit, PR, **subskrypcja PR i pętla poprawek** (uwagi z przeglądu poprawiasz sam, scalasz po spełnieniu warunków, najwyżej 3 rundy – `wiki/operacje/Git i gałęzie.md`, sekcja „Pętla PR”), merge, **sprzątanie gałęzi**.
 
 ## Struktura
 - `app/index.html` – aplikacja (plan podziału na `index.html`, `styles.css`, `data.js`, `app.js`: `wiki/architektura/Architektura aplikacji.md`).
