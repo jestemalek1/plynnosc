@@ -40,14 +40,15 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 
 - 2026-11-11: przegląd kodu i architektury przez kworum agentów – [[HLD PoC – kworum 2026-11-11]]. Kod bez zmian. Decyzje Alka 11.11: **C1 TAK** (architektura przyjęta), **C3 NIE** (prompt „Oceń” zostaje jako wyjątek prywatny, z zakazem przeniesienia do produktu – [[HLD v1]] §7). Otwarte: C2, C4–C8 w [[Decyzje do podjęcia]].
 - 2026-11-11: **C9 TAK** – podstawa „małe jest piękne” i strażnik architektury (przegląd PR przez Codex + `test/arch.js` w Actions). Nowe: [[Zasady architektury]], `AGENTS.md`, przepisana [[Architektura aplikacji]] (stan dziś, architektura docelowa, plan etapami E0–E5), spec [[A7 Strażnik architektury]] zaakceptowany (C10), plan etapów E0–E5 zaakceptowany (C2). Otwarte: C4–C8.
+- 2026-11-16: Alek potwierdził kolejność prac (bez przepisywania od zera; B14 → E1 → E2 → B15/B16/E3) i podłączył Codex. **B14 „Zadanie w terenie” zrobione** (tester + recenzent, poprawki), czeka na PR i wydanie v6.
 - 2026-11-12: **C11 TAK** – pętla PR: okno subskrybuje swój PR, samo poprawia uwagi z przeglądu i scala po spełnieniu warunków ([[Git i gałęzie]], `CLAUDE.md` krok 4).
 - 2026-11-12: **C5, C6, C8 TAK.** C5 zrobione w kodzie (wejdzie z następnym wydaniem); C8 (tagi `v4`, `v5` i stare gałęzie) do wykonania przez Alka – polecenia w [[Decision log]].
 
 ## Następna akcja
-1. Okno B: B14 wg [[B14 Zadanie w terenie]] – przed 14.11 (start tygodnia 2).
+1. Okno B: wydanie v6 (B14 + C5), potem etap E1: A5 podział razem z A7 (`test/arch.js`, workflow) – pierwszy PR sprawdzany przez Codex i skrypt.
 2. Alek: konsultacja 10.11 – [[Kontekst i profil]], pytania z B2 (w tym kolejność szczebli i imię w tygodniu 3); decyzje B21–B28 z weryfikacji v4.
-3. Okno B potem: A5 podział razem z A7 (etap E1), spec A8 (pakiet bezpieczeństwa, obejmuje #15), spec B15 (+ B13 w tej samej karcie). Plan etapów: [[Architektura aplikacji]].
-4. Alek: podłączyć przegląd PR przez Codex (kroki w [[A7 Strażnik architektury]]); przy Oddechu A sprawdzić, czy ekran nie gaśnie (C4).
+3. Okno B potem: spec A8 (pakiet bezpieczeństwa, obejmuje #15), spec B15 (+ B13 w tej samej karcie). Plan etapów: [[Architektura aplikacji]].
+4. Alek: przy Oddechu A sprawdzić, czy ekran nie gaśnie (C4).
 5. Alek (opcjonalnie): na GitHubie włączyć „Automatically delete head branches” (Settings → General).
 
 ## Inbox / Review

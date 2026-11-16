@@ -895,6 +895,26 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
       out.d7prog = /Zadania w terenie/.test(await p7.page.locator('#s-postepy').innerText()); out.d7progErrors = p7.page.__errors; await p7.c.close();
     }
     verdict('R14', out.invalid.field === null && out.invalid.on === 0 && !out.d7prog, '#12: invalid -> ' + out.invalid.field + ', no Postępy line on day 7: ' + !out.d7prog);
+    // #8: task unanswered, last exercise finished for real -> complete, auto-return; #9: answer on the finished day -> button stays put, no second return
+    {
+      const seed = { v: 2, days: { [KEY(8)]: { done: ['oddech', 'sygnal', 'monolog', 'napiecie'], extra: EXTRA_DONE } } };
+      const { c, page } = await ctx(browser, { time: D(8), init: seededF(seed) });
+      await page.goto(URL); await page.waitForTimeout(100); await openToday(page);
+      await tap(card(page, 'Dziennik bloków'), 'nie'); await page.clock.runFor(2200); await page.waitForTimeout(50);
+      const returned = await onMap(page);
+      await flush(page); const s8 = (await store(page)).days[KEY(8)];
+      await openToday(page);
+      const f = card(page, 'Zadanie w terenie'); const btn = f.locator('.chips3 button', { hasText: 'Użyłem techniki' });
+      await btn.evaluate(b => b.scrollIntoView({ block: 'center' })); await page.waitForTimeout(30);
+      const before = await btn.evaluate(b => ({ y: Math.round(b.getBoundingClientRect().top), sy: Math.round(scrollY) }));
+      await btn.click(); await page.waitForTimeout(30);
+      const after = await btn.evaluate(b => ({ y: Math.round(b.getBoundingClientRect().top), sy: Math.round(scrollY), focus: document.activeElement === b }));
+      await page.clock.runFor(3000); await page.waitForTimeout(50);
+      out.r89 = { returned, complete: s8.complete, field: s8.field, before, after, stayed: !(await onMap(page)), errors: page.__errors }; await c.close();
+    }
+    const r = out.r89;
+    verdict('R14', r.returned && r.complete === true && r.field === null, '#8: unanswered task, day complete and auto-return: ' + JSON.stringify({ returned: r.returned, complete: r.complete, field: r.field }));
+    verdict('R14', r.stayed && Math.abs(r.after.y - r.before.y) <= 2 && r.after.sy === r.before.sy && r.after.focus, '#9: no second return, tapped button stays (' + JSON.stringify(r.before) + ' -> ' + JSON.stringify(r.after) + ')');
     log('R14.result', out);
   });
 
