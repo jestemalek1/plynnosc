@@ -31,7 +31,7 @@ Nazwy po polsku bez ogonków, z myślnikami: `feature/eksport-danych`, `fix/lege
 Cel: poprawki po przeglądzie idą same, a Alek dostaje gotowy wynik albo jedno konkretne pytanie. Kto przegląda i co sprawdza: [[A7 Strażnik architektury]], [[Zasady architektury]].
 
 1. **Subskrypcja zawsze.** Okno, które otworzyło PR, od razu subskrybuje jego aktywność (w sesji w chmurze: narzędzie `subscribe_pr_activity`), bez pytania Alka. Od tej chwili budzi je każdy komentarz z przeglądu i każdy wynik w Actions.
-2. **Poprawka.** Na uwagę albo czerwony wynik okno: odtwarza problem, poprawia najmniejszą zmianą, puszcza harness (i `test/arch.js`, gdy istnieje), wypycha, odpowiada na uwagę jednym zdaniem.
+2. **Poprawka.** Na uwagę albo czerwony wynik okno: odtwarza problem, poprawia najmniejszą zmianą, puszcza harness (i `test/arch.js`), wypycha, odpowiada na uwagę jednym zdaniem.
 3. **Okno może odmówić.** Uwaga sprzeczna z [[Zasady architektury]], z decyzją Alka albo proponująca rozbudowę „na przyszłość” dostaje odpowiedź „nie, bo …” i nie jest wprowadzana. Okno nigdy nie wyłącza, nie pomija ani nie osłabia sprawdzenia, żeby dostać zielone.
 4. **Warunki samodzielnego scalenia** (wszystkie naraz):
    - harness zielony na ostatnim commicie;

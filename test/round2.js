@@ -2,8 +2,8 @@
 const { chromium } = require('playwright');
 const path = require('path');
 const APP = path.resolve(__dirname, '..', 'app', 'index.html');
-const APP_SRC = () => fs.readdirSync(path.dirname(APP)).map(f => fs.readFileSync(path.join(path.dirname(APP), f), 'utf8')).join('\n'); // E1: cała apka = wszystkie pliki w app/
 const fs = require('fs');
+const APP_SRC = () => fs.readdirSync(path.dirname(APP)).filter(f => /\.(html|css|js)$/.test(f)).map(f => fs.readFileSync(path.join(path.dirname(APP), f), 'utf8')).join('\n'); // E1: cała apka = wszystkie pliki w app/
 const URL = 'file://' + APP;
 const OUT = __dirname + '/';
 const UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1';
