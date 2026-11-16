@@ -40,19 +40,19 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 
 - 2026-11-11: przegląd kodu i architektury przez kworum agentów – [[HLD PoC – kworum 2026-11-11]]. Kod bez zmian. Decyzje Alka 11.11: **C1 TAK** (architektura przyjęta), **C3 NIE** (prompt „Oceń” zostaje jako wyjątek prywatny, z zakazem przeniesienia do produktu – [[HLD v1]] §7). Otwarte: C2, C4–C8 w [[Decyzje do podjęcia]].
 - 2026-11-11: **C9 TAK** – podstawa „małe jest piękne” i strażnik architektury (przegląd PR przez Codex + `test/arch.js` w Actions). Nowe: [[Zasady architektury]], `AGENTS.md`, przepisana [[Architektura aplikacji]] (stan dziś, architektura docelowa, plan etapami E0–E5), spec [[A7 Strażnik architektury]] zaakceptowany (C10), plan etapów E0–E5 zaakceptowany (C2). Otwarte: C4–C8.
-- 2026-11-16: **E1 (A5 + A7) – kod gotowy:** apka w czterech plikach (`index.html`, `styles.css`, `data.js` z blokiem `PROFILE`, `app.js`), strażnik `test/arch.js` + workflow „Architektura”, test spójności danych R15. Tester: zero różnic w działaniu wobec v6 (99 zrzutów, stan, DOM). Wejdzie w v7 (pierwsza publikacja z `files`).
+- 2026-11-16: **E1 (A5 + A7) – kod gotowy:** apka w czterech plikach (`index.html`, `styles.css`, `data.js` z blokiem `PROFILE`, `app.js`), strażnik `test/arch.js` + workflow „Architektura”, test spójności danych R15. Tester: zero różnic w działaniu wobec v6 (99 zrzutów, stan, DOM). **v7 wydana i opublikowana 16.11** – pierwsza publikacja z `files` (4 pliki); Codex i workflow „Architektura” zielone na PR #15. Tag `v7` do założenia przez Alka.
 - 2026-11-16: Alek potwierdził kolejność prac (bez przepisywania od zera; B14 → E1 → E2 → B15/B16/E3) i podłączył Codex. **B14 „Zadanie w terenie” zrobione** (tester + recenzent, poprawki, przegląd Codex bez uwag). **v6 wydana i opublikowana 16.11** (B14 + C5); tag `v6` do założenia przez Alka (krok 5 niżej).
 - 2026-11-12: **C11 TAK** – pętla PR: okno subskrybuje swój PR, samo poprawia uwagi z przeglądu i scala po spełnieniu warunków ([[Git i gałęzie]], `CLAUDE.md` krok 4).
 - 2026-11-12: **C5, C6, C8 TAK.** C5 zrobione w kodzie (wejdzie z następnym wydaniem); C8 (tagi `v4`, `v5` i stare gałęzie) do wykonania przez Alka – polecenia w [[Decision log]].
 
 ## Następna akcja
-1. Okno B: wydanie v7 (E1) i publikacja z `files`; potem spec A8 (pakiet bezpieczeństwa, E2) do akceptacji Alka.
-   Alek po v7: na telefonie otworzyć apkę i sprawdzić mapę, dzień i Postępy (mają wyglądać jak wcześniej).
-2. Alek: konsultacja 10.11 – [[Kontekst i profil]], pytania z B2 (w tym kolejność szczebli i imię w tygodniu 3); decyzje B21–B28 z weryfikacji v4.
-3. Okno B potem: spec B15 (+ B13 w tej samej karcie). Plan etapów: [[Architektura aplikacji]].
-4. Alek: przy Oddechu A sprawdzić, czy ekran nie gaśnie (C4).
-5. Alek: tag `v6` na `main` (`6d2dff3`) oraz C8 (tagi `v4`, `v5`, stare gałęzie – polecenia w [[Decision log]]); sesja w chmurze nie wypycha tagów i nie usuwa gałęzi. Przy okazji na GitHubie włączyć „Automatically delete head branches” (Settings → General).
-6. Alek: na telefonie zajrzeć do karty „Zadanie w terenie” i potwierdzić 3-liniowy skrót (spec B14 §7).
+1. **Alek: na telefonie otworzyć apkę (v7) i sprawdzić mapę, dzień i Postępy** – mają wyglądać jak wcześniej; „działa” zamyka E1, A5 i A7. Jeśli strona jest pusta: napisz od razu (brak `data.js`/`app.js`).
+2. Okno B: spec A8 (pakiet bezpieczeństwa, E2) do akceptacji Alka – teraz pilniejsze po niezapisanym dniu 15.11.
+3. Alek: konsultacja 10.11 – [[Kontekst i profil]], pytania z B2 (w tym kolejność szczebli i imię w tygodniu 3); decyzje B21–B28 z weryfikacji v4.
+4. Okno B potem: spec B15 (+ B13 w tej samej karcie). Plan etapów: [[Architektura aplikacji]].
+5. Alek: przy Oddechu A sprawdzić, czy ekran nie gaśnie (C4).
+6. Alek: tagi `v6` (`6d2dff3`) i `v7` (`c64e41a`) na `main` oraz C8 (tagi `v4`, `v5`, stare gałęzie – polecenia w [[Decision log]]); sesja w chmurze nie wypycha tagów i nie usuwa gałęzi. Przy okazji na GitHubie włączyć „Automatically delete head branches” (Settings → General).
+7. Alek: na telefonie zajrzeć do karty „Zadanie w terenie” i potwierdzić 3-liniowy skrót (spec B14 §7).
 
 ## Inbox / Review
 - [[Inbox]] · [[Review]]
