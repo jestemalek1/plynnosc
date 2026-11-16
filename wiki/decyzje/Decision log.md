@@ -4,6 +4,11 @@ Format: data — decyzja. Krótko: co, dlaczego, kiedy wracamy. Otwarte sprawy s
 
 ## Aktywne decyzje
 
+### 2026-11-16 — Kolejność prac po HLD PoC potwierdzona; Codex podłączony (Alek)
+- Bez przepisywania aplikacji od zera: rozwijamy kod etapami E0–E5 ([[Architektura aplikacji]]); od nowa dopiero przy zdarzeniu z P16 ([[HLD PoC – kworum 2026-11-11]]). Kolejność: B14 → E1 (A5 + A7) → E2 (A8, spec do akceptacji) → B15, B16, E3 → E4, gdy jest zapas → E5 w grudniu.
+- Przegląd PR przez Codex podłączony (krok Alka z [[A7 Strażnik architektury]]); pierwszy PR z kodem: B14.
+- B14 wdrożone z dwoma odstępstwami od specyfikacji (opis w [[B14 Zadanie w terenie]] §7): klucz `insSeen` osobny dla każdego tygodnia (`field2`, `field3`) i treść w `INS`, nie w osobnym `FIELD`.
+
 ### 2026-11-12 — C5, C6, C8 (Alek)
 - **C5: TAK.** Z kodu znikają domyślny wpis dziennika i ciała dnia 1 (używane tylko przy odtwarzaniu dnia 1 na pustym urządzeniu) oraz fragment o rodzinie w „Zdaniu do powiedzenia” w Ściągawce. Zapisane dane Alka się nie zmieniają. Skutek uboczny: po utracie danych dzień 1 odtworzy się bez tekstu dziennika – chroni przed tym „Kopiuj dane”. Imię, miasto i hierarchia zostają do czasu produktu.
 - **C6: TAK.** Testy logiki w Node jako druga bramka, dopiero razem z `domain.js` (A9); wtedy zmiana definicji „zielone” w `CLAUDE.md`.
