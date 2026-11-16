@@ -1,6 +1,6 @@
 ---
 status: active
-updated: 2026-11-11
+updated: 2026-11-16
 tags: [architektura]
 ---
 
@@ -11,8 +11,8 @@ Ten dokument opisuje, jak apka jest zbudowana dziś, jak ma być zbudowana (decy
 ## Podstawa: małe jest piękne
 **Najmniejsza ilość pracy i kodu, która daje daną funkcję. Treść przed formą.** Architektura ma chronić przed rozrostem, a nie go usprawiedliwiać: plik, warstwa albo abstrakcja powstają dopiero wtedy, gdy mają użytkownika, i tylko w kroku, w którym dany kod i tak jest przepisywany. Pełna treść zasady: [[Zasady architektury]] (Z0).
 
-## Stan dziś (v5, wydana 11.11)
-Jeden plik `app/index.html` (2017 linii; v4 miała 1598): `<style>` + `<script>` (IIFE, `var`/`function`, bez zależności zewnętrznych, bez frameworka).
+## Stan dziś (od E1, 16.11)
+Cztery pliki w `app/` (razem ok. 2080 linii; v4 miała 1598 w jednym pliku): `index.html` (szkielet, 24 linie), `styles.css`, `data.js` (`PLYN_DATA`: blok `PROFILE` – data startu, hierarchia, imię – oraz treść: `TOPICS`, `TAG_LABEL`, `ENC`, `INS`, pule słów i pytań, `TENSION`, `EX_META`, `WEEKS`), `app.js` (IIFE, `var`/`function`, bez zależności zewnętrznych, bez frameworka; na początku aliasy z `PLYN_DATA`). Treść Ściągawki i parametry ćwiczeń są jeszcze w kodzie ekranów (parametry przechodzą do `data.js` przy T4–6). Tabela niżej opisuje, gdzie co jest w `app.js`; wiersz „Treść” jest już w `data.js`.
 
 | Warstwa | Funkcje | Uwagi |
 | --- | --- | --- |
@@ -75,7 +75,7 @@ Zasada kolejności: plik powstaje w tym kroku, w którym jego kod i tak jest prz
 | Etap | Co powstaje | Kiedy | Backlog | Gotowe, gdy |
 | --- | --- | --- | --- | --- |
 | **E0** | [[Zasady architektury]], `AGENTS.md`; Alek podłącza przegląd PR przez Codex | dokumenty teraz; Codex w dowolnym momencie przed PR E1 | A7 | Codex skomentował pierwszy PR zmieniający `app/` (przed E1 ocenia tylko Z0, Z6 i Z9–Z13) |
-| **E1** | Podział mechaniczny: `styles.css`, `data.js` (z blokiem `PROFILE`), `app.js`; `?v=N`; test spójności danych; `test/arch.js` i workflow w Actions; harness czyta wszystkie pliki `app/` | do 15.11, po B14 | A5, A7 | harness zielony, zrzuty ekranów bez zmian, `test/arch.js` zielony, w `index.html` nie ma kodu w `<script>`, artefakt opublikowany z `files` działa na telefonie |
+| **E1** ☑ 16.11 | Podział mechaniczny: `styles.css`, `data.js` (z blokiem `PROFILE`), `app.js`; `?v=N`; test spójności danych; `test/arch.js` i workflow w Actions; harness czyta wszystkie pliki `app/` | do 15.11, po B14 | A5, A7 | harness zielony, zrzuty ekranów bez zmian, `test/arch.js` zielony, w `index.html` nie ma kodu w `<script>`, artefakt opublikowany z `files` działa na telefonie |
 | **E2** | „Pakiet bezpieczeństwa”: powstaje `store.js` (zapis, kopia przy błędzie parsowania, import „wklej”, eksport bez `ocenaDraft`, widoczny błąd zapisu) oraz w `app.js` siatka na wyjątki, R4, R5 | M1, do 21.11 | A8 (obejmuje #15); spec do napisania | dane da się przywrócić z kopii; błąd zapisu i wyjątek są widoczne; wygasają wyjątki Z2, Z5, Z10 |
 | **E3** | Zmiany stanu z tabeli wyżej, „Usuń dane”, R7, R8 | M1, po B15 i B16 | w specyfikacji A8 albo osobnej | stan Alka wczytuje się bez utraty; wycofanie wydania nie psuje danych |
 | **E4** | `domain.js`: wydzielenie logiki dnia bez zmian zachowania + testy w Node | gdy M1 ma zapas, inaczej po treści tygodni 4–6 | A9; C6 | testy zaliczenia dnia działają bez przeglądarki; z Z11 znika dopisek „do czasu jego powstania” |
@@ -83,8 +83,8 @@ Zasada kolejności: plik powstaje w tym kroku, w którym jego kod i tak jest prz
 
 Gdy w M1 brakuje czasu, kolejność jest taka: E2, potem B15, potem B16, na końcu E3; tniemy od końca. B15 nie potrzebuje E3 (jego pola idą płasko w dniu, bez zmiany `v`).
 
-Uwagi do E1:
-- Harness czyta dziś źródło `index.html` (m.in. `test/round3.js` R10 i skan innych skal w `test/round2.js`); po podziale ma czytać wszystkie pliki w `app/`. Test N4 w `round2.js` (brak sieci) zastępuje `test/arch.js`.
+Uwagi do E1 (zrobione 16.11):
+- Harness czyta wszystkie pliki w `app/`; test spójności danych to R15 w `round3.js` (bez drugiego harnessu – C6 dopiero z `domain.js`). N4 w `round2.js` zostaje jako log (sprawdza też `eval`, `indexedDB` i in.); bramką dla sieci jest `test/arch.js`.
 - To pierwsza publikacja wielu plików: `publish` z `files`, sprawdzenie na telefonie, że wersje plików się nie rozjeżdżają (`?v=N`).
 - Zmiany w `CLAUDE.md` przy E1: krok 1 (`node --check app/*.js`), krok 3 (publikacja z `files`), opis struktury.
 

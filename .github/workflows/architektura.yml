@@ -1,0 +1,10 @@
+name: Architektura
+on:
+  pull_request:
+    paths: ['app/**', 'test/arch.js', '.github/workflows/architektura.yml']
+jobs:
+  zasady:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: node test/arch.js

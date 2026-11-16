@@ -3,6 +3,7 @@
 Format: wersja · data · co się zmieniło dla Ciebie (nie dla kodu). Wydanie = tag na `main` + publikacja artefaktu.
 
 ## W przygotowaniu (następne wydanie)
+- Bez zmian w działaniu: aplikacja jest teraz w kilku plikach (porządek pod dalszy rozwój). Po aktualizacji sprawdź na telefonie, że mapa, dzień i Postępy wyglądają jak wcześniej (E1).
 
 ## v6 · 2026-11-16
 - Nowa karta „Zadanie w terenie” pod ćwiczeniami, od dnia 8: w tygodniu 2 pierwsze zdanie na daily na wydechu (w dzień bez daily – akapit czytany na głos), w tygodniu 3 imię z miękkim startem raz dziennie. Dwa przyciski: „Użyłem techniki” / „Dziś nie”; odpowiedź możesz zmienić, także we wcześniejszych dniach (strzałka ‹). Karta nie wpływa na zaliczenie dnia ani streak. W Postępach → Ćwiczenia licznik z ostatnich 7 dni (B14).

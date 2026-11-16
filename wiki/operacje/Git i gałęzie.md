@@ -50,7 +50,7 @@ Ograniczenia: pętla działa tylko w sesji w chmurze (sesji w lokalnym terminalu
 1. Na `develop` harness zielony, `CHANGELOG.md` uzupełniony w sekcji nowej wersji.
 2. PR `develop` → `main` o tytule „Wydanie vN”, merge (bez squash, żeby historia zgadzała się z `develop`).
 3. `git tag vN && git push origin vN`.
-4. Publikacja: narzędzie Artifact `read` na https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P, potem `publish` z `app/index.html` (bez `capabilities`). Publikujemy **tylko z `main`**.
+4. Publikacja: narzędzie Artifact `read` na https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P, potem `publish` z `file_path: app/index.html` i `files` z pozostałymi plikami `app/` (bez `capabilities`). Publikujemy **tylko z `main`**. W PR wydania `?v=N` w `index.html` = numer wersji, żeby telefon nie złożył strony z plików różnych wersji.
 5. Krótki wpis w [[Decision log]] tylko jeśli wydanie zawiera decyzję. Sprawdzenie na telefonie.
 
 Hotfix: `hotfix/*` z `main` → PR do `main` → tag `vN.1` → publikacja → merge `main` do `develop`.

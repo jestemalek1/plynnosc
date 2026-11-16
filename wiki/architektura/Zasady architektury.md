@@ -1,7 +1,7 @@
 ---
 status: active
 owner: Alek
-updated: 2026-11-11
+updated: 2026-11-16
 tags: [architektura, zasady, przegląd-pr]
 ---
 
@@ -23,7 +23,7 @@ W praktyce:
 - Jeśli zasada z tej strony wymusza więcej kodu, niż jest wart jej zysk, zmieniamy zasadę (decyzja Alka), a nie obchodzimy jej po cichu.
 
 ## Zasady
-**Przed etapem E1** (dopóki w `app/` jest tylko `index.html`) zasady plikowe Z1–Z5, Z7 i Z8 nie obowiązują; ocenie podlegają Z0, Z6 i Z9–Z13.
+Od etapu E1 (16.11, podział na pliki) obowiązują wszystkie zasady; wcześniej, gdy w `app/` był tylko `index.html`, oceniane były Z0, Z6 i Z9–Z13.
 
 Kolumna „Kto pilnuje”: **S** = skrypt `test/arch.js` (mechanicznie, przy każdym PR), **R** = recenzent (Codex i recenzent w sesji).
 
@@ -45,7 +45,7 @@ Kolumna „Kto pilnuje”: **S** = skrypt `test/arch.js` (mechanicznie, przy ka�
 | Z13 | Wyjątek prywatny C3 (sekcja „Treść i samorozwój” w prompcie „Oceń”) nie rozszerza się: żaden nowy kod nie dodaje wnioskowania o osobie, etykiet emocji ani diagnoz | R |
 
 ## Wyjątki z datą ważności
-Wyjątek ma zawsze termin i znika razem z etapem z [[Architektura aplikacji]]. Lista w skrypcie musi być taka sama jak tutaj.
+Wyjątek ma zawsze termin i znika razem z etapem z [[Architektura aplikacji]]. Lista w skrypcie (`EXCEPTIONS` w `test/arch.js`) musi być taka sama jak tutaj.
 
 | Zasada | Wyjątek | Wygasa |
 | --- | --- | --- |

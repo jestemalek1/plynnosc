@@ -10,7 +10,7 @@ Repo = vault Obsidiana + kod. Zacznij od `00 Start/Start.md`, potem `wiki/decyzj
 - Aplikacja = statyczne pliki publikowane jako artefakt claude.ai (ograniczenia: `wiki/architektura/Publikacja (artefakt claude.ai).md`). Bez frameworka i bundlera (Opcja A), chyba że Alek zdecyduje inaczej.
 - Prywatność: nagrania/transkrypty to treści osobiste; w stanie trzymamy tagi/liczniki, nie pełne transkrypty poza ostatnimi ocenami; nic nie wysyłamy poza `claude.use("sample")`. W repo nigdy nie lądują transkrypty.
 - Treści medyczne: aplikacja wspiera terapię, nie zastępuje logopedy; nie diagnozujemy; nie etykietujemy emocji, których użytkownik nie nazwał. Treść ćwiczeń tylko ze źródłem w `wiki/program/Program płynności.md` albo po akceptacji Alka.
-- Target, nie proces: nie dodajemy CI, linterów, Spec Kitu, frameworków, dopóki nie boli. Każda decyzja z rekomendacją, nie „wybierz sam”.
+- Target, nie proces: nie dodajemy CI, linterów, Spec Kitu, frameworków, dopóki nie boli. Jedyny wyjątek: strażnik architektury (A7: `test/arch.js` w GitHub Actions + przegląd PR przez Codex). Każda decyzja z rekomendacją, nie „wybierz sam”.
 
 ## Git i dwa okna
 - Gitflow lekki: `main` = opublikowana wersja (tag `vN`), `develop` = integracja, `feature/*` (okno B – Rozwój), `fix/*` (okno A – Dogfood), `hotfix/*` z `main`. Szczegóły: `wiki/operacje/Git i gałęzie.md`.
@@ -19,14 +19,14 @@ Repo = vault Obsidiana + kod. Zacznij od `00 Start/Start.md`, potem `wiki/decyzj
 - **Sprzątanie gałęzi – zawsze, bez pytania:** po merge PR od razu usuń gałąź zdalnie (`git push origin --delete <gałąź>`) i lokalnie (`git branch -D <gałąź>`). Na koniec każdej sesji: `git fetch --prune`, potem zdalnie zostają tylko `main`, `develop` i gałęzie z otwartym PR albo w aktywnej pracy drugiego okna; lokalnie tylko `main`, `develop` i bieżąca. Gałąź niezmergowana (zmiany nie są w `develop`) – nie usuwasz, pytasz Alka. Bez gałęzi „na zapas” i porzuconych WIP-ów. Szczegóły: `wiki/operacje/Git i gałęzie.md`.
 
 ## Workflow
-1. Zmiana → `node --check` na wyekstrahowanym skrypcie → `node test/run.js && node test/round2.js && node test/round3.js` (Playwright, headless Chromium, 390×844, `file://`; szczegóły `wiki/operacje/Testy.md`). Zielone = exit 0, puste `*.errors`, brak `*.EXCEPTION` w `test/*results.json`.
+1. Zmiana → `for f in app/*.js; do node --check $f; done && node test/arch.js` → `node test/run.js && node test/round2.js && node test/round3.js` (Playwright, headless Chromium, 390×844, `file://`; szczegóły `wiki/operacje/Testy.md`). Zielone = exit 0 wszystkich (także `arch.js`), puste `*.errors`, brak `*.EXCEPTION` w `test/*results.json`.
 2. Większe funkcje (logika dnia/tygodnia, stan, timer, mapa, ocena) = rozmiar L: najpierw spec w `wiki/specs/` zaakceptowany przez Alka (`wiki/specs/Jak pisać spec.md`), potem budowniczy → niezależny tester (dostaje scenariusze ze specyfikacji) + recenzent kodu (osobni agenci, bez twierdzeń budowniczego) → poprawki → publikacja.
-3. Publikacja: narzędzie Artifact `read` + `publish` na https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P (slug `6d11a925-4902-461b-9300-077502bbab5e`), bez podawania `capabilities` (zostaje `sample`).
+3. Publikacja: narzędzie Artifact `read` + `publish` na https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P (slug `6d11a925-4902-461b-9300-077502bbab5e`): `file_path: app/index.html` + `files` z pozostałymi plikami `app/`, bez podawania `capabilities` (zostaje `sample`). Przed wydaniem podbij `?v=N` w `index.html` do numeru wersji.
 4. Po pracy: wpis w `wiki/decyzje/Decision log.md` (jeśli decyzja), „Aktualny stan” w `00 Start/Start.md`, commit, PR, **subskrypcja PR i pętla poprawek** (uwagi z przeglądu poprawiasz sam, scalasz po spełnieniu warunków, najwyżej 3 rundy – `wiki/operacje/Git i gałęzie.md`, sekcja „Pętla PR”), merge, **sprzątanie gałęzi**.
 
 ## Struktura
-- `app/index.html` – aplikacja (plan podziału na `index.html`, `styles.css`, `data.js`, `app.js`: `wiki/architektura/Architektura aplikacji.md`).
-- `test/` – harness (`run.js`, `round2.js`); zrzuty i wyniki generowane, w `.gitignore`.
+- `app/` – aplikacja: `index.html` (szkielet), `styles.css`, `data.js` (treść, blok `PROFILE`), `app.js` (ekrany i logika); później `store.js`, `domain.js`. Zasady: `wiki/architektura/Zasady architektury.md`, plan etapów: `wiki/architektura/Architektura aplikacji.md`.
+- `test/` – harness (`run.js`, `round2.js`, `round3.js`) i strażnik `arch.js`; zrzuty i wyniki generowane, w `.gitignore`. `.github/workflows/architektura.yml` – `arch.js` przy PR zmieniającym `app/`.
 - `00 Start/` – Start (dashboard), Inbox, Review, Daily/.
 - `wiki/produkt/` – Kontekst i profil, HLD v1 (moduły 01–10; backlog tylko z HLD), Backlog, Plan działania. `wiki/specs/` – specyfikacje funkcji (rozmiar L). `wiki/program/` – program terapii (źródło prawdy). `wiki/decyzje/` – Decision log, Decyzje do podjęcia. `wiki/research/` – raporty. `wiki/architektura/`, `wiki/operacje/`.
 - `templates/` – szablony Obsidiana. `90 Archiwum/` – stare pliki (HANDOFF z czatu, dzien-01.html, run.orig.js).
