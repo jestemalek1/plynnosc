@@ -326,7 +326,7 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
         const nc = await browser.newContext({ viewport: { width, height: 700 }, isMobile: true, hasTouch: true }); const np = await nc.newPage(); np.__errors = []; ALL_PAGES.push(np);
         np.on('pageerror', e => np.__errors.push('PAGEERROR ' + e.message));
         await np.clock.install({ time: D(2) }); await np.goto(URL); await np.waitForTimeout(100); await openToday(np);
-        hs[width] = await np.evaluate(() => { const src = document.querySelector('script:not([src])').textContent; const qs = ['PL', 'EN'].flatMap(L => eval('[' + src.match(new RegExp('var SIGNAL_' + L + ' = \\[([\\s\\S]*?)\\];'))[1] + ']').map(x => x.q)); /* v5: {t, q} in SIGNAL_PL / SIGNAL_EN */ const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Start na sygnał'); c.classList.remove('collapsed'); const cue = c.querySelector('.cue'), tm = c.querySelector('.timer'); const set = new Set(); qs.forEach(q => { cue.textContent = q; set.add(Math.round(cue.getBoundingClientRect().height)); }); tm.classList.add('wait'); cue.textContent = 'Czekaj na sygnał…'; set.add(Math.round(cue.getBoundingClientRect().height)); return [...set]; });
+        hs[width] = await np.evaluate(() => { const qs = PLYN_DATA.SIGNAL_PL.concat(PLYN_DATA.SIGNAL_EN).map(x => x.q); /* E1: pule z data.js */ const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Start na sygnał'); c.classList.remove('collapsed'); const cue = c.querySelector('.cue'), tm = c.querySelector('.timer'); const set = new Set(); qs.forEach(q => { cue.textContent = q; set.add(Math.round(cue.getBoundingClientRect().height)); }); tm.classList.add('wait'); cue.textContent = 'Czekaj na sygnał…'; set.add(Math.round(cue.getBoundingClientRect().height)); return [...set]; });
         timerH[width] = await np.evaluate(() => { const c = [...document.querySelectorAll('#s-dzis .card')].find(x => x.querySelector('h2').textContent === 'Start na sygnał'); const tm = c.querySelector('.timer'), sub = c.querySelector('.sub'); const set = new Set(); ['dłoń na brzuchu, oddychasz normalnie', 'wdech nosem i od razu odpowiedź na wydechu', 'po wznowieniu znowu czekasz na sygnał', '', '10 pytań, każde w losowym momencie'].forEach(t => { sub.textContent = t; set.add(Math.round(tm.getBoundingClientRect().height)); }); return [...set]; });
         await nc.close();
       }
@@ -701,9 +701,10 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
 
   await section('R10', async () => {
     // A2–A5 / D1–D5 from the page's own functions (sliced from the script), days 2–84, computed in two orders; cross-check with the UI
-    const src = fs.readFileSync(APP, 'utf8');
+    const src = fs.readFileSync(path.join(path.dirname(APP), 'app.js'), 'utf8'), data = fs.readFileSync(path.join(path.dirname(APP), 'data.js'), 'utf8');
     const body = src.slice(src.indexOf('  var A_HARD_FROM_WEEK'), src.indexOf('  function isSrDay(k)'));
-    const make = () => new Function('function weekOf(d){return Math.min(12,Math.max(1,Math.ceil(d/7)));} function dayIndex(k){return k;}\n' + body + '\nreturn {oddechWords, signalQuestions, SIGNAL_PL, SIGNAL_EN, A_POOL1, A_POOL2, A_HARD_FROM_WEEK};')();
+    const pre = data + '\nvar SIGNAL_PL = PLYN_DATA.SIGNAL_PL, SIGNAL_EN = PLYN_DATA.SIGNAL_EN, A_POOL1 = PLYN_DATA.A_POOL1, A_POOL2 = PLYN_DATA.A_POOL2, A_NAME = PLYN_DATA.A_NAME;\n';
+    const make = () => new Function(pre + 'function weekOf(d){return Math.min(12,Math.max(1,Math.ceil(d/7)));} function dayIndex(k){return k;}\n' + body + '\nreturn {oddechWords, signalQuestions, SIGNAL_PL, SIGNAL_EN, A_POOL1, A_POOL2, A_HARD_FROM_WEEK};')();
     const M = make(), M2 = make();
     const topic = {}; M.SIGNAL_PL.concat(M.SIGNAL_EN).forEach(x => { topic[x.q] = x.t; });
     const W = {}, Q = {}, bad = [];
@@ -916,6 +917,36 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
     verdict('R14', r.returned && r.complete === true && r.field === null, '#8: unanswered task, day complete and auto-return: ' + JSON.stringify({ returned: r.returned, complete: r.complete, field: r.field }));
     verdict('R14', r.stayed && Math.abs(r.after.y - r.before.y) <= 2 && r.after.sy === r.before.sy && r.after.focus, '#9: no second return, tapped button stays (' + JSON.stringify(r.before) + ' -> ' + JSON.stringify(r.after) + ')');
     log('R14.result', out);
+  });
+
+  // ===== R15: spójność danych w data.js (E1) – treść kompletna, bez dziur, które wywróciłyby ekran =====
+  await section('R15', async () => {
+    const { c, page } = await ctx(browser, { time: D(8) });
+    await page.goto(URL); await page.waitForTimeout(100);
+    const bad = await page.evaluate(() => {
+      const D = window.PLYN_DATA, out = [], str = (x) => typeof x === 'string' && x.trim().length > 0;
+      const app = Object.keys(window).filter(k => /^PLYN_/.test(k));
+      if (app.join() !== 'PLYN_DATA') out.push('globals ' + app.join());
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(D.DAY1)) out.push('DAY1');
+      if (D.HIER.length !== 10 || D.BASE_HIER.length !== 10 || !D.HIER.every(str) || !D.BASE_HIER.every(v => Number.isInteger(v) && v >= 0 && v <= 8)) out.push('HIER/BASE_HIER');
+      if (!str(D.A_NAME)) out.push('A_NAME');
+      Object.keys(D.EX_META).forEach(ex => { if (!str(D.EX_META[ex].title)) out.push('EX_META.' + ex); });
+      Object.keys(D.INS).forEach(id => { const t = D.INS[id];
+        if (!Array.isArray(t.brief) || t.brief.length !== 3 || !t.brief.every(str)) out.push('INS.' + id + '.brief');
+        ['co', 'jak', 'nie', 'dlaczego'].forEach(f => { if (!str(t[f])) out.push('INS.' + id + '.' + f); }); });
+      ['baza', 'oddech', 'sygnal', 'monolog', 'napiecie', 'miekki', 'dziennik', 'sr', 'extra'].forEach(ex => { if (!D.INS[ex]) out.push('INS missing ' + ex); });
+      Object.keys(D.INS).filter(id => /^field\d+$/.test(id)).forEach(id => ['sub', 'tak', 'nieMsg'].forEach(f => { if (!str(D.INS[id][f])) out.push('INS.' + id + '.' + f); }));
+      ['co', 'jak', 'nie'].forEach(f => { if (D.INS.extra[f] !== D.INS.monolog[f]) out.push('INS.extra.' + f + ' != monolog'); });
+      Object.keys(D.ENC).forEach(ex => { if (!D.ENC[ex].length || !D.ENC[ex].every(str)) out.push('ENC.' + ex); });
+      if (!D.TOPICS.every(t => t.length === 3 && t.every(str) && D.TAG_LABEL[t[0]])) out.push('TOPICS/TAG_LABEL');
+      if (D.WEEKS.length !== 12 || !D.WEEKS.every(w => str(w[0]) && str(w[1]))) out.push('WEEKS');
+      [['A_POOL1', D.A_POOL1], ['A_POOL2', D.A_POOL2], ['B_WORDS', D.B_WORDS]].forEach(([n, a]) => { if (!a.every(str) || new Set(a).size !== a.length) out.push(n + ' empty/duplicate'); });
+      [['SIGNAL_PL', D.SIGNAL_PL], ['SIGNAL_EN', D.SIGNAL_EN]].forEach(([n, a]) => { if (!a.every(x => str(x.t) && str(x.q)) || new Set(a.map(x => x.q)).size !== a.length) out.push(n + ' empty/duplicate'); });
+      if (!D.TENSION.every(x => x.length === 2 && x.every(str))) out.push('TENSION');
+      return out;
+    });
+    log('R15.result', { bad, errors: page.__errors }); await c.close();
+    verdict('R15', bad.length === 0, bad.length ? bad.join('; ') : 'data.js: PROFILE, INS (3 brief lines, co/jak/nie/dlaczego), ENC, TOPICS, WEEKS, pools without gaps or duplicates; only global PLYN_DATA');
   });
 
   await browser.close();
