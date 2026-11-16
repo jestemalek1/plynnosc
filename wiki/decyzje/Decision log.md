@@ -4,6 +4,40 @@ Format: data — decyzja. Krótko: co, dlaczego, kiedy wracamy. Otwarte sprawy s
 
 ## Aktywne decyzje
 
+### 2026-11-16 — Kolejność prac po HLD PoC potwierdzona; Codex podłączony (Alek)
+- Bez przepisywania aplikacji od zera: rozwijamy kod etapami E0–E5 ([[Architektura aplikacji]]); od nowa dopiero przy zdarzeniu z P16 ([[HLD PoC – kworum 2026-11-11]]). Kolejność: B14 → E1 (A5 + A7) → E2 (A8, spec do akceptacji) → B15, B16, E3 → E4, gdy jest zapas → E5 w grudniu.
+- Przegląd PR przez Codex podłączony (krok Alka z [[A7 Strażnik architektury]]); pierwszy PR z kodem: B14.
+- B14 wdrożone z dwoma odstępstwami od specyfikacji (opis w [[B14 Zadanie w terenie]] §7): klucz `insSeen` osobny dla każdego tygodnia (`field2`, `field3`) i treść w `INS`, nie w osobnym `FIELD`.
+
+### 2026-11-12 — C5, C6, C8 (Alek)
+- **C5: TAK.** Z kodu znikają domyślny wpis dziennika i ciała dnia 1 (używane tylko przy odtwarzaniu dnia 1 na pustym urządzeniu) oraz fragment o rodzinie w „Zdaniu do powiedzenia” w Ściągawce. Zapisane dane Alka się nie zmieniają. Skutek uboczny: po utracie danych dzień 1 odtworzy się bez tekstu dziennika – chroni przed tym „Kopiuj dane”. Imię, miasto i hierarchia zostają do czasu produktu.
+- **C6: TAK.** Testy logiki w Node jako druga bramka, dopiero razem z `domain.js` (A9); wtedy zmiana definicji „zielone” w `CLAUDE.md`.
+- **C8: TAK, wykonuje Alek.** Sesja w chmurze może wypychać tylko własną gałąź: tagów nie utworzy, gałęzi nie usunie. Tagi: `v4` → `bcea4ae`, `v5` → `01653a1`. Gałęzie do usunięcia (PR scalony albo całość w `develop`): `feature/dzien2-feedback`, `feature/hld-decyzje-v2`, `feature/zasady-sprzatania`, `feature/uwagi-dzien3`, `feature/testy-v4-wip`, `fix/v5-dogfood`, `claude/funny-wright-rwli0b` (po scaleniu ostatniego PR). Do sprawdzenia przez Alka: `feature/hld-decyzje` (bez PR, 13 commitów, których nie ma w `-v2`).
+
+### 2026-11-12 — C11: pętla PR – poprawki po przeglądzie idą same (Alek)
+- Okno, które otwiera PR, zawsze go subskrybuje; komentarz z przeglądu (Codex) albo czerwony wynik w Actions budzi okno, które poprawia, puszcza harness, wypycha i odpowiada.
+- Okno scala samo, gdy naraz: harness zielony, workflow „Architektura” zielony (od E1), brak uwagi P1 bez odpowiedzi, a dla rozmiaru L zaliczeni tester i recenzent. W innym razie czeka na Alka.
+- Bezpiecznik: najwyżej 3 rundy poprawek na PR, potem okno staje i pisze do Alka. Okno może odmówić uwagi sprzecznej z zasadami („nie, bo …”) i nigdy nie omija sprawdzenia.
+- Zapis: [[Git i gałęzie]] (sekcja „Pętla PR”) i `CLAUDE.md` krok 4. Niesprawdzone: czy przeglądy Codex docierają do sesji jako zdarzenia – wyjdzie przy pierwszym PR z kodem; plan zastępczy jest w tej samej sekcji.
+
+### 2026-11-11 — C2, C10: plan wdrożenia architektury i spec strażnika zaakceptowane (Alek)
+- **C2: TAK.** Kolejność etapów E0–E5 z [[Architektura aplikacji]]: do 13.11 tylko B14; do 15.11 podział pliku (E1) ze skryptem i workflow; w M1 pakiet bezpieczeństwa (E2, powstaje `store.js`) i migracja v3 z B15 (E3); `domain.js` (E4), gdy M1 ma zapas, inaczej po treści tygodni 4–6. Trening ma pierwszeństwo: przesuwa się etap, nie B14 ani treść.
+- **C10: TAK.** [[A7 Strażnik architektury]] zaakceptowany; przy wdrożeniu dwie zmiany w `CLAUDE.md` (wyjątek od „bez CI” dla strażnika, `node test/arch.js` w bramce).
+- **Korekta po przeglądzie dokumentów (11.11, do wiadomości Alka):** Wake Lock w pozostałych timerach nie wchodzi do pakietu bezpieczeństwa, zostaje małą pozycją WL (mechanizm jest już w v5); E3 idzie po B15 i B16, bo B15 nie potrzebuje zmiany stanu; gdy w M1 brakuje czasu, kolejność to E2 → B15 → B16 → E3 i tniemy od końca. Z tabeli zmian stanu wypadły `updatedAt` i `promptVersion` (nikt ich nie czyta).
+- Test Wake Lock na osobnym artefakcie (C4) niepotrzebny po v5: Alek sprawdza w zwykłym Oddechu A, czy ekran nie gaśnie.
+
+### 2026-11-11 — C9: strażnik architektury i podstawa „małe jest piękne” (Alek)
+- **Podstawa architektury:** najmniejsza ilość pracy i kodu, która daje daną funkcję; treść przed formą. Nic „na zapas”: plik, warstwa, abstrakcja, pole stanu albo zależność muszą mieć użytkownika w tym samym PR. Pilnujemy od pierwszego PR, żeby nie budować długu technologicznego. Zapis: [[Zasady architektury]] (Z0) i [[Architektura aplikacji]].
+- **Przegląd PR pod kątem architektury** (testy i działanie funkcji osobno): recenzent z innego modelu – Codex przez integrację z GitHubem, sterowany `AGENTS.md`, bez tokenu w repo – oraz skrypt `test/arch.js` w GitHub Actions dla reguł mechanicznych. To świadomy wyjątek od A3 „bez CI”: tylko architektura, bez Playwright, linterów i blokady scalania.
+- Alek akceptuje, że Codex dostaje dostęp do całego prywatnego repo.
+- Konsekwencja dla C1: osobny `ai.js` nie powstaje, dopóki model woła jedno miejsce; `store.js` powstaje w pakiecie bezpieczeństwa (M1). Plan etapami E0–E5: [[Architektura aplikacji]].
+- Spec: [[A7 Strażnik architektury]] (zaakceptowany tego samego dnia – C10). Wracamy, jeśli przegląd generuje szum albo propozycje rozbudowy.
+
+### 2026-11-11 — C1, C3: HLD PoC przyjęty; prompt „Oceń” zostaje jako wyjątek prywatny (Alek)
+- **C1: TAK.** Architektura PoC wg [[HLD PoC – kworum 2026-11-11]]: `data.js` / `domain.js` / `store.js` / `ai.js` / `app.js`, bez `map.js`; stan v3 tylko przez dopisywanie pól. Zastępuje „Plan podziału” w [[Architektura aplikacji]]. Kolejność i terminy czekają na C2.
+- **C3: NIE zmieniamy promptu ani ekranu „Oceń”.** Apka jest na razie narzędziem prywatnym Alka, więc sekcja „Treść i samorozwój” (co mówca ujawnia o sobie, słaby punkt, pytanie do przemyślenia) zostaje, a ekran nie dostaje etykiety „informacja zwrotna, nie ocena kliniczna”. To świadomy wyjątek od B20/B32 i od zasady „nie etykietujemy” – wyłącznie dla Alka.
+- **Warunek bez wyjątków:** prompt i ekran „Oceń” w tej postaci **nigdy nie trafiają do wersji dla innych użytkowników**. Wersja produktowa powstaje od nowa wg minimum bezpieczeństwa z [[HLD v1]] §6. Wracamy przy pierwszym użytkowniku innym niż Alek (wyzwalacz z P16).
+
 ### 2026-11-11 — Wydanie v5: #19, #20, #21 (Alek: „wdróż wszystko, co zleciłem, od jutra poprawiona wersja”)
 Zakres: specy [[19 Oddech A i Start na sygnał – zmienność i dźwięki]], [[20 Dziennik bloków z sensem]], [[21 Ćwiczenie z gwiazdką]]. Pętla: budowniczy → niezależny tester (wszystkie kryteria PASS, 4 drobne defekty) + recenzent (0 krytycznych, 1 istotne: wznawianie dźwięku na iOS) → runda poprawek 11 punktów → harness zielony (run, round2, round3 z nowymi R8–R13). Odstępstwa przyjęte: dziennik dnia 1 tylko do odczytu, karta „Start na sygnał” wyższa o ok. 31 px (pytania do 3 linii), węższe przyciski tak/częściowo/nie poniżej 390 px; po dzienniku zakończonym „tak” bez notatki baner z „Na mapę” zamiast auto-powrotu; nowa zachęta dziennika „Zapisane. Po dwóch tygodniach te liczby pokażą wzór.” (Alek: tak). Do sprawdzenia na iPhonie: dźwięk w trybie cichym (`audioSession`), Wake Lock w iframe artefaktu.
 

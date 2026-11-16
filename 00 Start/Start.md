@@ -12,7 +12,9 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - [[Backlog]] — co teraz, co następne, kto (okno A / B)
 - [[Git i gałęzie]] — gitflow lekki, wydania, hotfix
 - [[Program płynności]] — źródło prawdy dla treści ćwiczeń i progresji
-- [[Architektura aplikacji]] — jak zbudowana jest apka i plan podziału na pliki
+- [[Architektura aplikacji]] — jak zbudowana jest apka, architektura docelowa i plan wdrożenia etapami
+- [[Zasady architektury]] — podstawa „małe jest piękne” i zasady Z0–Z13 pilnowane przy każdym PR
+- [[HLD PoC – kworum 2026-11-11]] — ocena kodu wg dobrych praktyk i propozycja HLD dla PoC (4 agentów, głosowanie, runda „grill”); C1, C2, C9, C10 przyjęte; otwarte C4–C8
 - [[Publikacja (artefakt claude.ai)]] — ograniczenia środowiska i jak publikować
 - [[Jak pracujemy]] — pętla build → tester → review → publikacja
 - [[Testy]] — jak odpalić harness i co znaczy „zielone”
@@ -36,11 +38,18 @@ Apka działa tu: https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P
 - Dogfooding dni 3–5 (okno A, 9–11.11): uwagi w [[Inbox]], decyzje B33 (user friendly first), B34–B36; spec [[19 Oddech A i Start na sygnał – zmienność i dźwięki]] zaakceptowany i gotowy dla agenta; #20 dziennik i #21 ★ w backlogu (okno B).
 - [[Backlog]]: każda pozycja ma moduł HLD, rozmiar i spec; roadmapa M0–M4 + utrzymanie, mapa pętla × kamienie i lista na 2 tygodnie w [[Plan działania]].
 
+- 2026-11-11: przegląd kodu i architektury przez kworum agentów – [[HLD PoC – kworum 2026-11-11]]. Kod bez zmian. Decyzje Alka 11.11: **C1 TAK** (architektura przyjęta), **C3 NIE** (prompt „Oceń” zostaje jako wyjątek prywatny, z zakazem przeniesienia do produktu – [[HLD v1]] §7). Otwarte: C2, C4–C8 w [[Decyzje do podjęcia]].
+- 2026-11-11: **C9 TAK** – podstawa „małe jest piękne” i strażnik architektury (przegląd PR przez Codex + `test/arch.js` w Actions). Nowe: [[Zasady architektury]], `AGENTS.md`, przepisana [[Architektura aplikacji]] (stan dziś, architektura docelowa, plan etapami E0–E5), spec [[A7 Strażnik architektury]] zaakceptowany (C10), plan etapów E0–E5 zaakceptowany (C2). Otwarte: C4–C8.
+- 2026-11-16: Alek potwierdził kolejność prac (bez przepisywania od zera; B14 → E1 → E2 → B15/B16/E3) i podłączył Codex. **B14 „Zadanie w terenie” zrobione** (tester + recenzent, poprawki), czeka na PR i wydanie v6.
+- 2026-11-12: **C11 TAK** – pętla PR: okno subskrybuje swój PR, samo poprawia uwagi z przeglądu i scala po spełnieniu warunków ([[Git i gałęzie]], `CLAUDE.md` krok 4).
+- 2026-11-12: **C5, C6, C8 TAK.** C5 zrobione w kodzie (wejdzie z następnym wydaniem); C8 (tagi `v4`, `v5` i stare gałęzie) do wykonania przez Alka – polecenia w [[Decision log]].
+
 ## Następna akcja
-1. Okno B: B14 wg [[B14 Zadanie w terenie]] – przed 14.11 (start tygodnia 2).
+1. Okno B: wydanie v6 (B14 + C5), potem etap E1: A5 podział razem z A7 (`test/arch.js`, workflow) – pierwszy PR sprawdzany przez Codex i skrypt.
 2. Alek: konsultacja 10.11 – [[Kontekst i profil]], pytania z B2 (w tym kolejność szczebli i imię w tygodniu 3); decyzje B21–B28 z weryfikacji v4.
-3. Okno B potem: A5 podział, #15 eksport; spec B15 (+ B13 w tej samej karcie).
-4. Alek (opcjonalnie): na GitHubie włączyć „Automatically delete head branches” (Settings → General).
+3. Okno B potem: spec A8 (pakiet bezpieczeństwa, obejmuje #15), spec B15 (+ B13 w tej samej karcie). Plan etapów: [[Architektura aplikacji]].
+4. Alek: przy Oddechu A sprawdzić, czy ekran nie gaśnie (C4).
+5. Alek (opcjonalnie): na GitHubie włączyć „Automatically delete head branches” (Settings → General).
 
 ## Inbox / Review
 - [[Inbox]] · [[Review]]

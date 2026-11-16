@@ -2,6 +2,13 @@
 
 Format: wersja · data · co się zmieniło dla Ciebie (nie dla kodu). Wydanie = tag na `main` + publikacja artefaktu.
 
+## W przygotowaniu (następne wydanie)
+
+## v6 · 2026-11-16
+- Nowa karta „Zadanie w terenie” pod ćwiczeniami, od dnia 8: w tygodniu 2 pierwsze zdanie na daily na wydechu (w dzień bez daily – akapit czytany na głos), w tygodniu 3 imię z miękkim startem raz dziennie. Dwa przyciski: „Użyłem techniki” / „Dziś nie”; odpowiedź możesz zmienić, także we wcześniejszych dniach (strzałka ‹). Karta nie wpływa na zaliczenie dnia ani streak. W Postępach → Ćwiczenia licznik z ostatnich 7 dni (B14).
+- Ściągawka → Kontakty: „Zdanie do powiedzenia” bez fragmentu o rodzinie (C5).
+- Na nowym albo wyczyszczonym urządzeniu dzień 1 odtwarza się bez gotowego tekstu dziennika i ciała; Twoje zapisane wpisy zostają bez zmian (C5).
+
 ## v5 · 2026-11-11
 - Oddech A: codziennie inne „Słowa dnia” (widać je nad przyciskiem Start), bez powtórek przez tydzień; „Aleksander” co drugi dzień, a od tygodnia 3 dochodzą słowa na k, g, t, d, p, b.
 - Oddech A z zamkniętymi oczami: dźwięk rosnący = wdech, opadający = wydech; ekran nie powinien gasnąć w trakcie serii. Przed Startem widać „Wdech nosem 0:03”.

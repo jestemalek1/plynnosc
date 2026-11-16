@@ -1,10 +1,10 @@
 ---
-status: zaakceptowany
+status: wdrożony
 id: B14
 hld: "05 (zasila 06, 08)"
 decyzja: B14
 budżet: 2 rundy (budowa + tester/recenzent, poprawki)
-updated: 2026-11-08
+updated: 2026-11-16
 ---
 
 # B14 Zadanie w terenie
@@ -94,4 +94,16 @@ Moduł [[HLD v1]] 05 Trening komunikacji. Licznik zasila 06 (uczestnictwo) i 08 
 - **Kolizja z oknem A:** dopóki nie ma A5, zmiana jest w `app/index.html`. Gałąź `feature/b14-zadanie-w-terenie` od `develop` po wydaniu v4.
 
 ## 7. Jak sprawdzone
-(uzupełnia okno B po wdrożeniu)
+Wdrożone 16.11 (gałąź `claude/zen-galileo-7tzmfy`, wydanie v6).
+
+- **Niezależny tester** (własne skrypty Playwright, 390×844): scenariusze 1–8 i 10–15 zaliczone; #9 częściowo – przycisk przesuwał się po odpowiedzi (potwierdzenie wstawiane nad przyciskami, a przy pierwszej odpowiedzi w tygodniu zwijała się instrukcja i strona się skracała). Poprawione: karta zmienia się w miejscu, potwierdzenie pod przyciskami, instrukcja zwija się przy następnym otwarciu; fokus zostaje na przycisku.
+- **Recenzent kodu:** bez błędów w zaliczeniu dnia, streaku, pasku postępu i powrocie na mapę; stara wersja apki wczyta stan z polem `field` (Z9). Ta sama usterka co u testera oraz dwa skróty kodu (Z0) – wprowadzone.
+- **Dodatkowo:** odpowiedź na zadanie w ciągu 1,8 s po zaliczeniu dnia nie zatrzymuje już powrotu na mapę (wcześniej każde dotknięcie go anulowało, a karta leży tuż pod dziennikiem).
+- **Harness:** `round3.js` R14 (13 sprawdzeń: dni 7, 8, 14, 15, 21, 22, 85; tak/nie i zmiana; brak wpływu na postęp; #8 z prawdziwym zaliczeniem i powrotem; #9 przycisk w miejscu i bez drugiego powrotu; poprzedni dzień; Postępy; zła wartość w stanie). Cały harness zielony.
+
+**Odstępstwa od specyfikacji:**
+- Klucz `insSeen` osobny dla tygodnia (`field2`, `field3`) zamiast jednego `field`: w tygodniu 3 nowa treść pokazuje się z rozwiniętą instrukcją. Treść jest w `INS.field2` / `INS.field3` (te same funkcje co reszta kart), a nie w osobnym `FIELD`.
+- Krótki opis (3 linie) ma etykiety „Co robisz / Jak to ma brzmieć / Czego nie robić” jak inne karty, więc zdania z „Krótko” zostały ułożone pod te etykiety, wyłącznie ze zdań z tej sekcji (bez nowej treści). Do akceptacji Alka przy pierwszym użyciu.
+- Etykieta rozwijanej sekcji to wspólne „Dlaczego to ćwiczenie”.
+
+Znane: od dnia 29 do czasu treści tygodni 4+ linia w Postępach pokazuje „użyłem 0 · dziś nie 0” (zgodnie z #11).

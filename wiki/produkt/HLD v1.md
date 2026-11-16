@@ -342,6 +342,16 @@ wzajemnego wsparcia; na ten moment poza zaakceptowaną ósemką.
   nagrania i rozmowy na żywo (B19), 07 oraz *[B31, B32]* 09 i 10.
   Dla Alka pierwsze wersje 09 (#13 English card) i 10 (#12 jedno
   pytanie) w M3, na dzisiejszej ocenie z transkryptu.
+- *[C3, 11.11]* **Wyjątek prywatny – zakaz przeniesienia do produktu.**
+  Ekran „Oceń” w prototypie prosi model o sekcję „Treść i samorozwój”
+  (co mówca ujawnia o sobie, słaby punkt w formułowaniu myśli) i nie
+  opisuje wyniku jako „informacja zwrotna, nie ocena kliniczna”. Alek
+  świadomie zostawia to dla siebie. W tej postaci prompt i ekran
+  **kategorycznie nigdy nie wchodzą do wersji dla innych użytkowników**:
+  łamią minimum bezpieczeństwa z §6 (wnioskowanie o osobie, brak
+  etykiety, brak informacji o pomocy kryzysowej). Wersję produktową
+  pisze się od nowa wg §6 i modułu 10, a nie przez kopiowanie tego
+  promptu.
 - **Czego prototyp nie dowodzi:** sprawdza, czy z aplikacji da się
   codziennie korzystać i czy pętla „plan → ćwiczenia → pomiar → zmiana
   planu” działa. Nie dowodzi skuteczności klinicznej ani popytu
