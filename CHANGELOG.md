@@ -3,6 +3,8 @@
 Format: wersja · data · co się zmieniło dla Ciebie (nie dla kodu). Wydanie = tag na `main` + publikacja artefaktu.
 
 ## W przygotowaniu (następne wydanie)
+
+## v7 · 2026-11-16
 - Bez zmian w działaniu: aplikacja jest teraz w kilku plikach (porządek pod dalszy rozwój). Po aktualizacji sprawdź na telefonie, że mapa, dzień i Postępy wyglądają jak wcześniej (E1).
 
 ## v6 · 2026-11-16
