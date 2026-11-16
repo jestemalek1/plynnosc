@@ -12,7 +12,7 @@ Ten dokument opisuje, jak apka jest zbudowana dziś, jak ma być zbudowana (decy
 **Najmniejsza ilość pracy i kodu, która daje daną funkcję. Treść przed formą.** Architektura ma chronić przed rozrostem, a nie go usprawiedliwiać: plik, warstwa albo abstrakcja powstają dopiero wtedy, gdy mają użytkownika, i tylko w kroku, w którym dany kod i tak jest przepisywany. Pełna treść zasady: [[Zasady architektury]] (Z0).
 
 ## Stan dziś (od E1, 16.11)
-Cztery pliki w `app/` (razem ok. 2080 linii; v4 miała 1598 w jednym pliku): `index.html` (szkielet, 23 linie), `styles.css`, `data.js` (`PLYN_DATA`: blok `PROFILE` – data startu, hierarchia, imię – oraz treść: `TOPICS`, `TAG_LABEL`, `ENC`, `INS`, pule słów i pytań, `TENSION`, `EX_META`, `WEEKS`), `app.js` (IIFE, `var`/`function`, bez zależności zewnętrznych, bez frameworka; na początku aliasy z `PLYN_DATA`). Treść Ściągawki i parametry ćwiczeń są jeszcze w kodzie ekranów (parametry przechodzą do `data.js` przy T4–6). Tabela niżej opisuje, gdzie co jest w `app.js`; wiersz „Treść” jest już w `data.js`.
+Cztery pliki w `app/` (razem ok. 2080 linii; v4 miała 1598 w jednym pliku): `index.html` (szkielet, 23 linie), `styles.css`, `data.js` (`PLYN_DATA`: blok `PROFILE` – data startu, hierarchia, imię, słowa Oddechu A i Miękkiego startu – oraz treść: `TOPICS`, `TAG_LABEL`, `ENC`, `INS`, pule pytań, `TENSION`, `EX_META`, `WEEKS`), `app.js` (IIFE, `var`/`function`, bez zależności zewnętrznych, bez frameworka; na początku aliasy z `PLYN_DATA`). Treść Ściągawki i parametry ćwiczeń są jeszcze w kodzie ekranów (parametry przechodzą do `data.js` przy T4–6). Tabela niżej opisuje, gdzie co jest w `app.js`; wiersz „Treść” jest już w `data.js`.
 
 | Warstwa | Funkcje | Uwagi |
 | --- | --- | --- |

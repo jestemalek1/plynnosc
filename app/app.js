@@ -71,7 +71,7 @@
     var b = isObj(d.blok) ? d.blok : {};
     d.blok = { jest: typeof b.jest === 'boolean' ? b.jest : null };
     Object.keys(BLOK_OPTS).forEach(function (f) { d.blok[f] = BLOK_OPTS[f].indexOf(b[f]) >= 0 ? b[f] : null; });
-    // v5 (#21): ★ monolog w drugim języku (nie wlicza się do dnia). Zakres tematu sprawdza karta (TOPICS jeszcze nie istnieje przy load()).
+    // v5 (#21): ★ monolog w drugim języku (nie wlicza się do dnia). Zakres tematu sprawdza karta.
     var x = isObj(d.extra) ? d.extra : {};
     d.extra = { lang: x.lang === 'pl' || x.lang === 'en' ? x.lang : null, topic: typeof x.topic === 'number' && x.topic >= 0 && x.topic % 1 === 0 ? x.topic : null,
       ran: x.ran === true, breath: TRI.indexOf(x.breath) >= 0 ? x.breath : null, sr: x.sr == null ? null : clampSR(x.sr), done: x.done === true };

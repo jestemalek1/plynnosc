@@ -1,7 +1,8 @@
 // Treść aplikacji – tylko dane (zasada Z3): bez funkcji, bez document, bez localStorage.
 // Ładowany przed app.js; jedyny obiekt globalny: PLYN_DATA (Z8).
 var PLYN_DATA = {
-  // ===== PROFILE: dane Alka (data startu, hierarchia, imię) – do czasu produktu =====
+  // ===== PROFILE: dane Alka (data startu, hierarchia, imię, słowa) – do czasu produktu =====
+  // Imię i miasto występują też w tekstach TOPICS i INS – w produkcie szablon.
   DAY1: '2026-11-07',
   HIER: [
     'Czytanie na głos samemu', 'Daily po polsku (własny moment)', 'Rozmowa z bliską osobą – luźno, szybko',
@@ -11,6 +12,20 @@ var PLYN_DATA = {
   ],
   BASE_HIER: [2, 2, 3, 5, 4, 2, 2, 4, 2, 4],
   A_NAME: 'Aleksander',
+  // słowa z życia Alka (Oddech A: pula 1 od tygodnia 1, pula 2 od A_HARD_FROM_WEEK; Miękki start)
+  A_POOL1: [
+    'okej', 'akurat', 'analiza', 'Azja', 'ale', 'auto', 'ekran', 'efekt', 'Ewa', 'idę',
+    'inaczej', 'impreza', 'inżynier', 'oczywiście', 'ocean', 'okno', 'obiad', 'umowa', 'uwaga', 'ulica',
+    'rano', 'rower', 'ramen', 'raport', 'miasto', 'morze', 'model', 'moment', 'narty', 'nowy',
+    'noc', 'Las Palmas', 'lato', 'woda', 'wakacje', 'wiatr', 'wtorek', 'jutro', 'jasne', 'jedzenie',
+    'łatwo', 'lekcja'
+  ],
+  A_POOL2: [
+    'gdzie', 'góry', 'gotowe', 'godzina', 'Gran Canaria', 'kawa', 'kolega', 'klient', 'kod', 'koniec',
+    'kuchnia', 'kiedy', 'dobrze', 'dane', 'deska', 'dzięki', 'teraz', 'tydzień', 'temat', 'trening',
+    'praca', 'projekt', 'prezentacja', 'problem', 'pytanie', 'plan', 'budżet', 'bilet', 'biuro', 'bardzo'
+  ],
+  B_WORDS: ['hhhAnia', 'hhhokej', 'hhhAleksander', 'hhhw ogóle', 'hhhuwaga', 'hhhidę', 'hhhale', 'hhhIreneusz', 'hhho której', 'hhhEwa', 'hhhumowa', 'hhhAzja'],
   // ===== /PROFILE =====
 
   /* ---------- topics ---------- */
@@ -183,19 +198,6 @@ var PLYN_DATA = {
       nieMsg: 'Zapisane. Bez okazji też jest OK; jutro spróbuj ją stworzyć (np. „tu Aleksander” w wiadomości głosowej).'
     }
   },
-  A_POOL1: [
-    'okej', 'akurat', 'analiza', 'Azja', 'ale', 'auto', 'ekran', 'efekt', 'Ewa', 'idę',
-    'inaczej', 'impreza', 'inżynier', 'oczywiście', 'ocean', 'okno', 'obiad', 'umowa', 'uwaga', 'ulica',
-    'rano', 'rower', 'ramen', 'raport', 'miasto', 'morze', 'model', 'moment', 'narty', 'nowy',
-    'noc', 'Las Palmas', 'lato', 'woda', 'wakacje', 'wiatr', 'wtorek', 'jutro', 'jasne', 'jedzenie',
-    'łatwo', 'lekcja'
-  ],
-  A_POOL2: [
-    'gdzie', 'góry', 'gotowe', 'godzina', 'Gran Canaria', 'kawa', 'kolega', 'klient', 'kod', 'koniec',
-    'kuchnia', 'kiedy', 'dobrze', 'dane', 'deska', 'dzięki', 'teraz', 'tydzień', 'temat', 'trening',
-    'praca', 'projekt', 'prezentacja', 'problem', 'pytanie', 'plan', 'budżet', 'bilet', 'biuro', 'bardzo'
-  ],
-  B_WORDS: ['hhhAnia', 'hhhokej', 'hhhAleksander', 'hhhw ogóle', 'hhhuwaga', 'hhhidę', 'hhhale', 'hhhIreneusz', 'hhho której', 'hhhEwa', 'hhhumowa', 'hhhAzja'],
   TENSION: [['wargi', 'Wargi'], ['jezyk', 'Język'], ['krtan', 'Krtań'], ['brzuch', 'Brzuch']],
   // Start na sygnał (v5, #19): krótkie pytania PL i EN z tematem t wspólnym dla obu języków – w jednym dniu żaden temat dwa razy,
   // żadne pytanie dwa razy w oknie 7 dni. Kolejność języków jak w v4: PL, EN, PL, EN, PL, PL, EN, PL, EN, PL.
