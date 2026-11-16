@@ -19,9 +19,9 @@ Slug: `6d11a925-4902-461b-9300-077502bbab5e`. Zadeklarowana capability: `sample`
 > Korekta 11.11 ([[HLD PoC – kworum 2026-11-11]]): według dwóch agentów aktualny kontrakt artefaktów ma capability `downloads` (zapis pliku). Niepusta deklaracja zastępuje cały zestaw, więc publikacja musiałaby podać `sample` i `downloads` razem. Na razie nie używamy; do potwierdzenia, gdy kopiuj/wklej przestanie wystarczać.
 
 ## Jak publikować (z sesji Claude Code)
-1. Zielony harness: `node test/run.js && node test/round2.js`.
-2. Narzędzie Artifact: `read` na URL artefaktu (żeby mieć aktualną wersję), potem `publish` z `file_path: app/index.html` i tym samym `url`. Capability `sample` zostaje (nie podawać `capabilities`, żeby nie wyzerować deklaracji).
+1. Zielony harness i strażnik: `node test/arch.js && node test/run.js && node test/round2.js && node test/round3.js`.
+2. Narzędzie Artifact: `read` na URL artefaktu (żeby mieć aktualną wersję), potem `publish` z `file_path: app/index.html`, `files` (`styles.css`, `data.js`, `app.js`, później `store.js`, `domain.js`) i tym samym `url`. Capability `sample` zostaje (nie podawać `capabilities`, żeby nie wyzerować deklaracji).
 3. Po publikacji: sprawdzić w telefonie ekran Dziś i jedno „Oceń z Claude”.
 4. Zapisać w [[Decision log]] albo w notatce dnia, co weszło.
 
-Po podziale na kilka plików (Opcja A): `publish` z `files` (`styles.css`, `data.js`, `app.js`, później `store.js`, `domain.js`) obok `index.html`; ścieżki w HTML względne, bez wiodącego `/`.
+Od E1 (16.11) apka ma kilka plików: ścieżki w HTML względne, bez wiodącego `/`, z `?v=N` (numer wersji), żeby po publikacji nie spotkały się pliki różnych wersji z pamięci podręcznej.

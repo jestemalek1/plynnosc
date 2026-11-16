@@ -3,6 +3,7 @@ const { chromium } = require('playwright');
 const path = require('path');
 const APP = path.resolve(__dirname, '..', 'app', 'index.html');
 const fs = require('fs');
+const APP_SRC = () => fs.readdirSync(path.dirname(APP)).filter(f => /\.(html|css|js)$/.test(f)).map(f => fs.readFileSync(path.join(path.dirname(APP), f), 'utf8')).join('\n'); // E1: cała apka = wszystkie pliki w app/
 const URL = 'file://' + APP;
 const OUT = __dirname + '/';
 const UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1';
@@ -236,7 +237,7 @@ async function section(name, fn) {
       return { small: out, segSizes: [...document.querySelectorAll('#s-dzis .seg button')].map(b => { const r = b.getBoundingClientRect(); return [b.textContent, +r.width.toFixed(1), +r.height.toFixed(1)]; }), chipSize: (() => { const r = document.querySelector('#s-dzis .sr .chip').getBoundingClientRect(); return [+r.width.toFixed(1), +r.height.toFixed(1)]; })() };
     }));
     // scan whole source for other scales
-    const src = fs.readFileSync(APP, 'utf8');
+    const src = APP_SRC();
     log('F.sourceScaleScan', { '0-10': (src.match(/0\s?[–-]\s?10\b/g) || []).length, '/10': (src.match(/(?<!\/)\/\s?10\b/g) || []).length, '1-5': (src.match(/\b1\s?[–-]\s?5\b/g) || []).length, 'range': (src.match(/type=["']?range/g) || []).length, 'SR 0–8': (src.match(/0–8/g) || []).length });
     await v.c.close();
   });
@@ -500,7 +501,7 @@ async function section(name, fn) {
     }
     // N4: grep for external resources / forbidden APIs
     {
-      const src = fs.readFileSync(APP, 'utf8');
+      const src = APP_SRC();
       const pats = { 'http(s)://': /https?:\/\//g, 'fetch(': /\bfetch\s*\(/g, XMLHttpRequest: /XMLHttpRequest/g, WebSocket: /WebSocket/g, EventSource: /EventSource/g, sendBeacon: /sendBeacon/g, 'import(': /\bimport\s*\(/g, 'eval(': /\beval\s*\(/g, 'new Function': /new Function/g, 'document.cookie': /document\.cookie/g, indexedDB: /indexedDB/g, 'script src': /<script[^>]+src=/g, 'link href': /<link[^>]+href=/g, '@import': /@import/g, 'url(': /url\(/g, 'window.open': /window\.open/g, 'serviceWorker': /serviceWorker/g, 'getUserMedia': /getUserMedia/g };
       const hits = {}; Object.keys(pats).forEach(k => { const m = src.match(pats[k]); if (m) hits[k] = m.length; });
       const urls = src.match(/https?:\/\/[^\s"'<)]+/g) || [];

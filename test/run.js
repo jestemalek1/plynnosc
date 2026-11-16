@@ -340,7 +340,7 @@ const txt = (page, sel) => page.locator(sel).first().innerText();
   {
     const { c, page } = await ctx(browser, { time: new Date(2026, 10, 8, 10, 0, 0) });
     await page.goto(URL); await page.waitForTimeout(100); await openToday(page);
-    log('T11.topicPool', await page.evaluate(() => { const src = document.querySelector('script:not([src])').textContent; const m = src.match(/var TOPICS = \[([\s\S]*?)\n  \];/); const rows = m[1].split('\n').filter(l => /^\s*\['/.test(l)); const tags = {}; rows.forEach(r => { const t = r.match(/\['([^']+)'/)[1]; tags[t] = (tags[t] || 0) + 1; }); return { count: rows.length, tags }; }));
+    log('T11.topicPool', await page.evaluate(() => { const rows = PLYN_DATA.TOPICS; const tags = {}; rows.forEach(r => { tags[r[0]] = (tags[r[0]] || 0) + 1; }); return { count: rows.length, tags }; }));
     await c.close();
   }
   await browser.close();

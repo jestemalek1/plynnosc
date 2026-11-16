@@ -31,7 +31,7 @@ Nazwy po polsku bez ogonków, z myślnikami: `feature/eksport-danych`, `fix/lege
 Cel: poprawki po przeglądzie idą same, a Alek dostaje gotowy wynik albo jedno konkretne pytanie. Kto przegląda i co sprawdza: [[A7 Strażnik architektury]], [[Zasady architektury]].
 
 1. **Subskrypcja zawsze.** Okno, które otworzyło PR, od razu subskrybuje jego aktywność (w sesji w chmurze: narzędzie `subscribe_pr_activity`), bez pytania Alka. Od tej chwili budzi je każdy komentarz z przeglądu i każdy wynik w Actions.
-2. **Poprawka.** Na uwagę albo czerwony wynik okno: odtwarza problem, poprawia najmniejszą zmianą, puszcza harness (i `test/arch.js`, gdy istnieje), wypycha, odpowiada na uwagę jednym zdaniem.
+2. **Poprawka.** Na uwagę albo czerwony wynik okno: odtwarza problem, poprawia najmniejszą zmianą, puszcza harness (i `test/arch.js`), wypycha, odpowiada na uwagę jednym zdaniem.
 3. **Okno może odmówić.** Uwaga sprzeczna z [[Zasady architektury]], z decyzją Alka albo proponująca rozbudowę „na przyszłość” dostaje odpowiedź „nie, bo …” i nie jest wprowadzana. Okno nigdy nie wyłącza, nie pomija ani nie osłabia sprawdzenia, żeby dostać zielone.
 4. **Warunki samodzielnego scalenia** (wszystkie naraz):
    - harness zielony na ostatnim commicie;
@@ -50,7 +50,7 @@ Ograniczenia: pętla działa tylko w sesji w chmurze (sesji w lokalnym terminalu
 1. Na `develop` harness zielony, `CHANGELOG.md` uzupełniony w sekcji nowej wersji.
 2. PR `develop` → `main` o tytule „Wydanie vN”, merge (bez squash, żeby historia zgadzała się z `develop`).
 3. `git tag vN && git push origin vN`.
-4. Publikacja: narzędzie Artifact `read` na https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P, potem `publish` z `app/index.html` (bez `capabilities`). Publikujemy **tylko z `main`**.
+4. Publikacja: narzędzie Artifact `read` na https://claude.ai/artifact/EUANdz59Df6hkaxVUsHR5P, potem `publish` z `file_path: app/index.html` i `files` z pozostałymi plikami `app/` (bez `capabilities`). Publikujemy **tylko z `main`**. W PR wydania `?v=N` w `index.html` = numer wersji, żeby telefon nie złożył strony z plików różnych wersji.
 5. Krótki wpis w [[Decision log]] tylko jeśli wydanie zawiera decyzję. Sprawdzenie na telefonie.
 
 Hotfix: `hotfix/*` z `main` → PR do `main` → tag `vN.1` → publikacja → merge `main` do `develop`.
