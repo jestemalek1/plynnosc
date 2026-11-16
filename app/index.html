@@ -334,6 +334,8 @@
     var x = isObj(d.extra) ? d.extra : {};
     d.extra = { lang: x.lang === 'pl' || x.lang === 'en' ? x.lang : null, topic: typeof x.topic === 'number' && x.topic >= 0 && x.topic % 1 === 0 ? x.topic : null,
       ran: x.ran === true, breath: TRI.indexOf(x.breath) >= 0 ? x.breath : null, sr: x.sr == null ? null : clampSR(x.sr), done: x.done === true };
+    // B14: zadanie w terenie – fakt tak/nie, brak odpowiedzi = null.
+    d.field = d.field === 'tak' || d.field === 'nie' ? d.field : null;
     return d;
   }
   // v2 (2026-11-08): a finished day stays finished even when the exercise list changes later (review R1).
@@ -822,6 +824,27 @@
     co: INS.monolog.co, jak: INS.monolog.jak, nie: INS.monolog.nie,
     dlaczego: 'Program każe w tygodniu 1 mówić naprzemiennie po polsku i po angielsku. Długa, szybka wypowiedź po angielsku to dla Ciebie najtrudniejszy warunek – ta karta daje go więcej w dni, kiedy masz ochotę.'
   };
+  // B14: zadanie w terenie, treść kluczowana tygodniem (field2, field3); tygodnie 4+ dochodzą z T4–6. Źródło: Program płynności, reguła 3 i tabela progresji.
+  INS.field2 = {
+    sub: 'Daily: pierwsze zdanie na wydechu',
+    brief: ['Na daily pierwsze zdanie na wydechu, jak w oddechu A. W dzień bez daily: jeden akapit czegoś, co i tak czytasz, na głos.', 'Wdech 2–3 s brzuchem, pierwsze słowo na początku wydechu.', 'Nie zatrzymuj powietrza i nie oceniaj, czy było płynnie – liczy się „użyłem”, nie „byłem płynny”.'],
+    co: 'Na daily (szczebel 2 Twojej hierarchii) przed pierwszym zdaniem robisz jeden spokojny wdech brzuchem i zaczynasz mówić od razu na wydechu, tak jak słowo w ostatnich powtórzeniach oddechu A. W dzień bez daily: szczebel 1. Przeczytaj na głos jeden akapit czegoś, co i tak czytasz, i zacznij tak samo. Potem zaznacz w apce.',
+    jak: 'Wdech 2–3 s, brzuch luźny, pierwsze słowo wychodzi na początku wydechu, bez momentu „wdech – stop – mówię”. Dalej mówisz normalnie i nie musisz pilnować techniki w całej wypowiedzi.',
+    nie: 'Nie zatrzymuj powietrza po wdechu, nie bierz kilku wdechów „na zapas”, nie oceniaj, czy było płynnie.',
+    dlaczego: 'Poprzednio technika nie trzymała się poza ćwiczeniami, bo brakowało przenoszenia jej do prawdziwych sytuacji. Zaczynasz od najłatwiejszych szczebli, gdzie bloków zwykle nie ma, żeby start na wydechu stał się nawykiem, zanim przeniesiesz go wyżej.',
+    tak: 'Zapisane. Technika użyta w prawdziwej sytuacji – to jest właśnie transfer.',
+    nieMsg: 'Zapisane. Jutro kolejna okazja.'
+  };
+  INS.field3 = {
+    sub: 'Imię z miękkim startem, 1× dziennie',
+    brief: ['Raz dziennie przedstaw się pełnym imieniem z miękkim startem: „hhhAleksander” – telefon, spotkanie, recepcja, wiadomość głosowa, byle naprawdę do kogoś.', '„h” ledwo słyszalne, „A” miękko na wydechu, reszta imienia w normalnym tempie.', 'Nie skracaj do „Alek” i nie zatrzymuj powietrza przed „A” – liczy się „użyłem”, nie „byłem płynny”.'],
+    co: 'Raz dziennie w prawdziwej sytuacji mówisz pełne imię „Aleksander” z miękkim startem, jak w ćwiczeniu „Miękki start”: cichy wydech, z którego wyrasta „A”. Okazja może być dowolna: telefon („tu Aleksander”), spotkanie, recepcja, wiadomość głosowa. Potem zaznacz w apce.',
+    jak: '„hhhAleksander”: „h” ledwo słyszalne, krótsze niż sekunda, „A” miękko na wydechu, reszta imienia w normalnym tempie. Rozmówca słyszy po prostu spokojnie powiedziane imię.',
+    nie: 'Nie skracaj do „Alek” i nie zastępuj imienia obejściem w rodzaju „jestem z firmy…”, bo to też zamiana słowa. Nie zatrzymuj powietrza przed „A”. Jeśli wejdzie blok, rób mniej, nie więcej: puść brzuch, cichy głos na samogłosce, dokończ.',
+    dlaczego: 'Przedstawianie się to Twój najtrudniejszy szczebel, a imię zaczyna się od samogłoski, czyli dokładnie tam, gdzie krtań lubi się zamknąć. Miękki start trzyma ją otwartą. Cel tego tygodnia to jedno użycie dziennie, nie płynność.',
+    tak: 'Zapisane. Imię powiedziane techniką w prawdziwej sytuacji – najtrudniejszy szczebel ruszył.',
+    nieMsg: 'Zapisane. Bez okazji też jest OK; jutro spróbuj ją stworzyć (np. „tu Aleksander” w wiadomości głosowej).'
+  };
   var BRIEF_LABEL = ['Co robisz', 'Jak to ma brzmieć', 'Czego nie robić'];
   function briefBlock(id) {
     var t = INS[id];
@@ -1025,8 +1048,11 @@
     miekki: { title: 'Miękki start', sub: '12 słów po 5 s, „hhh” przed samogłoską', mins: '1 min' },
     dziennik: { title: 'Dziennik bloków', sub: 'Był blok? 1–4 dotknięcia', mins: '1 min' },
     sr: { title: 'SR tygodnia', sub: 'Typowe i najgorsze z 7 dni', mins: '30 s' },
-    extra: { title: '★ Monolog w drugim języku', sub: 'dla chętnych · nie wlicza się do dnia', mins: '3 min' } // v5 (#21): poza exercisesFor / done / zaliczeniem dnia
+    extra: { title: '★ Monolog w drugim języku', sub: 'dla chętnych · nie wlicza się do dnia', mins: '3 min' }, // v5 (#21): poza exercisesFor / done / zaliczeniem dnia
+    field: { title: 'Zadanie w terenie' } // B14: poza exercisesFor / done / zaliczeniem dnia; podtytuł z INS.fieldN
   };
+  // B14: karta zadania w terenie od dnia 8, tylko w tygodniach z treścią.
+  function fieldId(k) { var d = peekDay(k), n = dayIndex(k), id = 'field' + weekOf(n); return n >= 8 && !(d && d.baseline) && INS[id] ? id : null; }
   // ★ w dniach z Luźnym monologiem (tygodnie 1–3, bez dnia 1); nie wchodzi do listy ćwiczeń, paska postępu ani „Teraz”.
   function hasExtra(k) { var d = peekDay(k), n = dayIndex(k); return n >= 2 && weekOf(n) <= 3 && !(d && d.baseline) && exercisesFor(k).indexOf('monolog') >= 0; }
   function extraDone(k) { var d = peekDay(k); return !!d && !!d.extra && d.extra.done === true; }
@@ -1035,7 +1061,7 @@
   function extraBtnLang(k) { var d = day(k); return extraStarted(d) ? d.extra.lang : extraLang(k); }
   function extraLang(k) { var d = day(k), m = d.monolog, ml = m.lang || (dayIndex(k) % 2 === 1 ? 'pl' : 'en'); return ml === 'pl' ? 'en' : 'pl'; }
   function exTitle(k, ex) { var d = peekDay(k); return ex === 'sr' && d && d.baseline ? 'SR dnia' : EX_META[ex].title; }
-  function isDone(k, ex) { if (ex === 'extra') return extraDone(k); var d = peekDay(k); return !!d && d.done.indexOf(ex) >= 0; }
+  function isDone(k, ex) { if (ex === 'extra') return extraDone(k); if (ex === 'field') { var f = peekDay(k); return !!f && f.field != null; } var d = peekDay(k); return !!d && d.done.indexOf(ex) >= 0; }
   function refreshComplete(k) { var d = day(k); if (!d.complete && exercisesFor(k).every(function (e) { return d.done.indexOf(e) >= 0; })) d.complete = true; }
   function markDone(k, ex) {
     if (cards[ex] && isField(document.activeElement)) {
@@ -1097,7 +1123,9 @@
     if (ex === 'extra' && !isDayDone(k)) a = a.filter(function (t) { return !/Dzień i tak był zaliczony/.test(t); });
     return a;
   }
-  function encCard(k, ex) { return h('div', { class: 'enc' }, h('strong', { text: ex === 'extra' ? '★ ' : 'Zaliczone. ' }), pick(encPool(k, ex), dayIndex(k) + ex.length)); }
+  function encCard(k, ex) {
+    if (ex === 'field') return h('div', { class: 'enc' }, day(k).field === 'tak' ? INS[fieldId(k)].tak : INS[fieldId(k)].nieMsg);
+    return h('div', { class: 'enc' }, h('strong', { text: ex === 'extra' ? '★ ' : 'Zaliczone. ' }), pick(encPool(k, ex), dayIndex(k) + ex.length)); }
   var recent = {};
   var expanded = {};
   var cards = {};
@@ -1169,6 +1197,7 @@
     if (w >= 4 && !d.baseline) root.appendChild(planCard(w));
     extraHook = null; monoHook = null;
     list.forEach(function (ex) { var c = exerciseCard(k, ex, ex === nextEx); cards[ex] = c; root.appendChild(c); });
+    if (fieldId(k)) { cards.field = exerciseCard(k, 'field', false); root.appendChild(cards.field); } // B14: pod ćwiczeniami, bez odpowiedzi rozwinięta
     if (hasExtra(k)) { cards.extra = exerciseCard(k, 'extra', false); root.appendChild(cards.extra); } // v5 (#21): pod obowiązkowymi, domyślnie zwinięta
     updateHeader();
     if (!isToday) root.appendChild(h('p', { class: 'footer' }, 'Przeglądasz wcześniejszy dzień.'));
@@ -1338,13 +1367,13 @@
   function repeatBtn(label, fn) { return h('button', { class: 'ghost act', type: 'button', text: label, onclick: function (e) { e.stopPropagation(); fn(); } }); }
   function exerciseCard(k, ex, isCurrent) {
     var d = day(k), done = isDone(k, ex), meta = EX_META[ex];
-    var open = expanded[ex] != null ? expanded[ex] : (isCurrent || (done && recent[ex]) || (ex === 'extra' && d.extra.ran && !done)); // ★ w trakcie: rozwinięta
+    var open = expanded[ex] != null ? expanded[ex] : (isCurrent || (done && recent[ex]) || (ex === 'extra' && d.extra.ran && !done) || (ex === 'field' && !done)); // ★ w trakcie i zadanie bez odpowiedzi: rozwinięte
     var card = h('div', { class: 'card' + (done ? ' done' : '') + (isCurrent ? ' current' : '') + (open ? '' : ' collapsed') });
     function toggleBody() { expanded[ex] = card.classList.contains('collapsed'); card.classList.toggle('collapsed'); head.setAttribute('aria-expanded', card.classList.contains('collapsed') ? 'false' : 'true'); }
     var head = h('div', { class: 'chead', role: 'button', tabindex: '0', 'aria-expanded': open ? 'true' : 'false', onclick: toggleBody,
       onkeydown: function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); head.click(); } } }, // przez click: ta sama ścieżka co tap (anuluje powrót na mapę)
       h('div', { class: 'mark', text: done ? '✓' : '' }),
-      h('div', { class: 't' }, h('h2', { text: exTitle(k, ex) }), h('small', { text: done ? 'Zrobione' + doneSummary(k, ex) : meta.sub + ' · ' + meta.mins })));
+      h('div', { class: 't' }, h('h2', { text: exTitle(k, ex) }), h('small', { text: ex === 'field' ? (done ? 'Zapisane' + doneSummary(k, ex) : INS[fieldId(k)].sub) : done ? 'Zrobione' + doneSummary(k, ex) : meta.sub + ' · ' + meta.mins })));
     if (done && !d.baseline && REPEAT[ex]) head.appendChild(repeatBtn(REPEAT[ex].label, function () { REPEAT[ex].fn(k, d); }));
     var body = h('div', { class: 'cbody' });
     card.appendChild(head); card.appendChild(body);
@@ -1365,6 +1394,7 @@
   function doneSummary(k, ex) {
     var d = day(k);
     if (ex === 'oddech') return ' · ' + (d.reps.oddech || 0) + '/12' + (d.oddechBrzuch ? ' · brzuch: ' + d.oddechBrzuch : '');
+    if (ex === 'field') return d.field === 'tak' ? ' · użyłem techniki' : ' · dziś nie';
     if (ex === 'extra') return ' · ' + (d.extra.lang || extraLang(k)).toUpperCase() + (d.extra.sr != null ? ' · SR ' + d.extra.sr : '');
     if (ex === 'miekki') return ' · ' + (d.reps.miekki || 0) + '/' + B_WORDS.length;
     if (ex === 'sygnal') return ' · ' + (d.reps.sygnal || 0) + '/' + SIGNAL_N;
@@ -1580,6 +1610,19 @@
       }
     },
 
+    field: function (body, k, d) {
+      // B14: fakt tak/nie; zmiana odpowiedzi w każdej chwili, bez wpływu na zaliczenie dnia i powrót na mapę.
+      var id = fieldId(k);
+      body.appendChild(briefBlock(id));
+      body.appendChild(h('div', { class: 'chips3', role: 'group', 'aria-label': 'Zadanie w terenie' }, [['tak', 'Użyłem techniki'], ['nie', 'Dziś nie']].map(function (o) {
+        var on = d.field === o[0];
+        return h('button', { type: 'button', text: o[1], class: on ? 'on' : '', 'aria-pressed': on ? 'true' : 'false', onclick: function () {
+          d.field = o[0]; markSeen(id); save(); toast('Zapisano'); recent.field = true; expanded.field = true; rebuildCard(k, 'field');
+        } });
+      })));
+      fullInstructions(body, id);
+    },
+
     extra: function (body, k, d, done) {
       // v5 (#21): ★ monolog w drugim języku – jak Luźny monolog, ale nie wlicza się do dnia (poza done / exercisesFor / streakiem).
       var x = d.extra, m = d.monolog, changed = false;
@@ -1647,6 +1690,11 @@
       if (e.start === 'ktoś') x++; if (e.tempo === 'szybko') y++; if (e.jezyk === 'EN') z++;
     }
     return 'Wpisy: ' + N + ' · z blokiem: ' + B + ' · start ktoś: ' + x + '/' + B + ' · szybko: ' + y + '/' + B + ' · EN: ' + z + '/' + B;
+  }
+  function fieldLine() { // B14: liczone tylko dni ≥ 8
+    var t = todayKey(), y = 0, n = 0;
+    for (var i = 6; i >= 0; i--) { var k = addDays(t, -i), d = peekDay(k); if (dayIndex(k) < 8 || !d) continue; if (d.field === 'tak') y++; else if (d.field === 'nie') n++; }
+    return 'Zadania w terenie (ostatnie 7 dni): użyłem ' + y + ' · dziś nie ' + n;
   }
   function bellyLine() {
     var t = todayKey(), c = { tak: 0, 'częściowo': 0, nie: 0 };
@@ -1891,7 +1939,8 @@
     var ne = extraDays();
     root.appendChild(h('div', { class: 'card' }, h('h2', { text: 'Ćwiczenia' }),
       h('p', { class: 'note', text: bellyLine() }),
-      h('p', { class: 'note', text: '★ zrobione: ' + ne + (ne === 1 ? ' dzień' : ' dni') })));
+      h('p', { class: 'note', text: '★ zrobione: ' + ne + (ne === 1 ? ' dzień' : ' dni') }),
+      dayIndex(todayKey()) >= 8 ? h('p', { class: 'note', text: fieldLine() }) : null));
     root.appendChild(h('div', { class: 'card' }, h('h2', { text: 'Dziennik bloków (14 dni)' }), h('p', { class: 'note', text: diaryStatsLine() })));
 
     var bl = h('div', { class: 'card' }, h('h2', { text: 'Bloki i SR: PL / EN' }));

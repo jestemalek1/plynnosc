@@ -824,6 +824,80 @@ const rowsOk = (rows) => rows.length === 6 && rows.every((r, i) => r.startsWith(
     verdict('R13', out.banner && out.banner.buttons.join('|') === 'Na mapę|★ Jeszcze monolog EN', 'banner label from extra.lang: ' + JSON.stringify(out.banner));
   });
 
+  // ===== R14: B14 zadanie w terenie (karta od dnia 8, tak/nie, bez wpływu na zaliczenie, Postępy) =====
+  await section('R14', async () => {
+    const out = {};
+    const seededF = (obj) => `if (!sessionStorage.getItem('seeded')) { sessionStorage.setItem('seeded', '1'); localStorage.setItem('plynnosc', ${JSON.stringify(JSON.stringify(obj))}); }`;
+    for (const n of [7, 8, 14, 15, 21, 22, 85]) {
+      const { c, page } = await ctx(browser, { time: D(n) });
+      await page.goto(URL); await page.waitForTimeout(100);
+      if (!(await openToday(page))) { // day 85+: no island „dziś”, open day 84 and go › (as in R7)
+        await page.locator(`#s-dzis .island[data-k="${KEY(84)}"]`).first().click(); await page.waitForTimeout(50);
+        await page.locator('#s-dzis .arrow', { hasText: '›' }).click(); await page.waitForTimeout(50);
+      }
+      const titles = await cardTitles(page);
+      const f = card(page, 'Zadanie w terenie');
+      const info = (await f.count()) ? await f.evaluate(c => ({ sub: c.querySelector('small').textContent, open: !c.classList.contains('collapsed'), brief: c.querySelectorAll('.brief li').length, toggle: !!c.querySelector('.instoggle'), btns: [...c.querySelectorAll('.chips3 button')].map(b => { const r = b.getBoundingClientRect(); return { t: b.textContent, w: Math.round(r.width), h: Math.round(r.height) }; }), sw: document.documentElement.scrollWidth })) : null;
+      out['d' + n] = { titles, info, errors: page.__errors }; await c.close();
+    }
+    const fi = (n) => out['d' + n].info;
+    verdict('R14', !fi(7) && !fi(22) && !fi(85), '#1/#4: no card on days 7, 22, 85: ' + [7, 22, 85].map(n => !!fi(n)).join(','));
+    verdict('R14', [8, 14].every(n => fi(n) && fi(n).sub === 'Daily: pierwsze zdanie na wydechu') && [15, 21].every(n => fi(n) && fi(n).sub === 'Imię z miękkim startem, 1× dziennie'), '#2/#3: week 2/3 content: ' + [8, 14, 15, 21].map(n => fi(n) && fi(n).sub).join(' | '));
+    verdict('R14', [8, 15].every(n => fi(n).open && fi(n).brief === 3 && fi(n).toggle), '#2: unanswered card open, 3 brief lines, instruction toggle');
+    verdict('R14', [8, 14, 15, 21].every(n => { const t = out['d' + n].titles, i = t.indexOf('Zadanie w terenie'); return i > 0 && t.slice(0, i).indexOf('Dziennik bloków') >= 0; }) && out.d14.titles.indexOf('SR tygodnia') >= 0 && out.d7.titles.indexOf('SR tygodnia') >= 0, '#2/#14: card under exercises; SR tygodnia on days 7 and 14: ' + JSON.stringify(out.d14.titles));
+    verdict('R14', fi(8).btns.length === 2 && fi(8).btns.every(b => b.w >= 44 && b.h >= 44) && fi(8).sw <= 390, '#15: buttons ' + JSON.stringify(fi(8).btns) + ', scrollWidth ' + fi(8).sw);
+    // #5–#8: day complete without answer, answers do not change progress/complete/streak
+    {
+      const DONE = ['oddech', 'sygnal', 'monolog', 'napiecie', 'dziennik'];
+      const seed = { v: 2, days: { [KEY(9)]: { done: DONE.slice(), blok: { jest: false }, extra: EXTRA_DONE, complete: true }, [KEY(10)]: { done: DONE.slice(0, 2) } } };
+      const { c, page } = await ctx(browser, { time: D(10), init: seededF(seed) });
+      await page.goto(URL); await page.waitForTimeout(100); await openToday(page);
+      const head0 = await page.locator('#s-dzis .next').innerText();
+      const bar0 = await page.locator('#s-dzis .progress span.on').count();
+      const f = card(page, 'Zadanie w terenie');
+      await f.locator('.chips3 button', { hasText: 'Użyłem techniki' }).click(); await page.waitForTimeout(50);
+      const toastTxt = await page.locator('#toast').innerText();
+      const a1 = await card(page, 'Zadanie w terenie').evaluate(c => ({ on: [...c.querySelectorAll('.chips3 button.on')].map(b => b.textContent), enc: (c.querySelector('.enc') || {}).textContent, small: c.querySelector('small').textContent }));
+      await flush(page); const s1 = (await store(page)).days[KEY(10)];
+      await card(page, 'Zadanie w terenie').locator('.chips3 button', { hasText: 'Dziś nie' }).click(); await page.waitForTimeout(50);
+      const a2 = await card(page, 'Zadanie w terenie').evaluate(c => ({ on: [...c.querySelectorAll('.chips3 button.on')].map(b => b.textContent), enc: (c.querySelector('.enc') || {}).textContent }));
+      await flush(page); const s2 = (await store(page)).days[KEY(10)];
+      const head1 = await page.locator('#s-dzis .next').innerText();
+      const bar1 = await page.locator('#s-dzis .progress span.on').count();
+      // previous day (‹): change answer there; day 9 stays complete
+      await page.locator('#s-dzis .arrow', { hasText: '‹' }).click(); await page.waitForTimeout(50);
+      const fc9 = card(page, 'Zadanie w terenie');
+      if (await fc9.evaluate(c => c.classList.contains('collapsed'))) await fc9.locator('.chead').click();
+      await fc9.locator('.chips3 button', { hasText: 'Użyłem techniki' }).click(); await page.waitForTimeout(50); await flush(page);
+      const st = await store(page);
+      await tab(page, 'postepy');
+      const prog = await page.locator('#s-postepy').innerText();
+      out.flow = { head0, head1, bar0, bar1, toastTxt, a1, a2, s1: s1.field, s2: s2.field, s2done: s2.done, d9: { field: st.days[KEY(9)].field, complete: st.days[KEY(9)].complete }, progLine: (prog.match(/Zadania w terenie[^\n]*/) || [null])[0], errors: page.__errors };
+      await c.close();
+    }
+    const fl = out.flow;
+    verdict('R14', fl.s1 === 'tak' && fl.a1.on.join() === 'Użyłem techniki' && /^Zapisan/.test(fl.toastTxt) && /transfer/.test(fl.a1.enc || '') && fl.a1.small === 'Zapisane · użyłem techniki', '#5: ' + JSON.stringify(fl.a1) + ' toast ' + fl.toastTxt);
+    verdict('R14', fl.s2 === 'nie' && fl.a2.on.join() === 'Dziś nie' && /Jutro kolejna okazja/.test(fl.a2.enc || ''), '#6/#7: changed to nie: ' + JSON.stringify(fl.a2));
+    verdict('R14', fl.head0 === fl.head1 && fl.bar0 === fl.bar1 && fl.s2done.indexOf('field') < 0, '#5: header/progress unchanged: ' + fl.head0 + ' / ' + fl.head1 + ', bar ' + fl.bar0 + '/' + fl.bar1);
+    verdict('R14', fl.d9.field === 'tak' && fl.d9.complete === true, '#10: previous day answer saved, still complete: ' + JSON.stringify(fl.d9));
+    verdict('R14', fl.progLine === 'Zadania w terenie (ostatnie 7 dni): użyłem 1 · dziś nie 1', '#11: ' + fl.progLine);
+    // #12: invalid value from older state -> null; #11: no Postępy line before day 8
+    {
+      const seed = { v: 2, days: { [KEY(8)]: { done: [], field: 'maybe' } } };
+      const { c, page } = await ctx(browser, { time: D(8), init: seededF(seed) });
+      await page.goto(URL); await page.waitForTimeout(100);
+      await openToday(page);
+      const on = await card(page, 'Zadanie w terenie').evaluate(c => c.querySelectorAll('.chips3 button.on').length);
+      await flush(page); const s = (await store(page)).days[KEY(8)];
+      out.invalid = { on, field: s.field, errors: page.__errors }; await c.close();
+      const p7 = await ctx(browser, { time: D(7) });
+      await p7.page.goto(URL); await p7.page.waitForTimeout(100); await tab(p7.page, 'postepy');
+      out.d7prog = /Zadania w terenie/.test(await p7.page.locator('#s-postepy').innerText()); out.d7progErrors = p7.page.__errors; await p7.c.close();
+    }
+    verdict('R14', out.invalid.field === null && out.invalid.on === 0 && !out.d7prog, '#12: invalid -> ' + out.invalid.field + ', no Postępy line on day 7: ' + !out.d7prog);
+    log('R14.result', out);
+  });
+
   await browser.close();
   // every console/page error logged anywhere (also nested, e.g. R1.detail.*Errors) fails the run
   const errs = []; (function scan(o, p) { if (!o || typeof o !== 'object') return; for (const k of Object.keys(o)) { if (/errors$/i.test(k) && Array.isArray(o[k]) && o[k].length) errs.push(p + k + ': ' + JSON.stringify(o[k]).slice(0, 200)); else scan(o[k], p + k + '.'); } })(R, '');
